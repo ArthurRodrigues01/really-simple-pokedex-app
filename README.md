@@ -1,30 +1,28 @@
-# React + TypeScript + Vite
+# Really Simple Pokedex
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Description 
 
-Currently, two official plugins are available:
+Simple pokedex-like app, as of right now it is pending styling and other major features meant to be implemented later versions.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Pages
 
-## Expanding the ESLint configuration
+You may acess three pages, a page to display a single pokemon data, a page to display preview data(id and name) of all pokemons and with lazy loading (loading 200 pokemons at a time), and a page to display filtered search for pokemons based on URL's variables.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Single Pokemon Page
 
-- Configure the top-level `parserOptions` property like this:
+URI template: '/pokemon/:id'
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+Display data of a single pokemon.
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+## All Pokemons Page (Main Page)
+
+URI template: '/'
+
+Display preview-data(id and name) of all pokemons, preview-data is wrapped in a 'Link' component linking to the single pokemon page for that specific pokemon.
+To load more pokemons, simply press the button on the bottom of the page.
+
+##  Filtered Search Page
+
+URI template: '/filtered?gen=1&type1=normal&type2=fighting'
+
+Display preview-data(id and name) of any pokemons who fit in ALL of the specified search parameters defined in the URL's variables(gen and type).
