@@ -1,26 +1,34 @@
 import { useQuery } from "@tanstack/react-query"
 import { getCommonItemsFromObjectArrays } from "../functions/other-functions"
 import { NamedAPIResource, NamedAPIResourceList, PokemonPreviewData, PokemonsPreviewDataStatus } from "../types/pokemon-related-types"
+import { sanitizeTypes, getPokemonPreviewDataFromArray } from "../functions/poke-functions"
 
-function usePokemonsPreviewDataTypes(types: string[]): PokemonsPreviewDataStatus {  
+function usePokemonsPreviewDataTypes(types: string[]): PokemonsPreviewDataStatus {
+  const pokemonTypes = sanitizeTypes(types) 
+  
+  if (pokemonTypes.length === 0) {
+    return ({
+      previewData: null,
+      isLoading: false
+    })
+  } 
+  
+  
   const { data, isLoading } = useQuery({
-    queryKey: [types],
-    queryFn: async () => await getPokemonsPreviewDataFromTypes(types)
+    queryKey: [pokemonTypes],
+    queryFn: async () => await getPokemonsPreviewDataFromTypes(pokemonTypes)
   }) 
 
   return ({
     previewData: data ? data : null,
     isLoading
   })
-
   async function getPokemonsPreviewDataFromTypes(types: string[]): Promise<PokemonPreviewData[] | null> {
     const res = await fetch(`https://pokeapi.co/api/v2/type`)
     const rawData: NamedAPIResourceList = await res.json()
     
     const typeObjs = rawData.results
     const typeFetchs = typeObjs.filter(typeObj => types.includes(typeObj.name))
-  
-    if (typeFetchs.length === 0) return null
   
     const resType1 = await fetch(typeFetchs[0].url)
     const rawDataType1 = await resType1.json()
@@ -49,10 +57,7 @@ function usePokemonsPreviewDataTypes(types: string[]): PokemonsPreviewDataStatus
   
     const commonItems: NamedAPIResource[] = getCommonItemsFromObjectArrays(pokemonResource1, pokemonResource2, 'name')
     
-    return commonItems.map(commonItem => ({
-      id: Number(commonItem.url.split('/')[6]),
-      name: commonItem.name
-    }))
+    return getPokemonPreviewDataFromArray(commonItems)
   }
 }
 

@@ -1,6 +1,8 @@
 import { 
+  NamedAPIResource,
   PokedexEntry, 
   PokemonData,
+  PokemonPreviewData,
   PokemonType
 } from "../types/pokemon-related-types";
 import { isInRange, isNaturalNumber } from "./other-functions";
@@ -55,6 +57,13 @@ async function getMaxNumberOfPokemons(): Promise<number> {
   return rawData.count
 }
 
+function getPokemonPreviewDataFromArray(arr: NamedAPIResource[]): PokemonPreviewData[] {
+  return arr.map(item => ({
+    id: Number(item.url.split('/')[6]),
+    name: item.name
+  }))
+}
+
 function getGenRegion(gen: number) {
   switch (gen) {
     case 1: 
@@ -79,8 +88,34 @@ function getGenRegion(gen: number) {
       return null
   }
 }
+
+function sanitizeTypes(types: string[]) {
+  const validTypes = [
+    'normal', 'fighting', 
+    'flying', 'poison', 
+    'ground', 'rock', 
+    'bug', 'ghost',
+    'steel', 'fire',
+    'water', 'grass',
+    'electric', 'psychic',
+    'ice', 'dragon',
+    'dark', 'fairy'
+  ]
+  let sanitizedTypes: string[] = []
+
+  for (const type of types) {
+    if (validTypes.includes(type)) {
+      sanitizedTypes.push(type)
+    }
+  }
+
+  return sanitizedTypes
+}
+
 export { 
   getPokemonData, 
   getMaxNumberOfPokemons, 
-  getGenRegion
+  getGenRegion,
+  getPokemonPreviewDataFromArray,
+  sanitizeTypes
 }

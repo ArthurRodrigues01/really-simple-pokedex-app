@@ -3,11 +3,12 @@ import { isInRange, isNaturalNumber } from "../functions/other-functions"
 import { Generation, PokemonsPreviewDataStatus } from "../types/pokemon-related-types"
 
 function usePokemonsPreviewDataGen(gen: number): PokemonsPreviewDataStatus {
-  if (!isNaturalNumber(gen) && !isInRange(gen, 9)) return ({
+  // Param handling
+  if (isNaturalNumber(gen) === false && isInRange(gen, 9) === false) return ({
     previewData: null,
     isLoading: false
   })
-  
+
   const { data, isLoading } = useQuery({
     queryKey: [gen],
     queryFn: async () => await getPokemonsPreviewDataFromGen(gen)

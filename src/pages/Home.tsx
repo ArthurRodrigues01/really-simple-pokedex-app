@@ -5,23 +5,33 @@ import { PokemonPreviewData } from "../types/pokemon-related-types";
 
 function Home() {
   const { previewData, isLoading, fetchNextPokemons } = usePokemonsPreviewData(200)
+  const [fetchedPokemons, setFetchedPokemons] = useState<PokemonPreviewData[]>([]);
 
-  if (previewData === null && !isLoading){
-    return <h1>Sorry, no pokemons found</h1>
+  useEffect(() => {
+    if (previewData !== null) {
+      setFetchedPokemons([...fetchedPokemons, ...previewData])
+    }
+  }, [previewData]);
+
+  if (fetchedPokemons.length === 0) {
+    return <h1>Loading...</h1>
   }
+  // if (isLoading === true && previewData === null) it is still loading
+  // if (isLoading === false && previewData !== null) is has retrieved data
+  // if (isLoading === false && previewData === null) it has no data to retrieve
 
   return (
     <>
       <div style={{display: "flex", flexDirection: 'row', flexWrap: 'wrap', gap: 16}}>
-      {previewData.map(pokemonPreviewData => (
-        <Link to={`/pokemon/${pokemonPreviewData.id}`}>
+      {fetchedPokemons.map(fetchedPokemon => (
+        <Link to={`/pokemon/${fetchedPokemon.id}`}  key={fetchedPokemon.id}>
           <div>
-            <h3>{pokemonPreviewData.name}</h3>
-            <h3>{pokemonPreviewData.id}</h3>
+            <h3>{fetchedPokemon.name}</h3>
+            <h3>{fetchedPokemon.id}</h3>
           </div>
         </Link>
       ))}
-      {isLoading && <h1>...Loading</h1>}
+      {isLoading && <h1>...Loading more pokemons</h1>}
       </div>
       <button onClick={() => fetchNextPokemons()}>Fetch more</button>
     </>
