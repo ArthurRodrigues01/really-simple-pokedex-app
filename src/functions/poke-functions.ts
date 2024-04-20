@@ -64,6 +64,10 @@ function getPokemonPreviewDataFromArray(arr: NamedAPIResource[]): PokemonPreview
   }))
 }
 
+function removeNonPokemonSpeciesObjectsFromArray(arr: PokemonPreviewData[]): PokemonPreviewData[] {
+  return arr.filter(item => item.id < 10000)
+}
+
 function getGenRegion(gen: number) {
   switch (gen) {
     case 1: 
@@ -117,5 +121,6 @@ export {
   getMaxNumberOfPokemons, 
   getGenRegion,
   getPokemonPreviewDataFromArray,
-  sanitizeTypes
+  sanitizeTypes,
+  removeNonPokemonSpeciesObjectsFromArray
 }

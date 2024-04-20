@@ -8,12 +8,12 @@ import { useQuery } from "@tanstack/react-query"
 function SinglePokemon() {
   const { id } = useParams()
   const pokemonId = Number(id)
-  const { data, isPending } = useQuery({ 
-    queryKey: ['pokemon_data', pokemonId],
+  const { data, isLoading } = useQuery({ 
+    queryKey: [pokemonId],
     queryFn: async () => await getPokemonData(pokemonId)
   })
     
-  if (isPending || data === undefined) return <h1>Loading...</h1>
+  if (isLoading || data === undefined) return <h1>Loading...</h1>
   else if (data === null) return <h1>Sorry, no pokemon found with this id.</h1>
 
   return (

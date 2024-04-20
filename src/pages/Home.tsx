@@ -1,7 +1,7 @@
-import { Link } from "react-router-dom";
 import usePokemonsPreviewData from "../hooks/usePokemonsPreviewData";
 import { useEffect, useState } from "react";
 import { PokemonPreviewData } from "../types/pokemon-related-types";
+import PokemonPreviewCard from "../components/PokemonPreviewCard";
 
 function Home() {
   const { previewData, isLoading, fetchNextPokemons } = usePokemonsPreviewData(200)
@@ -16,20 +16,16 @@ function Home() {
   if (fetchedPokemons.length === 0) {
     return <h1>Loading...</h1>
   }
-  // if (isLoading === true && previewData === null) it is still loading
-  // if (isLoading === false && previewData !== null) is has retrieved data
-  // if (isLoading === false && previewData === null) it has no data to retrieve
 
   return (
     <>
       <div style={{display: "flex", flexDirection: 'row', flexWrap: 'wrap', gap: 16}}>
       {fetchedPokemons.map(fetchedPokemon => (
-        <Link to={`/pokemon/${fetchedPokemon.id}`}  key={fetchedPokemon.id}>
-          <div>
-            <h3>{fetchedPokemon.name}</h3>
-            <h3>{fetchedPokemon.id}</h3>
-          </div>
-        </Link>
+        <PokemonPreviewCard 
+          id={fetchedPokemon.id} 
+          name={fetchedPokemon.name} 
+          key={`pokemon-${fetchedPokemon.id}`}
+        />
       ))}
       {isLoading && <h1>...Loading more pokemons</h1>}
       </div>

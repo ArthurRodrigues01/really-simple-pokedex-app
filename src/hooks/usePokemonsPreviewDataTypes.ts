@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query"
 import { getCommonItemsFromObjectArrays } from "../functions/other-functions"
 import { NamedAPIResource, NamedAPIResourceList, PokemonPreviewData, PokemonsPreviewDataStatus } from "../types/pokemon-related-types"
-import { sanitizeTypes, getPokemonPreviewDataFromArray } from "../functions/poke-functions"
+import { sanitizeTypes, getPokemonPreviewDataFromArray, removeNonPokemonSpeciesObjectsFromArray } from "../functions/poke-functions"
 
 function usePokemonsPreviewDataTypes(types: string[]): PokemonsPreviewDataStatus {
   const pokemonTypes = sanitizeTypes(types) 
@@ -15,8 +15,12 @@ function usePokemonsPreviewDataTypes(types: string[]): PokemonsPreviewDataStatus
   
   
   const { data, isLoading } = useQuery({
-    queryKey: [pokemonTypes],
-    queryFn: async () => await getPokemonsPreviewDataFromTypes(pokemonTypes)
+    queryKey: pokemonTypes,
+    queryFn: async () => {
+      const previewData = await getPokemonsPreviewDataFromTypes(pokemonTypes)
+
+      return previewData && removeNonPokemonSpeciesObjectsFromArray(previewData)
+    }
   }) 
 
   return ({
