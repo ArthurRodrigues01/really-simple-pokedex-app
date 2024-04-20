@@ -27,7 +27,9 @@ function useFilteredPokemonsPreviewData(options: PokemonFilteringOptions): Pokem
       } else {
         filteredPreviewData.current = getCommonItemsFromObjectArrays(filteredPreviewData.current, result, 'name')
       }
+    }
 
+    if (filteredPreviewData.current !== null) {
       filteredPreviewData.current.sort((a,b) => a.id - b.id)
     }
   }

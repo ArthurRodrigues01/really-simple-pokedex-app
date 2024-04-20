@@ -1,6 +1,6 @@
-import { Link } from "react-router-dom"
 import useFilteredPokemonsPreviewData from "../hooks/useFilteredPokemonsPreviewData"
 import useURLSearchParams from "../hooks/useURLSearchParams"
+import PokemonPreviewCard from "../components/PokemonPreviewCard"
 
 function Filtered() {
   const searchParams = useURLSearchParams()
@@ -20,12 +20,11 @@ function Filtered() {
     <>
       <div style={{display: "flex", flexDirection: 'row', flexWrap: 'wrap', gap: 16}}>
       {previewData.map(fetchedPokemon => (
-        <Link to={`/pokemon/${fetchedPokemon.id}`} key={fetchedPokemon.id}>
-          <div>
-            <h3>{fetchedPokemon.name}</h3>
-            <h3>{fetchedPokemon.id}</h3>
-          </div>
-        </Link>
+        <PokemonPreviewCard 
+          id={fetchedPokemon.id}
+          name={fetchedPokemon.name}
+          key={`pokemon-${fetchedPokemon.id}`}
+        />
       ))}
       </div>
     </>
