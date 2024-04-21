@@ -13,9 +13,8 @@ function usePokemonsPreviewDataTypes(types: string[]): PokemonsPreviewDataStatus
     })
   } 
   
-  
   const { data, isLoading } = useQuery({
-    queryKey: pokemonTypes,
+    queryKey: ['pokemonTypes', ...pokemonTypes],
     queryFn: async () => {
       const previewData = await getPokemonsPreviewDataFromTypes(pokemonTypes)
 

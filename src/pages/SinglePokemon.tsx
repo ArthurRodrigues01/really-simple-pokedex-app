@@ -1,19 +1,16 @@
-import { getGenRegion, getPokemonData } from "../functions/poke-functions"
+import { getGenRegion } from "../functions/poke-functions"
 import { capitalize } from "../functions/other-functions"
 import { Link, useParams } from "react-router-dom"
-import { useQuery } from "@tanstack/react-query"
+import useSinglePokemonData from "../hooks/useSinglePokemonData"
 
 // TODO: styling
 
 function SinglePokemon() {
   const { id } = useParams()
   const pokemonId = Number(id)
-  const { data, isLoading } = useQuery({ 
-    queryKey: [pokemonId],
-    queryFn: async () => await getPokemonData(pokemonId)
-  })
+  const { data, isLoading } = useSinglePokemonData(pokemonId)
     
-  if (isLoading || data === undefined) return <h1>Loading...</h1>
+  if (isLoading) return <h1>Loading...</h1>
   else if (data === null) return <h1>Sorry, no pokemon found with this id.</h1>
 
   return (

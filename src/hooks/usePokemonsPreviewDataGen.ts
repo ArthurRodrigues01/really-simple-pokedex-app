@@ -10,7 +10,7 @@ function usePokemonsPreviewDataGen(gen: number): PokemonsPreviewDataStatus {
   })
 
   const { data, isLoading } = useQuery({
-    queryKey: [gen],
+    queryKey: ['pokemonGen', gen],
     queryFn: async () => await getPokemonsPreviewDataFromGen(gen)
   })
 
