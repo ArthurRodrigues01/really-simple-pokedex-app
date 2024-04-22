@@ -1,9 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import useOnScreen from "../hooks/useOnScreen";
-import { getPokemonData } from "../functions/poke-functions";
+import { getPokemonData, getPokemonTypeColor } from "../functions/poke-functions";
 import { PokemonData } from "../types/pokemon-related-types";
-import { Link } from "react-router-dom";
-import RotatingPokeballFeedback from "./feedbacks/RotatingPokeballFeedback";
+import PokemonPreviewCardLoadingFeedback from "./feedbacks/PokemonPreviewCardLoadingFeedback";
+import { PokemonImage, PokemonImageWrapper, PokemonPreviewCardWrapper } from "./main-poke-components";
+import { NoDecorationLink, Title } from "./main-components";
+import { capitalize } from "../functions/other-functions";
 
 function PokemonPreviewCard({ id, name }: { id: number, name: string }) {
   const ref = useRef(null)
@@ -19,22 +21,20 @@ function PokemonPreviewCard({ id, name }: { id: number, name: string }) {
 
   if (pokemonData === null) {
     return (
-      <div ref={ref}>
-        <h1>{name}</h1>
-        <RotatingPokeballFeedback pokemonId={id}/>
-        <h1>Loading...</h1>
-      </div>
+      <PokemonPreviewCardLoadingFeedback ref={ref} name={name} id={id}/>
     )
   }
 
   return (
-    <Link to={`/pokemon/${pokemonData.id}`}>
-      <div ref={ref}>
-        <h1>{pokemonData.name}</h1>
-        <img src={pokemonData.spriteSrc} alt={`pokemon ${pokemonData.name}`} style={{maxWidth: 350, maxHeight: 350}}/>
-        <h1>{pokemonData.id}</h1>
-      </div>
-    </Link>
+    <NoDecorationLink to={`/pokemon/${pokemonData.id}`}>
+      <PokemonPreviewCardWrapper ref={ref} type={getPokemonTypeColor(pokemonData.types[0])}>
+        <Title color="#fff">{capitalize(pokemonData.name)}</Title>
+        <PokemonImageWrapper>
+          <PokemonImage src={pokemonData.spriteSrc} alt={`Pokemon ${pokemonData.id}`}/>
+        </PokemonImageWrapper>
+        <Title color="#fff">#{pokemonData.id}</Title>
+      </PokemonPreviewCardWrapper>
+    </NoDecorationLink>
   )
 }
 

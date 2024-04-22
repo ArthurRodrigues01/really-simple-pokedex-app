@@ -7,7 +7,7 @@ import {
 } from "../types/pokemon-related-types";
 import { isInRange, isNaturalNumber } from "./other-functions";
 
-async function getPokemonData(id: number): Promise<PokemonData | null> {
+export async function getPokemonData(id: number): Promise<PokemonData | null> {
   const maxNumberOfPokemons = await getMaxNumberOfPokemons()
 
   if (!isNaturalNumber(id) || !isInRange(id, maxNumberOfPokemons)) return null
@@ -50,25 +50,25 @@ function getGenFromFetchedData(fetchedPokemonSpeciesData: {
   return Number(genURL[genURL.length - 2])
 }
 
-async function getMaxNumberOfPokemons(): Promise<number> {
+export async function getMaxNumberOfPokemons(): Promise<number> {
   const res = await fetch('https://pokeapi.co/api/v2/pokemon-species/')
   const rawData = await res.json()
 
   return rawData.count
 }
 
-function getPokemonPreviewDataFromArray(arr: NamedAPIResource[]): PokemonPreviewData[] {
+export function getPokemonPreviewDataFromArray(arr: NamedAPIResource[]): PokemonPreviewData[] {
   return arr.map(item => ({
     id: Number(item.url.split('/')[6]),
     name: item.name
   }))
 }
 
-function removeNonPokemonSpeciesObjectsFromArray(arr: PokemonPreviewData[]): PokemonPreviewData[] {
+export function removeNonPokemonSpeciesObjectsFromArray(arr: PokemonPreviewData[]): PokemonPreviewData[] {
   return arr.filter(item => item.id < 10000)
 }
 
-function getGenRegion(gen: number) {
+export function getGenRegion(gen: number) {
   switch (gen) {
     case 1: 
       return 'Kanto'
@@ -93,7 +93,7 @@ function getGenRegion(gen: number) {
   }
 }
 
-function sanitizeTypes(types: string[]) {
+export function sanitizeTypes(types: string[]) {
   const validTypes = [
     'normal', 'fighting', 
     'flying', 'poison', 
@@ -116,11 +116,45 @@ function sanitizeTypes(types: string[]) {
   return sanitizedTypes
 }
 
-export { 
-  getPokemonData, 
-  getMaxNumberOfPokemons, 
-  getGenRegion,
-  getPokemonPreviewDataFromArray,
-  sanitizeTypes,
-  removeNonPokemonSpeciesObjectsFromArray
+export function getPokemonTypeColor(pokemonType: string): string {
+  switch(pokemonType) {
+    case 'bug':
+      return '#92BC2C'
+    case 'dark': 
+      return '#595761' 
+    case 'dragon':
+      return '#0C69C8'  
+    case 'electric':
+      return '#F2D94E'  
+    case 'fairy':
+      return '#EE90E6'  
+    case 'fighting':
+      return '#de264a'  
+    case 'fire':
+      return '#ff9430'  
+    case 'flying':
+      return '#A1BBEC'  
+    case 'ghost':
+      return '#5F6DBC'  
+    case 'grass':
+      return '#5FBD58'  
+    case 'ground':
+      return '#d18645'  
+    case 'ice':
+      return '#75D0C1'  
+    case 'normal':
+      return '#A0A29F'  
+    case 'poison':
+      return '#9d15eb'  
+    case 'psychic':
+      return '#FA8581'  
+    case 'rock':
+      return '#C9BB8A'  
+    case 'steel':
+      return '#5695A3'  
+    case 'water':
+      return '#539DDF'
+    default:
+      return '#d4d4d4'  
+  }
 }
