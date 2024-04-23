@@ -6,6 +6,7 @@ import PokemonPreviewCardLoadingFeedback from "./feedbacks/PokemonPreviewCardLoa
 import { PokemonImage, PokemonImageWrapper, PokemonPreviewCardWrapper } from "./main-poke-components";
 import { NoDecorationLink, Title } from "./main-components";
 import { capitalize } from "../functions/other-functions";
+import HoverableGrowthFeedback from "./feedbacks/HoverableGrowthFeedback";
 
 function PokemonPreviewCard({ id, name }: { id: number, name: string }) {
   const ref = useRef(null)
@@ -26,15 +27,20 @@ function PokemonPreviewCard({ id, name }: { id: number, name: string }) {
   }
 
   return (
-    <NoDecorationLink to={`/pokemon/${pokemonData.id}`}>
-      <PokemonPreviewCardWrapper ref={ref} type={getPokemonTypeColor(pokemonData.types[0])}>
-        <Title color="#fff">{capitalize(pokemonData.name)}</Title>
-        <PokemonImageWrapper>
-          <PokemonImage src={pokemonData.spriteSrc} alt={`Pokemon ${pokemonData.id}`}/>
-        </PokemonImageWrapper>
-        <Title color="#fff">#{pokemonData.id}</Title>
-      </PokemonPreviewCardWrapper>
-    </NoDecorationLink>
+    <HoverableGrowthFeedback 
+      borderBottomRightRadius={16} 
+      borderTopLeftRadius={16}
+    >
+      <NoDecorationLink to={`/pokemon/${pokemonData.id}`}>
+        <PokemonPreviewCardWrapper ref={ref} type={getPokemonTypeColor(pokemonData.types[0])}>
+          <Title color="#fff">{capitalize(pokemonData.name)}</Title>
+          <PokemonImageWrapper>
+            <PokemonImage src={pokemonData.spriteSrc} alt={`Pokemon ${pokemonData.id}`}/>
+          </PokemonImageWrapper>
+          <Title color="#fff">#{pokemonData.id}</Title>
+        </PokemonPreviewCardWrapper>
+      </NoDecorationLink>
+    </HoverableGrowthFeedback>
   )
 }
 
