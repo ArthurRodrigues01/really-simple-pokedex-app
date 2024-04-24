@@ -4,7 +4,7 @@ import PokeballSVG from '../../assets/pokeball.svg'
 function RotatingPokeballFeedback({ pokemonId }: { pokemonId: number }) {
   return (
     <Rotate>
-      <img src={PokeballSVG} alt={`Loading pokemon ${pokemonId}`} style={{width: 500, height: 500}}/>
+      <img src={PokeballSVG} alt={`Loading pokemon ${pokemonId}`} style={{height: '400px', width: '400px'}}/>
     </Rotate>
   )
 }

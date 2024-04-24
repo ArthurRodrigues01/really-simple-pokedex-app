@@ -1,0 +1,1 @@
+export const POKEMON_IMAGE_WRAPPER_BG_COLOR = '#ffe294' 
