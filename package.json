@@ -1,7 +1,7 @@
 {
   "name": "really-simple-pokedex",
   "private": true,
-  "version": "1.1.0",
+  "version": "1.1.1",
   "type": "module",
   "scripts": {
     "uncheck-build": "vite build",
