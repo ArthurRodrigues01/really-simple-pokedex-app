@@ -1,10 +1,9 @@
 import Rotate from "../Rotate"
-import PokeballSVG from '../../assets/pokeball.svg'
 
 function RotatingPokeballFeedback({ pokemonId }: { pokemonId: number }) {
   return (
     <Rotate>
-      <img src={PokeballSVG} alt={`Loading pokemon ${pokemonId}`} style={{height: '400px', width: '400px'}}/>
+      <img src={"/really-simple-pokedex-app/pokeball.svg"} alt={`Loading pokemon ${pokemonId}`} style={{height: '200px', width: '200px'}}/>
     </Rotate>
   )
 }

@@ -11,7 +11,7 @@ const queryClient = new QueryClient()
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <BrowserRouter>
+      <BrowserRouter basename="/really-simple-pokedex-app/">
         <NavigationHeader/>
         <Routes>
           <Route path={"/"} element={<Home/>}/>
