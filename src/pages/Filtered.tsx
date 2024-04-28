@@ -8,13 +8,12 @@ function Filtered() {
     gen: Number(searchParams.gen),
     types: [searchParams.type1, searchParams.type2]
   }) 
-  
-  if (previewData === null) {
-    return isLoading ? 
-    <h1>Loading...</h1> :
-    <h1>Sorry, no pokemons found, you might have mistyped the gen or the pokemons' types</h1>
+
+  if (isLoading) {
+    return <h1>Loading...</h1>
+  } else if (previewData === null) {
+    return <h1>Sorry, no pokemons found, try less options or check if the current ones are typed correctly.</h1>
   }
-  if (previewData.length === 0) return <h1>Sorry, no pokemons found</h1>
 
   return (
     <>
