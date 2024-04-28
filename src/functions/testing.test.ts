@@ -2,35 +2,11 @@ import { expect, test } from '@jest/globals'
 
 
 test('testing', async () => {
-  const fam = ['father', 'son1', 'son2', 'mother', 'daughter1']
-  const par = ['mother', 'father']
-  // const woman = ['mother']
+  const parents = ['mother', 'father']
+  const sons = ['son1', 'son2']
+  const daughters = ['daughter1']
 
-  const some = [fam, par]
+  const family = [parents, sons, daughters].flat()
 
-  function getCommon(arr: string[], arr2: string[]) {
-    let resultarr = []
-    
-    for (const item of arr) {
-      for (const item2 of arr2) {
-        if (item === item2) resultarr.push(item)
-      }
-    }
-
-    return resultarr
-  }
-
-  const sanitized = some.filter(item => item !== null)
-
-  const res = sanitized.reduce((prev, curr, index) => {
-    if (index === 0) return curr
-
-    return getCommon(prev!, curr!)
-  })
-
-  expect(res).toStrictEqual(['father', 'mother'])
-
-  // const array: number[] = []
-
-  // expect(array.reduce((prev, curr) =>  prev + curr, []))
+  expect(family).toStrictEqual(['mother', 'father', 'son1', 'son2', 'daughter1'])
 })

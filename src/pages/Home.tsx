@@ -1,35 +1,43 @@
-import usePokemonsPreviewData from "../hooks/usePokemonsPreviewData";
-import { useEffect, useState } from "react";
-import { PokemonPreviewData } from "../types/pokemon-related-types";
+import { useEffect } from "react";
 import PokemonPreviewCard from "../components/PokemonPreviewCard";
+import useInfinitePokemonsPreviewData from "../hooks/useInfinitePokemonsPreviewData";
+import useOnScreen from "../hooks/useOnScreen";
 
 function Home() {
-  const { previewData, isLoading, fetchNextPokemons } = usePokemonsPreviewData(200)
-  const [fetchedPokemons, setFetchedPokemons] = useState<PokemonPreviewData[]>([]);
+  const { 
+    previewData, 
+    isLoadingRequest, 
+    isLoadingMorePokemons, 
+    fetchNextPokemons 
+  } = useInfinitePokemonsPreviewData(250)
+
+  const { ref, isVisible } = useOnScreen()
 
   useEffect(() => {
-    if (previewData !== null) {
-      setFetchedPokemons([...fetchedPokemons, ...previewData])
+    if (isVisible && isLoadingMorePokemons === false) {
+      fetchNextPokemons()
     }
-  }, [previewData]);
+  }, [isVisible]);
 
-  if (fetchedPokemons.length === 0) {
+  if (isLoadingRequest) {
     return <h1>Loading...</h1>
+  }
+  else if (previewData === null) {
+    return <h1>Something went wrong, perhaps refreshing the page will sort everything out.</h1>
   }
 
   return (
     <>
       <div style={{display: "flex", flexDirection: 'row', flexWrap: 'wrap', gap: 16}}>
-      {fetchedPokemons.map(fetchedPokemon => (
-        <PokemonPreviewCard 
-          id={fetchedPokemon.id} 
-          name={fetchedPokemon.name} 
-          key={`pokemon-${fetchedPokemon.id}`}
-        />
-      ))}
-      {isLoading && <h1>...Loading more pokemons</h1>}
+        {previewData.map(fetchedPokemon => (
+          <PokemonPreviewCard 
+            id={fetchedPokemon.id} 
+            name={fetchedPokemon.name} 
+            key={`pokemon-${fetchedPokemon.id}`}
+          />
+        ))}
       </div>
-      <button onClick={() => fetchNextPokemons()}>Fetch more</button>
+      <div ref={ref}>{isLoadingMorePokemons && <h1>Loading more pokemons...</h1>}</div>
     </>
   )
 }

@@ -1,28 +1,30 @@
-import { RefObject, useState, useEffect } from "react"
+import { useState, useEffect, useCallback } from "react"
 
-function useOnScreen(ref: RefObject<HTMLElement>) {
+function useOnScreen() {
+  const [element, setElement] = useState<Element | null>(null);
   const [isVisible, setIsVisible] = useState(false);
+  const ref = useCallback((node: Element | null) => {
+    if (node !== null) {
+      setElement(node)
+    }
+  }, [])
+
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        setIsVisible(entry.isIntersecting);
-      }
-    );
+    const observer = new IntersectionObserver(      
+      ([entry]) => setIsVisible(entry.isIntersecting), { rootMargin: '700px'})
 
-    const currentElement = ref?.current;
+    const currentElement = element
 
-    if (currentElement) {
-      observer.observe(currentElement);
-    }
+    if (currentElement) observer.observe(currentElement)
 
     return () => {
-      if (!currentElement) return
-      observer.unobserve(currentElement);
-    };
-  }, []);
+      if (currentElement) observer.unobserve(currentElement)
+    }
+  }, [element])
 
   return {
+    ref: ref,
     isVisible: isVisible
   }
 }
