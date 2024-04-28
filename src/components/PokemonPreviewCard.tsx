@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import useOnScreen from "../hooks/useOnScreen";
 import { getPokemonData, getPokemonTypeColor } from "../functions/poke-functions";
 import { PokemonData } from "../types/pokemon-related-types";
@@ -9,10 +9,8 @@ import { capitalize } from "../functions/other-functions";
 import HoverableGrowthFeedback from "./feedbacks/HoverableGrowthFeedback";
 
 function PokemonPreviewCard({ id, name }: { id: number, name: string }) {
-  const ref = useRef(null)
-  const { isVisible } = useOnScreen(ref)
+  const { ref, isVisible } = useOnScreen()
   const [pokemonData, setPokemonData] = useState<PokemonData | null>(null);
-
 
   useEffect(() => {
     if (isVisible && pokemonData === null) {
