@@ -23,7 +23,7 @@ function useFilteredPokemonsPreviewData(options: PokemonFilteringOptions): Pokem
   }, [])
 
   return { 
-    previewData: res!.length !== 0 ? res! : null, 
+    previewData: res!.length !== 0 ? res!.sort((a, b) => a.id - b.id) : null, 
     isLoading: isLoadingTypes || isLoadingGen
   }
 }
