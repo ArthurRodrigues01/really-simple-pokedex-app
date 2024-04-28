@@ -1,9 +1,9 @@
 {
   "name": "really-simple-pokedex",
   "private": true,
-  "version": "1.2.0",
+  "version": "1.2.1",
   "type": "module",
-  "homepage": "arthurrodrigues.github.io/really-simple-pokedex-app",
+  "homepage": "https://arthurrodrigues.github.io/really-simple-pokedex-app",
   "scripts": {
     "uncheck-build": "vite build",
     "dev": "vite",
