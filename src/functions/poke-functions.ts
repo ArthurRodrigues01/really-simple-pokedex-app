@@ -1,9 +1,10 @@
 import { 
   NamedAPIResource,
-  PokedexEntry, 
+  NamedAPIResourceList,
   PokemonData,
+  PokemonPage,
   PokemonPreviewData,
-  PokemonType
+  SpeciesPage
 } from "../types/pokemon-related-types";
 import { isInRange, isNaturalNumber } from "./other-functions";
 
@@ -12,39 +13,34 @@ export async function getPokemonData(id: number): Promise<PokemonData | null> {
 
   if (!isNaturalNumber(id) || !isInRange(id, maxNumberOfPokemons)) return null
 
-  const resPokemonData = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`)
-  const rawPokemonData = await resPokemonData.json()
+  const resPokemonPageData = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`)
+  const rawPokemonPageData: PokemonPage = await resPokemonPageData.json()
   
-  const resPokemonSpeciesData = await fetch(rawPokemonData.species.url)
-  const rawPokemonSpeciesData = await resPokemonSpeciesData.json()
+  const resSpeciesPageData = await fetch(rawPokemonPageData.species.url)
+  const rawSpeciesPageData: SpeciesPage = await resSpeciesPageData.json()
 
-  const pokemonTypes = rawPokemonData.types.map(
-      (typeObject: PokemonType) => typeObject.type.name
+  const pokemonTypes = rawPokemonPageData.types.map(
+    pokemonTypeObj => pokemonTypeObj.type.name
   )
 
-  const pokedexEntries = rawPokemonSpeciesData.flavor_text_entries.filter(
-    (entryObject: PokedexEntry) => entryObject.language.name === 'en'
+  const pokedexEntries = rawSpeciesPageData.flavor_text_entries.filter(
+    pokemonEntryObj => pokemonEntryObj.language.name === 'en'
   )
 
   return {
-    id: rawPokemonData.id,
-    gen: getGenFromFetchedData(rawPokemonSpeciesData),
-    name: rawPokemonData.name,
-    weight: rawPokemonData.weight / 10, // ??? -> KG
-    height: rawPokemonData.height /10, // Decimeters -> Meters
+    id: rawPokemonPageData.id,
+    gen: getGenFromFetchedData(rawSpeciesPageData),
+    name: rawSpeciesPageData.name,
+    weight: rawPokemonPageData.weight / 10, // ??? -> KG
+    height: rawPokemonPageData.height /10, // Decimeters -> Meters
     types: pokemonTypes,
-    spriteSrc: rawPokemonData.sprites.other['official-artwork'].front_default,
+    spriteSrc: rawPokemonPageData.sprites.other["official-artwork"].front_default,
     pokedexEntries: pokedexEntries,
     maxNumberOfPokemons: maxNumberOfPokemons
   }
 }
 
-function getGenFromFetchedData(fetchedPokemonSpeciesData: {
-  generation: {
-    name: string,
-    url: string
-  }
-}) {
+function getGenFromFetchedData(fetchedPokemonSpeciesData: SpeciesPage) {
   const genURL = fetchedPokemonSpeciesData.generation.url
   
   return Number(genURL[genURL.length - 2])
@@ -52,7 +48,7 @@ function getGenFromFetchedData(fetchedPokemonSpeciesData: {
 
 export async function getMaxNumberOfPokemons(): Promise<number> {
   const res = await fetch('https://pokeapi.co/api/v2/pokemon-species/')
-  const rawData = await res.json()
+  const rawData: NamedAPIResourceList = await res.json()
 
   return rawData.count
 }

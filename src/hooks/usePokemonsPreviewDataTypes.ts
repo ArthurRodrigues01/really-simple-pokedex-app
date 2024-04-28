@@ -1,7 +1,8 @@
-import { useQuery } from "@tanstack/react-query"
+import { useQueries } from "@tanstack/react-query"
 import { getCommonItemsFromObjectArrays } from "../functions/other-functions"
-import { NamedAPIResource, NamedAPIResourceList, PokemonPreviewData, PokemonsPreviewDataStatus } from "../types/pokemon-related-types"
+import { NamedAPIResource, NamedAPIResourceList, PokemonPreviewData, PokemonTypePage, PokemonsPreviewDataStatus } from "../types/pokemon-related-types"
 import { sanitizeTypes, getPokemonPreviewDataFromArray, removeNonPokemonSpeciesObjectsFromArray } from "../functions/poke-functions"
+import { useMemo } from "react"
 
 function usePokemonsPreviewDataTypes(types: string[]): PokemonsPreviewDataStatus {
   const pokemonTypes = sanitizeTypes(types) 
@@ -13,54 +14,45 @@ function usePokemonsPreviewDataTypes(types: string[]): PokemonsPreviewDataStatus
     })
   } 
   
-  const { data, isLoading } = useQuery({
-    queryKey: ['pokemonTypes', ...pokemonTypes],
-    queryFn: async () => {
-      const previewData = await getPokemonsPreviewDataFromTypes(pokemonTypes)
+  const results = useQueries({
+    queries: pokemonTypes.map(type => ({
+      queryKey: ['pokemonType', type],
+      queryFn: async () => await getPokemonsPreviewDataFromType(type)
+    }))
+  })
 
-      return previewData && removeNonPokemonSpeciesObjectsFromArray(previewData)
-    }
-  }) 
+  const { data, isLoading } = useMemo(() => ({
+    data: results.map(result => result.data ? result.data : null).filter(
+      item => item !== null // weird typescript bug (I think), even though I filtered the array so that there could be no null value, it still says there could be null values on the array which is absurd
+    ),
+    isLoading: results.some(result => result.isLoading)
+  }), [results])
+
+  const combinedData = data.reduce((prev, curr, index) => {
+    if (index === 0) return curr
+    
+    return getCommonItemsFromObjectArrays(prev!, curr!, 'name')
+  }, [])
 
   return ({
-    previewData: data ? data : null,
+    previewData: combinedData!.length !== 0 ? removeNonPokemonSpeciesObjectsFromArray(combinedData!) : null,
     isLoading
   })
-  async function getPokemonsPreviewDataFromTypes(types: string[]): Promise<PokemonPreviewData[] | null> {
+  async function getPokemonsPreviewDataFromType(type: string): Promise<PokemonPreviewData[]> {
     const res = await fetch(`https://pokeapi.co/api/v2/type`)
     const rawData: NamedAPIResourceList = await res.json()
     
     const typeObjs = rawData.results
-    const typeFetchs = typeObjs.filter(typeObj => types.includes(typeObj.name))
+    const typeFetch = typeObjs.find(typeObj => typeObj.name === type)!
   
-    const resType1 = await fetch(typeFetchs[0].url)
-    const rawDataType1 = await resType1.json()
+    const resType = await fetch(typeFetch.url)
+    const rawDataType: PokemonTypePage = await resType.json()
     
-    if (typeFetchs.length === 1) {
-      return rawDataType1.pokemon.map((pokemonOfThisType: { 
-        pokemon: NamedAPIResource, 
-        slot: number 
-      }) => ({
-        id: Number(pokemonOfThisType.pokemon.url.split('/')[6]),
-        name: pokemonOfThisType.pokemon.name
-      }))
-    }
-    const resType2 = await fetch(typeFetchs[1].url)
-    const rawDataType2 = await resType2.json()
-    
-    const pokemonResource1: NamedAPIResource[] = rawDataType1.pokemon.map((pokemonAndSlot: {
-      pokemon: NamedAPIResource,
-      slot: number
-    }) => pokemonAndSlot.pokemon)
-  
-    const pokemonResource2: NamedAPIResource[] = rawDataType2.pokemon.map((pokemonAndSlot: {
-      pokemon: NamedAPIResource,
-      slot: number
-    }) => pokemonAndSlot.pokemon)
-  
-    const commonItems: NamedAPIResource[] = getCommonItemsFromObjectArrays(pokemonResource1, pokemonResource2, 'name')
-    
-    return getPokemonPreviewDataFromArray(commonItems)
+    const pokemonsSrc: NamedAPIResource[] = rawDataType.pokemon.map(
+      pokemonAndSlot => pokemonAndSlot.pokemon
+    )
+
+    return getPokemonPreviewDataFromArray(pokemonsSrc)
   }
 }
 

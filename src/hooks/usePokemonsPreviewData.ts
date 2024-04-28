@@ -1,6 +1,7 @@
 import { useState, useCallback } from 'react';
 import { NamedAPIResourceList, PokemonsPreviewDataStatus } from '../types/pokemon-related-types';
 import { useQuery } from '@tanstack/react-query';
+import { getPokemonPreviewDataFromArray } from '../functions/poke-functions';
 
 
 function usePokemonsPreviewData(limit = 20): PokemonsPreviewDataStatus & { fetchNextPokemons: () => void } {
@@ -13,10 +14,7 @@ function usePokemonsPreviewData(limit = 20): PokemonsPreviewDataStatus & { fetch
       const rawData: NamedAPIResourceList = await res.json()
       
       return {
-        previewData: rawData.results.map(result => ({
-            id: Number(result.url.split('/')[6]),
-            name: result.name
-        })),
+        previewData: getPokemonPreviewDataFromArray(rawData.results),
         nextFetch: rawData.next
       }
     }

@@ -1,5 +1,3 @@
-import { PokemonPreviewData } from "../types/pokemon-related-types"
-
 /**
  * Checks if a number is a natural number (0,1,2,3,4,...,n) or not.
  * 

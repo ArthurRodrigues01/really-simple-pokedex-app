@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query"
 import { isInRange, isNaturalNumber } from "../functions/other-functions"
-import { Generation, PokemonsPreviewDataStatus } from "../types/pokemon-related-types"
+import { GenPage, PokemonsPreviewDataStatus } from "../types/pokemon-related-types"
+import { getPokemonPreviewDataFromArray } from "../functions/poke-functions"
 
 function usePokemonsPreviewDataGen(gen: number): PokemonsPreviewDataStatus {
   // Param handling
@@ -21,12 +22,9 @@ function usePokemonsPreviewDataGen(gen: number): PokemonsPreviewDataStatus {
 
   async function getPokemonsPreviewDataFromGen(gen: number) {
     const res = await fetch(`https://pokeapi.co/api/v2/generation/${gen}`)
-    const rawData: Generation = await res.json()
+    const rawData: GenPage = await res.json()
 
-    return rawData.pokemon_species.map(pokemonSpecie => ({
-      id: Number(pokemonSpecie.url.split('/')[6]),
-      name: pokemonSpecie.name
-    }))
+    return getPokemonPreviewDataFromArray(rawData.pokemon_species)
   }
 }
 
