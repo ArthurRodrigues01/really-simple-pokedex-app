@@ -11,7 +11,7 @@ const rotate = keyframes`
   }
 `
 
-const Rotating = styled.div`
+const Rotating = styled.span`
   animation: ${rotate} 1s linear infinite;
 `
 

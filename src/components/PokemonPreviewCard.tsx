@@ -7,14 +7,19 @@ import { PokemonImage, PokemonImageWrapper, PokemonPreviewCardWrapper } from "./
 import { NoDecorationLink, Title } from "./main-components";
 import { capitalize } from "../functions/other-functions";
 import HoverableGrowthFeedback from "./feedbacks/HoverableGrowthFeedback";
+import { useQueryClient } from "@tanstack/react-query";
 
 function PokemonPreviewCard({ id, name }: { id: number, name: string }) {
+  const queryClient = useQueryClient()
   const { ref, isVisible } = useOnScreen()
   const [pokemonData, setPokemonData] = useState<PokemonData | null>(null);
-
+  
   useEffect(() => {
     if (isVisible && pokemonData === null) {
-      getPokemonData(id).then(data => setPokemonData(data))
+      queryClient.fetchQuery({
+        queryKey: ['pokemonId', id],
+        queryFn: async () => await getPokemonData(id)
+      }).then(data => setPokemonData(data))
     }
   }, [isVisible]);
 

@@ -2,14 +2,14 @@ import { useQuery } from "@tanstack/react-query"
 import { getPokemonData } from "../functions/poke-functions"
 import { PokemonData } from "../types/pokemon-related-types"
 
-function useSinglePokemonData(pokemonId: number): 
+function useSinglePokemonData(id: number): 
 { 
   data: PokemonData | null,
   isLoading: boolean
 } {
   const { data, isLoading } = useQuery({ 
-    queryKey: ['pokemonId', pokemonId],
-    queryFn: async () => await getPokemonData(pokemonId)
+    queryKey: ['pokemonId', id],
+    queryFn: async () => await getPokemonData(id)
   })
 
   return {
