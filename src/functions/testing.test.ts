@@ -2,11 +2,7 @@ import { expect, test } from '@jest/globals'
 
 
 test('testing', async () => {
-  const parents = ['mother', 'father']
-  const sons = ['son1', 'son2']
-  const daughters = ['daughter1']
+  let arr: number[] = new Array(3)
 
-  const family = [parents, sons, daughters].flat()
-
-  expect(family).toStrictEqual(['mother', 'father', 'son1', 'son2', 'daughter1'])
+  expect(arr).toStrictEqual([0,0,0])
 })
