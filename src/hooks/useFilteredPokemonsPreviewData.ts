@@ -1,7 +1,7 @@
+import { getCommonItemsFromObjectArrays, isObjectEmpty } from "../functions/other-functions";
 import { PokemonFilteringOptions, PokemonsPreviewDataStatus } from "../types/pokemon-related-types";
 import usePokemonsPreviewDataGen from "./usePokemonsPreviewDataGen";
 import usePokemonsPreviewDataTypes from "./usePokemonsPreviewDataTypes";
-import { getCommonItemsFromObjectArrays, isObjectEmpty } from "../functions/other-functions";
 
 function useFilteredPokemonsPreviewData(options: PokemonFilteringOptions): PokemonsPreviewDataStatus {
   if (isObjectEmpty(options)) {

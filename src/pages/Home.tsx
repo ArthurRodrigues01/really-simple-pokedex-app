@@ -1,5 +1,5 @@
-import { useEffect } from "react";
 import PokemonPreviewCard from "../components/PokemonPreviewCard";
+import { useEffect } from "react";
 import useInfinitePokemonsPreviewData from "../hooks/useInfinitePokemonsPreviewData";
 import useOnScreen from "../hooks/useOnScreen";
 

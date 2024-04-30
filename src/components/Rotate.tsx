@@ -1,7 +1,6 @@
-import { ReactNode } from "react";
 import styled, { keyframes } from "styled-components";
 
-const rotate = keyframes`
+const rotating = keyframes`
   from {
     transform: rotate(0deg);
   }
@@ -11,16 +10,8 @@ const rotate = keyframes`
   }
 `
 
-const Rotating = styled.div`
-  animation: ${rotate} 1s linear infinite;
+const Rotate = styled.span`
+  animation: ${rotating} 1s linear infinite;
 `
-
-function Rotate({ children }: { children: ReactNode }) {
-  return (
-    <Rotating>
-      { children }
-    </Rotating>
-  )
-}
 
 export default Rotate;
