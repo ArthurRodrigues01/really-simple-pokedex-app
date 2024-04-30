@@ -1,13 +1,14 @@
 import { Link } from "react-router-dom"
 
+import { CenteredFlexRowGap } from "./styles"
+
 function NavigationHeader() {
 
   return (
-    <div>
+    <CenteredFlexRowGap>
       <Link to={'/'}><h1>Home</h1></Link>
-      <Link to={'/pokemon/1'}><h1>Pokemons</h1></Link>
       <Link to={'/filtered?gen=1'}><h1>Filtered</h1></Link>
-    </div>
+    </CenteredFlexRowGap>
   )
 }
 

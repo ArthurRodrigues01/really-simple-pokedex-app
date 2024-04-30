@@ -1,13 +1,14 @@
-import { useEffect, useState } from "react";
-import useOnScreen from "../hooks/useOnScreen";
-import { getPokemonData, getPokemonTypeColor } from "../functions/poke-functions";
-import { PokemonData } from "../types/pokemon-related-types";
-import PokemonPreviewCardLoadingFeedback from "./feedbacks/PokemonPreviewCardLoadingFeedback";
-import { PokemonImage, PokemonImageWrapper, PokemonPreviewCardWrapper } from "./main-poke-components";
-import { NoDecorationLink, Title } from "./main-components";
-import { capitalize } from "../functions/other-functions";
-import HoverableGrowthFeedback from "./feedbacks/HoverableGrowthFeedback";
 import { useQueryClient } from "@tanstack/react-query";
+import { useEffect, useState } from "react";
+
+import { capitalize } from "../functions/other-functions";
+import { getPokemonData, getPokemonTypeColor } from "../functions/poke-functions";
+import useOnScreen from "../hooks/useOnScreen";
+import { PokemonData } from "../types/pokemon-related-types";
+import HoverableGrowthFeedback from "./feedbacks/HoverableGrowthFeedback";
+import PokemonPreviewCardLoadingFeedback from "./feedbacks/PokemonPreviewCardLoadingFeedback";
+import { NoDecorationLink, Title } from "./main-components";
+import { PokemonImage, PokemonImageWrapper, PokemonPreviewCardWrapper } from "./main-poke-components";
 
 function PokemonPreviewCard({ id, name }: { id: number, name: string }) {
   const queryClient = useQueryClient()

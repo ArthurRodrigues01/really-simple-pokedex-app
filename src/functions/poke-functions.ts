@@ -1,4 +1,4 @@
-import { 
+import {
   NamedAPIResource,
   NamedAPIResourceList,
   PokemonData,
@@ -155,7 +155,7 @@ export function getPokemonTypeColor(type: string): string {
   }
 }
 
-function getPokemonTypeWrapperBGColor(type: string): string {
+export function getPokemonWrapperTypeColor(type: string): string {
   switch(type) {
     case 'bug':
       return '#759623'

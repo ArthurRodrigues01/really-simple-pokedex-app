@@ -1,6 +1,8 @@
 import { useQueryClient } from "@tanstack/react-query"
-import { Link } from "react-router-dom"
+
 import { getPokemonData } from "../functions/poke-functions"
+import { CenteredFlexRow } from "./main-components"
+import { PaginationCell, PaginationCellCurrent } from "./styles"
 
 function PokePaginationBar ({ 
   growth,
@@ -13,6 +15,7 @@ function PokePaginationBar ({
 }) {
   const queryClient = useQueryClient()
   const nextPageId = current + 1
+  const previousPageId = current - 1
   const maxCell = current + growth
   const minCell = current - growth
   const min = 1
@@ -45,16 +48,30 @@ function PokePaginationBar ({
       })
     } 
   }
+  /*
+    Prefetch up to {growth} of previous pages, or nothing
+    if theere is no previous page.
+   */
+  for (let i = previousPageId; i >= cells[0]; i--) {
+    if (current !== cells[0]){   
+      queryClient.prefetchQuery({
+        queryKey: ['pokemonId', i],
+        queryFn: async () => await getPokemonData(i)
+      })
+    } 
+  }
 
   return (
-    <div>
+    <CenteredFlexRow>
       {
-        cells.map(item => {
-          if (item === current) return <h1>{item}</h1>
-          return <Link to={`/pokemon/${item}`}><h1>{item}</h1></Link>
+        cells.map((item, index) => {
+          if (item === current) {
+            return <PaginationCellCurrent key={`pagination-button-${index}-deactivated`}>{item}</PaginationCellCurrent>
+          }
+          return <PaginationCell key={`pagination-button-${index}`} to={`/pokemon/${item}`}>{item}</PaginationCell>
         })
       }
-    </div>
+    </CenteredFlexRow>
   )
 }
 
