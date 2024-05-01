@@ -1,7 +1,8 @@
 import { useParams } from "react-router-dom"
-import useSinglePokemonData from "../hooks/useSinglePokemonData"
-import PokemonCard from "../components/PokemonCard"
+
 import PokemonCardLoadingFeedback from "../components/feedbacks/PokemonCardLoadingFeedback"
+import PokemonCard from "../components/PokemonCard"
+import useSinglePokemonData from "../hooks/useSinglePokemonData"
 
 // TODO: styling
 
@@ -9,7 +10,7 @@ function SinglePokemon() {
   const { id } = useParams()
   const pokemonId = Number(id)
   const { data, isLoading } = useSinglePokemonData(pokemonId)
-    
+  
   if (isLoading) return <PokemonCardLoadingFeedback id={pokemonId}/>
   else if (data === null) return <h1>Sorry, no pokemon found with this id.</h1>
     

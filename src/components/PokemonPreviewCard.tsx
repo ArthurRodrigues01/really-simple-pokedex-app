@@ -3,18 +3,20 @@ import { useEffect, useState } from "react";
 
 import { capitalize } from "../functions/other-functions";
 import { getPokemonData, getPokemonTypeColor } from "../functions/poke-functions";
+import useImagePreloader from "../hooks/useImagePreloader";
 import useOnScreen from "../hooks/useOnScreen";
 import { PokemonData } from "../types/pokemon-related-types";
 import HoverableGrowthFeedback from "./feedbacks/HoverableGrowthFeedback";
 import PokemonPreviewCardLoadingFeedback from "./feedbacks/PokemonPreviewCardLoadingFeedback";
 import { NoDecorationLink, Title } from "./main-components";
-import { PokemonImage, PokemonImageWrapper, PokemonPreviewCardWrapper } from "./main-poke-components";
+import { PokemonPreviewCardWrapper, PokemonSprite, PokemonSpriteWrapper } from "./main-poke-components";
 
 function PokemonPreviewCard({ id, name }: { id: number, name: string }) {
   const queryClient = useQueryClient()
   const { ref, isVisible } = useOnScreen()
-  const [pokemonData, setPokemonData] = useState<PokemonData | null>(null);
-  
+  const [pokemonData, setPokemonData] = useState<PokemonData | null>(null)
+  const { hasLoaded } = useImagePreloader(pokemonData ? pokemonData.spriteSrc : '')
+
   useEffect(() => {
     if (isVisible && pokemonData === null) {
       queryClient.fetchQuery({
@@ -24,7 +26,7 @@ function PokemonPreviewCard({ id, name }: { id: number, name: string }) {
     }
   }, [isVisible]);
 
-  if (pokemonData === null) {
+  if (pokemonData === null || hasLoaded === false) {
     return (
       <PokemonPreviewCardLoadingFeedback ref={ref} name={name} id={id}/>
     )
@@ -38,9 +40,9 @@ function PokemonPreviewCard({ id, name }: { id: number, name: string }) {
       <NoDecorationLink to={`/pokemon/${pokemonData.id}`}>
         <PokemonPreviewCardWrapper ref={ref} type={getPokemonTypeColor(pokemonData.types[0])}>
           <Title color="#fff">{capitalize(pokemonData.name)}</Title>
-          <PokemonImageWrapper>
-            <PokemonImage src={pokemonData.spriteSrc} alt={`Pokemon ${pokemonData.id}`}/>
-          </PokemonImageWrapper>
+          <PokemonSpriteWrapper>
+            <PokemonSprite src={pokemonData.spriteSrc} alt={`Pokemon ${pokemonData.id}`}/>
+          </PokemonSpriteWrapper>
           <Title color="#fff">#{pokemonData.id}</Title>
         </PokemonPreviewCardWrapper>
       </NoDecorationLink>

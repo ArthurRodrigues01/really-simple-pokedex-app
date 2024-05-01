@@ -1,6 +1,7 @@
 import { useQueryClient } from "@tanstack/react-query"
 
 import { getPokemonData } from "../functions/poke-functions"
+import { preloadImage } from "../hooks/useImagePreloader"
 import { CenteredFlexRow } from "./main-components"
 import { PaginationCell, PaginationCellCurrent } from "./styles"
 
@@ -37,26 +38,34 @@ function PokePaginationBar ({
   }
 
   /*
-    Prefetch up to {growth} of next pages, or nothing
+    Prefetch up to {growth * 2} of next pages, or nothing
     if there is no next page.
   */
-  for (let i = nextPageId; i <= cells[cells.length - 1]; i++) {
+  for (let i = nextPageId; i <= cells[cells.length - 1] + growth; i++) {
     if (current !== cells[cells.length - 1]){   
-      queryClient.prefetchQuery({
+      if (i > max) continue
+
+      queryClient.fetchQuery({
         queryKey: ['pokemonId', i],
         queryFn: async () => await getPokemonData(i)
+      }).then(data => {
+        if (data !== null) preloadImage(data.spriteSrc)
       })
     } 
   }
   /*
-    Prefetch up to {growth} of previous pages, or nothing
+    Prefetch up to {growth * 2} of previous pages, or nothing
     if theere is no previous page.
    */
-  for (let i = previousPageId; i >= cells[0]; i--) {
+  for (let i = previousPageId; i >= cells[0] - growth; i--) {
     if (current !== cells[0]){   
-      queryClient.prefetchQuery({
+      if (i < min) continue
+
+      queryClient.fetchQuery({
         queryKey: ['pokemonId', i],
         queryFn: async () => await getPokemonData(i)
+      }).then(data => {
+        if (data !== null) preloadImage(data.spriteSrc)
       })
     } 
   }

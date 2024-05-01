@@ -1,12 +1,12 @@
+import { PokemonSpriteWrapper } from '../main-poke-components'
 import RotatingPokeballFeedback from "./RotatingPokeballFeedback"
-import { PokemonImageWrapper } from '../main-poke-components'
 
 function PokemonCardLoadingFeedback({ id }: {id: number}) {
   return (
     <div>
-      <PokemonImageWrapper>
+      <PokemonSpriteWrapper>
         <RotatingPokeballFeedback pokemonId={id}/>
-      </PokemonImageWrapper>
+      </PokemonSpriteWrapper>
       <h1>Loading...</h1>
     </div>
   )
