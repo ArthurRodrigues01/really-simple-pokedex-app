@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react"
+import { useCallback, useEffect, useState } from "react"
 
 function useOnScreen() {
   const [element, setElement] = useState<Element | null>(null);
@@ -12,7 +12,7 @@ function useOnScreen() {
 
   useEffect(() => {
     const observer = new IntersectionObserver(      
-      ([entry]) => setIsVisible(entry.isIntersecting), { rootMargin: '700px'})
+      ([entry]) => setIsVisible(entry.isIntersecting), { rootMargin: '1400px'})
 
     const currentElement = element
 

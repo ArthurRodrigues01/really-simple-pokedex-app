@@ -62,7 +62,7 @@ export const CenteredFlexColGap = styled(CenteredFlexCol)`
   gap: 3rem;
 `
 export const PokemonStatsWrapper = styled(CenteredFlexCol)<{ type?: string}>`
-  justify-content: start;
+  min-width: 325px;
   border-top-left-radius: 1rem;
   background-color: ${(props) => props.type ? props.type : '#d4d4d4'};
   padding: 1.5rem;
