@@ -60,7 +60,7 @@ export function getPokemonPreviewDataFromArray(arr: NamedAPIResource[]): Pokemon
   }))
 }
 
-export function removeNonPokemonSpeciesObjectsFromArray(arr: PokemonPreviewData[]): PokemonPreviewData[] {
+export function removeNonSpeciesFromArray(arr: PokemonPreviewData[]): PokemonPreviewData[] {
   return arr.filter(item => item.id < 10000)
 }
 
