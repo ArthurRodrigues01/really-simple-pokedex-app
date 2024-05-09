@@ -16,7 +16,7 @@ function FilteringOptionsUI() {
     [
       {name: types[0], type: 'type'}, 
       {name: types[1], type: 'type'}, 
-      {name: `${gen}`, type: 'gen'}
+      {name: gen, type: 'gen'}
     ].filter(item => item.name)
   )
   
