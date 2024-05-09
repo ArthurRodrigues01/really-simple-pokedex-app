@@ -27,12 +27,13 @@ function HoverableGrowthFeedback({
 }) {
   return (
     <GrowOnHover 
-      style={{
-        borderRadius: borderRadius ?? 0,
-        borderBottomRightRadius: borderBottomRightRadius ?? 0,
-        borderBottomLeftRadius: borderBottomLeftRadius ?? 0,
-        borderTopRightRadius: borderTopRightRadius ?? 0,
-        borderTopLeftRadius: borderTopLeftRadius ?? 0
+    style={borderRadius ? {
+        borderRadius: borderRadius ?? 'initial',
+      } : {
+        borderBottomRightRadius: borderBottomRightRadius ?? 'initial',
+        borderBottomLeftRadius: borderBottomLeftRadius ?? 'initial',
+        borderTopRightRadius: borderTopRightRadius ?? 'initial',
+        borderTopLeftRadius: borderTopLeftRadius ?? 'initial'
       }}
     >
       { children }

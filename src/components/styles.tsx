@@ -1,6 +1,8 @@
+import { ReactNode } from "react"
 import styled from "styled-components"
 
 import { getPokemonTypeColor } from "../functions/poke-functions"
+import HoverableGrowthFeedback from "./feedbacks/HoverableGrowthFeedback"
 import { CenteredFlexCol, CenteredFlexRow, NoDecorationLink, Title } from "./main-components"
 
 export const PaginationCell = styled(NoDecorationLink)`
@@ -113,3 +115,73 @@ export function PokemonType({ type }: { type: string }) {
     </PokemonTypeWrapper>
   )
 }
+
+const FilterBase = styled(CenteredFlexRow)`
+  border-radius: 4rem;
+  background-color: gray;
+  min-width: 5rem;
+  cursor: pointer;
+  padding: 1rem;
+  color: #fff;
+  font-size: 1.5rem;
+  font-weight: bold;
+`
+
+export const FiltersWrapper = styled(CenteredFlexRow)`
+  flex-wrap: wrap;
+  gap: 1rem;
+`
+export function Filter({ 
+  children, 
+  onClick
+}: { 
+  children: ReactNode, 
+  onClick: () => void
+}) {
+  return (
+    <HoverableGrowthFeedback
+      borderRadius={64}
+    >
+      <FilterBase onClick={onClick}>
+        { children }
+      </FilterBase>
+    </HoverableGrowthFeedback>
+  )
+}
+
+export function FilterType({ 
+  children, 
+  type, 
+  onClick 
+}: { 
+  children: ReactNode, 
+  type: string, 
+  onClick: () => void 
+}) {
+  return (
+    <HoverableGrowthFeedback
+      borderRadius={64}
+    >
+      <FilterBase onClick={onClick} style={{ backgroundColor: getPokemonTypeColor(type), minWidth: '8rem' }}>
+        { children }
+      </FilterBase>
+    </HoverableGrowthFeedback>
+  )
+} 
+
+
+export const FeedbackedButton = styled.button`
+  transition: 0.3s;
+  border-radius: 4rem;
+  background-color: #1d4ede;
+  cursor: pointer;
+  padding: 1rem 5rem;
+  color: #fff;
+  font-size: 2rem;
+  font-weight: bold;
+
+  &: hover {
+    transform: scale(1.2);
+    background-color: #215aff;
+  }
+`

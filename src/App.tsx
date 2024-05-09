@@ -1,10 +1,10 @@
-import { Routes, Route } from "react-router-dom"
-import Home from "./pages/Home"
-import SinglePokemon from "./pages/SinglePokemon"
-import Redirect from "./pages/Redirect"
+import { Route, Routes } from "react-router-dom"
+
 import NavigationHeader from "./components/NavigationHeader"
 import Filtered from "./pages/Filtered"
-
+import Home from "./pages/Home"
+import Redirect from "./pages/Redirect"
+import SinglePokemon from "./pages/SinglePokemon"
 
 function App() {
   return (

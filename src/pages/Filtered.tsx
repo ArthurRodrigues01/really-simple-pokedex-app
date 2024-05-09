@@ -1,12 +1,16 @@
+import ArrayToJSXTransformer from "../components/ArrayToJSXTransformer"
+import FilteringOptionsUI from "../components/FilteringOptionsUI"
+import PokemonPreviewCard from "../components/PokemonPreviewCard"
+import { CenteredFlexColGap } from "../components/styles"
+import { sanitizeTypes } from "../functions/poke-functions"
 import useFilteredPokemonsPreviewData from "../hooks/useFilteredPokemonsPreviewData"
 import useURLSearchParams from "../hooks/useURLSearchParams"
-import PokemonPreviewCard from "../components/PokemonPreviewCard"
 
 function Filtered() {
   const searchParams = useURLSearchParams()
   const { previewData, isLoading } = useFilteredPokemonsPreviewData({
     gen: Number(searchParams.gen),
-    types: [searchParams.type1, searchParams.type2]
+    types: sanitizeTypes([searchParams.type1, searchParams.type2])
   }) 
 
   if (isLoading) {
@@ -16,17 +20,21 @@ function Filtered() {
   }
 
   return (
-    <>
-      <div style={{display: "flex", flexDirection: 'row', flexWrap: 'wrap', gap: 16}}>
-      {previewData.map(fetchedPokemon => (
-        <PokemonPreviewCard 
-          id={fetchedPokemon.id}
-          name={fetchedPokemon.name}
-          key={`pokemon-${fetchedPokemon.id}`}
+    <CenteredFlexColGap>
+      <FilteringOptionsUI/>
+      <div style={{display: "flex", flexDirection: 'row', flexFlow: 'wrap', gap: 16}}>
+        <ArrayToJSXTransformer
+          dataArray={previewData}
+          transformer={(pokemon) => (
+            <PokemonPreviewCard 
+              id={pokemon.id} 
+              name={pokemon.name} 
+              key={`pokemon-${pokemon.id}`}
+            />
+          )}
         />
-      ))}
       </div>
-    </>
+    </CenteredFlexColGap>
   )
 }
 
