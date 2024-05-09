@@ -2,6 +2,7 @@ import {
   getCommonItemsFromObjectArrays,
   isObjectEmpty
 } from "../functions/other-functions";
+import { getSortedPokemonsById } from "../functions/poke-functions";
 import {
   PokemonFilteringOptions,
   PokemonsPreviewDataStatus
@@ -29,13 +30,13 @@ function useFilteredPokemonsPreviewData(options: PokemonFilteringOptions): Pokem
   const sanitized = [previewDataGen, previewDataTypes].filter(item => item !== null)
 
   const reducedData = sanitized.reduce((prev, curr, index) => {
-    if (index === 0) return curr
+    if (index === 0) return curr!
 
-    return getCommonItemsFromObjectArrays(prev!, curr!, 'name')
+    return getCommonItemsFromObjectArrays(prev!, curr!, 'id')
   }, [])
 
   return { 
-    previewData: reducedData!.length !== 0 ? reducedData!.sort((a, b) => a.id - b.id) : null, 
+    previewData: reducedData!.length !== 0 ? getSortedPokemonsById(reducedData!) : null, 
     isLoading: isLoadingTypes || isLoadingGen
   }
 }

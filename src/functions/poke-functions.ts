@@ -1,3 +1,4 @@
+import { VALID_GENS, VALID_TYPES } from "../constants/pokemon-related-constants";
 import {
   NamedAPIResource,
   NamedAPIResourceList,
@@ -11,7 +12,7 @@ import { isInRange, isNaturalNumber } from "./other-functions";
 export async function getPokemonData(id: number): Promise<PokemonData | null> {
   const maxNumberOfPokemons = await getMaxNumberOfPokemons()
 
-  if (!isNaturalNumber(id) || !isInRange(id, maxNumberOfPokemons)) return null
+  if (await isValidPokemonId(id) === false) return null
 
   const resPokemonPageData = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`)
   const rawPokemonPageData: PokemonPage = await resPokemonPageData.json()
@@ -42,8 +43,8 @@ export async function getPokemonData(id: number): Promise<PokemonData | null> {
 
 function getGenFromFetchedData(fetchedPokemonSpeciesData: SpeciesPage) {
   const genURL = fetchedPokemonSpeciesData.generation.url
-  
-  return Number(genURL[genURL.length - 2])
+    
+  return Number(genURL.split('/')[6])
 }
 
 export async function getMaxNumberOfPokemons(): Promise<number> {
@@ -90,26 +91,33 @@ export function getGenRegion(gen: number) {
 }
 
 export function sanitizeTypes(types: string[]) {
-  const validTypes = [
-    'normal', 'fighting', 
-    'flying', 'poison', 
-    'ground', 'rock', 
-    'bug', 'ghost',
-    'steel', 'fire',
-    'water', 'grass',
-    'electric', 'psychic',
-    'ice', 'dragon',
-    'dark', 'fairy'
-  ]
   let sanitizedTypes: string[] = []
 
   for (const type of types) {
-    if (validTypes.includes(type)) {
+    if (VALID_TYPES.includes(type)) {
       sanitizedTypes.push(type)
     }
   }
 
   return sanitizedTypes
+}
+
+export function isValidType(type: string) {
+  return VALID_TYPES.includes(type)
+}
+
+export function isValidGen(gen: number) {
+  return isNaturalNumber(gen) && isInRange(gen, VALID_GENS.length)
+}
+
+export async function isValidPokemonId(id: number) {
+  const maxPokemons = await getMaxNumberOfPokemons()
+  
+  return isNaturalNumber(id) && isInRange(id, maxPokemons)
+}
+
+export function getSortedPokemonsById(pokemons: PokemonPreviewData[] | PokemonData[]) {
+  return [...pokemons].sort((a, b) => a.id - b.id)
 }
 
 export function getPokemonTypeColor(type: string): string {

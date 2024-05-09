@@ -4,8 +4,7 @@ import { useMemo } from "react"
 import { getCommonItemsFromObjectArrays } from "../functions/other-functions"
 import {
   getPokemonPreviewDataFromArray,
-  removeNonSpeciesFromArray,
-  sanitizeTypes
+  removeNonSpeciesFromArray
 } from "../functions/poke-functions"
 import {
   NamedAPIResource,
@@ -15,10 +14,8 @@ import {
 } from "../types/pokemon-related-types"
 
 function usePokemonsPreviewDataTypes(types: string[]): PokemonsPreviewDataStatus {
-  const pokemonTypes = useMemo(() => sanitizeTypes(types), [types]) 
-
   const results = useQueries({
-    queries: pokemonTypes.map(type => ({
+    queries: types.map(type => ({
       queryKey: ['pokemonType', type],
       queryFn: async () => {
         const res = await fetch(`https://pokeapi.co/api/v2/type`)
@@ -40,14 +37,14 @@ function usePokemonsPreviewDataTypes(types: string[]): PokemonsPreviewDataStatus
   })
 
   const { data, isLoading } = useMemo(() => ({
-    data: results.map(result => result.data ? result.data : null).filter(
+    data: results.map(result => result.data ?? null).filter(
       item => item !== null // weird typescript bug (I think), even though I filtered the array so that there could be no null value, it still says there could be null values on the array which is absurd
     ),
     isLoading: results.some(result => result.isLoading)
   }), [results])
 
   const reducedData = data.reduce((prev, curr, index) => {
-    if (index === 0) return curr
+    if (index === 0) return curr!
     
     return getCommonItemsFromObjectArrays(prev!, curr!, 'name')
   }, [])

@@ -47,12 +47,12 @@ function getCommonItemsFromObjectArrays(
   propertyKey: string
 ): any[]{
   for (const obj of arr1) {
-    if (obj.hasOwnProperty(propertyKey) === false || isPropertyOfTypeString(obj, propertyKey) === false) {
+    if (obj.hasOwnProperty(propertyKey) === false || (isPropertyOfTypeString(obj, propertyKey) === false && isPropertyANaturalNumber(obj, propertyKey) === false)) {
       return []
     }
   }
   for (const obj of arr2) {
-    if (obj.hasOwnProperty(propertyKey) === false || isPropertyOfTypeString(obj, propertyKey) === false) {
+    if (obj.hasOwnProperty(propertyKey) === false || (isPropertyOfTypeString(obj, propertyKey) === false && isPropertyANaturalNumber(obj, propertyKey) === false)) {
       return []
     }
   }
@@ -73,6 +73,9 @@ function getCommonItemsFromObjectArrays(
  */
 function isPropertyOfTypeString(obj: any, propertyKey: string) {
   return typeof obj[propertyKey] === 'string'
+}
+function isPropertyANaturalNumber(obj: any, propertyKey: string) {
+  return typeof obj[propertyKey] === 'number' && isNaturalNumber(obj[propertyKey])
 }
 /**
  * Checks if a certain object is an empty object, that is 

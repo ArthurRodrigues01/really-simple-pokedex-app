@@ -18,17 +18,20 @@ function useImagePreloader(src: string[] | string) {
     preload()
     
     async function preload() {
-      if (Array.isArray(src)) { // a string[]
-        for (const imageSrc of src) {
-          await preloadImage(imageSrc)
-        }
-        
-        setHasLoaded(true)
-      } else { // just 1 src string
-        await preloadImage(src)
+      try {
 
-        setHasLoaded(true)
-      }
+        if (Array.isArray(src)) { // a string[]
+          for (const imageSrc of src) {
+            await preloadImage(imageSrc)
+          }
+          
+          setHasLoaded(true)
+        } else { // just 1 src string
+          await preloadImage(src)
+          
+          setHasLoaded(true)
+        }
+      } catch (e) {}
     }
 
     return () => setHasLoaded(false)
