@@ -1,12 +1,7 @@
-import { expect, test } from '@jest/globals'
+import { ChainLink, NamedAPIResource } from "../types/pokemon-related-types";
+import { CenteredFlexCol, FlexRow } from "./main-components";
 
-import { ChainLink, EvolutionChainPage, NamedAPIResource } from '../types/pokemon-related-types'
-
-test('testing', async () => {
-  const res = await fetch('https://pokeapi.co/api/v2/evolution-chain/135/')
-  const raw: EvolutionChainPage =  await res.json()
-  const chain = raw.chain
-  
+function EvolutionChain({ chainLink }: { chainLink: ChainLink }) {
   function getAllSpeciesFromChain(
     chain: ChainLink, 
     returnArr: { species: NamedAPIResource, depth: number }[] = [], 
@@ -36,12 +31,29 @@ test('testing', async () => {
     return returnObj
   }
 
-  const allSpecies = getAllSpeciesFromChain(chain)
+  const allSpecies = getAllSpeciesFromChain(chainLink)
   const allEvolutionChains = getAllEvolutionChains(allSpecies)
-  console.log(Object.getOwnPropertyNames(allEvolutionChains).length)
-  expect(allEvolutionChains).toStrictEqual({
-    depth_0: ['wurmple'],
-    depth_1: ['silcoon', 'cascoon'],
-    depth_2: ['beautifly', 'dustox']
-  })
-})
+  let some: string[][] = []
+
+  for (let i = 0; i < Object.getOwnPropertyNames(allEvolutionChains).length; i++) {
+    some.push(allEvolutionChains[`depth_${i}`])
+  }
+
+  if (some.length === 1) {
+    return <h1>This Pokemon is not in a evolution chain</h1>
+  }
+
+  return (
+    <FlexRow style={{gap: '3rem'}}>
+      {
+        some.map(item => (
+          <CenteredFlexCol>
+            { item.map(subItem => <h2>{subItem}</h2>) }
+          </CenteredFlexCol>
+        ))
+      }
+    </FlexRow>
+  )
+}
+
+export default EvolutionChain

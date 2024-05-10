@@ -1,5 +1,6 @@
 import { VALID_GENS, VALID_TYPES } from "../constants/pokemon-related-constants";
 import {
+  EvolutionChainPage,
   NamedAPIResource,
   NamedAPIResourceList,
   PokemonData,
@@ -20,6 +21,9 @@ export async function getPokemonData(id: number): Promise<PokemonData | null> {
   const resSpeciesPageData = await fetch(rawPokemonPageData.species.url)
   const rawSpeciesPageData: SpeciesPage = await resSpeciesPageData.json()
 
+  const resEvolutionChainPageData = await fetch(rawSpeciesPageData.evolution_chain.url)
+  const rawEvolutionChainPageData: EvolutionChainPage = await resEvolutionChainPageData.json() 
+
   const pokemonTypes = rawPokemonPageData.types.map(
     pokemonTypeObj => pokemonTypeObj.type.name
   )
@@ -37,7 +41,8 @@ export async function getPokemonData(id: number): Promise<PokemonData | null> {
     types: pokemonTypes,
     spriteSrc: rawPokemonPageData.sprites.other["official-artwork"].front_default,
     pokedexEntries: pokedexEntries,
-    maxNumberOfPokemons: maxNumberOfPokemons
+    maxNumberOfPokemons: maxNumberOfPokemons,
+    evolutionChain: rawEvolutionChainPageData.chain
   }
 }
 
