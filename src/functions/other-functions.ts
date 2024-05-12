@@ -67,13 +67,21 @@ function getCommonItemsFromObjectArrays(
  * Checks if a certain property value, of a certain object passed, is of type string.
  * 
  * WARNING: unexpected results may happen if you pass a non-object parameter to the function.
- * @param obj an object(PokemonPreviewData) which it is expected
- *  a defined property value to be of type string  
- * @param propertyKey a property key which it is certain to be in the object.
+ * @param obj an object  
+ * @param propertyKey a property key
  */
 function isPropertyOfTypeString(obj: any, propertyKey: string) {
   return typeof obj[propertyKey] === 'string'
 }
+/**
+ * Checks if a certain property value, of a certain object passed, is of type number 
+ * and is a natural number (0,1,2,3,4,5,...,n).
+ * 
+ * WARNING: unexpected results may happen if you pass a non-object parameter to the function.
+ * @param obj an object
+ * @param propertyKey a property key
+ * @returns 
+ */
 function isPropertyANaturalNumber(obj: any, propertyKey: string) {
   return typeof obj[propertyKey] === 'number' && isNaturalNumber(obj[propertyKey])
 }
@@ -88,21 +96,51 @@ function isObjectEmpty(obj: any) {
   return Object.getOwnPropertyNames(obj).length === 0
 }
 
-function isAnyPropertyNull(obj: any) {
-  for (const value of Object.values(obj)) {
-    if (value === null) return true
-  }
+/**
+ * Checks if a value is unique in the passed array.
+ * Also returns true if the passed value does not exist on the passed array.
+ * 
+ * @param array an array
+ * @param value a value to be checked if it is unique in the passed array
+ * @returns 
+ */
+function isUnique<T extends string | number>(array: T[], value: T) {
+  let count = 0
 
-  return false
-}
-
-function areAllValuesTrue(arr: boolean[]) {
-  for (const value of arr) {
-    if (value === false) return false
+  for (const item of array) {
+    if (item === value) {
+      count++
+    }
+    if (count > 1) {
+      return false
+    }
   }
 
   return true
 }
+
+function recursiveFiltering<T>(
+  array: T[], 
+  predicate: (value: T, recArr: T[]) => boolean, 
+  increment: (value: T, recArr: T[]) => T[]
+) {
+  let ret: T[] = []
+
+  for (const item of array) {
+    if (predicate(item, ret)) {
+      ret = increment(item, ret)
+    }
+  }
+
+  return ret
+}
+
+/*
+  recursvieFiltering(aux, 
+    rec.find(poke => poke.evolvesFrom !== rmPoke),
+    rec.filter(sub => sub.species !== item)
+  )
+ */
 
 export { 
   isNaturalNumber, 
@@ -110,6 +148,6 @@ export {
   capitalize,
   getCommonItemsFromObjectArrays,
   isObjectEmpty,
-  isAnyPropertyNull,
-  areAllValuesTrue
+  isUnique,
+  recursiveFiltering
 }

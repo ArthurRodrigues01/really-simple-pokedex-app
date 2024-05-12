@@ -1,5 +1,6 @@
 import { VALID_GENS, VALID_TYPES } from "../constants/pokemon-related-constants";
 import {
+  ChainLink,
   EvolutionChainPage,
   NamedAPIResource,
   NamedAPIResourceList,
@@ -209,4 +210,91 @@ export function getPokemonWrapperTypeColor(type: string): string {
     default:
       return '#d4d4d4'  
   }
+}
+
+export function getEvolutionChains(chain: ChainLink) {
+  function getAllSpeciesFromChain( 
+    chain: ChainLink,
+    prev: PokemonPreviewData = { id: 0, name: ''}
+  ) {
+      const returnArr: { species: PokemonPreviewData, evolvesFrom: PokemonPreviewData}[] = chain.evolves_to.map(
+        item => getAllSpeciesFromChain(item, { id: Number(chain.species.url.split('/')[6]), name: chain.species.name })
+      ).flat()
+      
+      return [...returnArr, { species: { id: Number(chain.species.url.split('/')[6]), name: chain.species.name }, evolvesFrom: prev}]
+  }
+
+  function getConvergion(arr: PokemonPreviewData[][]) {
+    let obj: {
+      [k: string]: number
+    } = {}
+
+    const aux: PokemonPreviewData[] = []
+
+    if (arr.length === 1) {
+      return ({
+        base: [arr[0][0]],
+        branches: [arr[0].filter(item => item !== arr[0][0])]
+      })
+    }
+
+    for (let i = 0; i < arr.length; i++) {
+      for (let j = 0; j < arr[i].length; j++) {
+        if (obj[`${arr[i][j].name}`]) {
+          obj[`${arr[i][j].name}`]++
+        } else {
+          obj[`${arr[i][j].name}`] = 1
+        }
+      }
+    }
+    for (let i = 0; i < arr.length; i++) {
+      for (let j = 0; j < arr[i].length; j++) {
+        if (obj[`${arr[i][j].name}`] > 1) {
+          const deleted = [...[...arr][i]].splice(j, 1)[0]
+          if (aux.find(item => item.name === deleted.name) === undefined) {
+            aux.push(deleted)
+          }
+        }
+      }
+    }
+
+    const ret = arr.map(item => item.filter(item2 => aux.find(item3 => item3.name === item2.name) === undefined)) 
+
+    return ({
+      base: aux,
+      branches: ret
+    })
+  }
+  
+  function getAllEvolutionChains(
+    arr: { species: PokemonPreviewData, evolvesFrom: PokemonPreviewData}[]
+  ) {
+    let some = [...arr]
+    let inn: PokemonPreviewData[] = []
+    let prev = {id: 0, name: ''}
+    let retArr: PokemonPreviewData[][] = []
+
+    while (some.length !== 0) {
+      const pkmn = some.find(item => item.evolvesFrom.name === prev.name)
+      if (pkmn === undefined) {
+        if (retArr.find(item => item.find(item2 => item2.name === prev.name)) === undefined) {
+          retArr.push(inn)
+        }
+        some = some.filter(item => item.species !== prev)
+        inn = []
+        prev = {id: 0, name: ''}
+      } else {
+        inn.push(pkmn.species)
+        prev = pkmn.species
+      }
+    }
+
+    return retArr
+  }
+
+  const allSpecies = getAllSpeciesFromChain(chain)
+  const allEvolutionChains = getAllEvolutionChains(allSpecies)
+  const convergion = getConvergion(allEvolutionChains)
+
+  return convergion
 }

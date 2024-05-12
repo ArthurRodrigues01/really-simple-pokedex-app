@@ -1,32 +1,32 @@
-import { useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 
 import { capitalize } from "../functions/other-functions";
-import { getPokemonData, getPokemonTypeColor } from "../functions/poke-functions";
+import { getPokemonTypeColor } from "../functions/poke-functions";
 import useImagePreloader from "../hooks/useImagePreloader";
 import useOnScreen from "../hooks/useOnScreen";
-import { PokemonData } from "../types/pokemon-related-types";
+import useSinglePokemonData from "../hooks/useSinglePokemonData";
 import HoverableGrowthFeedback from "./feedbacks/HoverableGrowthFeedback";
 import PokemonPreviewCardLoadingFeedback from "./feedbacks/PokemonPreviewCardLoadingFeedback";
 import { NoDecorationLink, Title } from "./main-components";
-import { PokemonPreviewCardWrapper, PokemonSprite, PokemonSpriteWrapper } from "./main-poke-components";
+import {
+  PokemonPreviewCardWrapper,
+  PokemonSprite,
+  PokemonSpriteWrapper
+} from "./main-poke-components";
 
 function PokemonPreviewCard({ id, name }: { id: number, name: string }) {
-  const queryClient = useQueryClient()
   const { ref, isVisible } = useOnScreen()
-  const [pokemonData, setPokemonData] = useState<PokemonData | null>(null)
-  const { hasLoaded } = useImagePreloader(pokemonData ? pokemonData.spriteSrc : '')
+  const [enabled, setEnabled] = useState(false)
+  const { data, isLoading } = useSinglePokemonData(id, enabled)
+  const { hasLoaded } = useImagePreloader(data ? data.spriteSrc : '')
 
   useEffect(() => {
-    if (isVisible && pokemonData === null) {
-      queryClient.fetchQuery({
-        queryKey: ['pokemonId', id],
-        queryFn: async () => await getPokemonData(id)
-      }).then(data => setPokemonData(data))
+    if (isVisible && data === null) {
+      setEnabled(true)
     }
   }, [isVisible]);
 
-  if (pokemonData === null || hasLoaded === false) {
+  if (data === null || hasLoaded === false || isLoading) {
     return (
       <PokemonPreviewCardLoadingFeedback ref={ref} name={name} id={id}/>
     )
@@ -37,13 +37,13 @@ function PokemonPreviewCard({ id, name }: { id: number, name: string }) {
       borderBottomRightRadius={16} 
       borderTopLeftRadius={16}
     >
-      <NoDecorationLink to={`/pokemon/${pokemonData.id}`}>
-        <PokemonPreviewCardWrapper ref={ref} type={getPokemonTypeColor(pokemonData.types[0])}>
-          <Title color="#fff">{capitalize(pokemonData.name)}</Title>
+      <NoDecorationLink to={`/pokemon/${data.id}`}>
+        <PokemonPreviewCardWrapper ref={ref} type={getPokemonTypeColor(data.types[0])}>
+          <Title color="#fff">{capitalize(data.name)}</Title>
           <PokemonSpriteWrapper>
-            <PokemonSprite src={pokemonData.spriteSrc} alt={`Pokemon ${pokemonData.id}`}/>
+            <PokemonSprite src={data.spriteSrc} alt={`Pokemon ${data.id}`}/>
           </PokemonSpriteWrapper>
-          <Title color="#fff">#{pokemonData.id}</Title>
+          <Title color="#fff">#{data.id}</Title>
         </PokemonPreviewCardWrapper>
       </NoDecorationLink>
     </HoverableGrowthFeedback>
