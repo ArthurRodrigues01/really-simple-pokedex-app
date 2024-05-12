@@ -4,6 +4,7 @@ import styled from "styled-components"
 import { getPokemonTypeColor } from "../functions/poke-functions"
 import HoverableGrowthFeedback from "./feedbacks/HoverableGrowthFeedback"
 import { CenteredFlexCol, CenteredFlexRow, NoDecorationLink, Title } from "./main-components"
+import { PokemonSprite, PokemonSpriteWrapper } from "./main-poke-components"
 
 export const PaginationCell = styled(NoDecorationLink)`
   display: flex;
@@ -184,4 +185,19 @@ export const FeedbackedButton = styled.button`
     transform: scale(1.2);
     background-color: #215aff;
   }
+`
+
+export const PokemonSpriteChainLink = styled(PokemonSprite)`
+  width: 150px;
+  height: 150px;
+`
+export const PokemonSpriteWrapperChainLink = styled(PokemonSpriteWrapper)`
+  width: 175px;
+  height: 175px;
+`
+export const EvolutionChainWrapper = styled(CenteredFlexCol)<{ color: string }>`
+  border-radius: 4rem;
+  background-color: ${props => props.color};
+  min-width: 750px;
+  padding: 5rem;
 `
