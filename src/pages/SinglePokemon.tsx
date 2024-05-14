@@ -5,7 +5,6 @@ import PokemonCardLoadingFeedback from "../components/feedbacks/PokemonCardLoadi
 import PokemonCard from "../components/PokemonCard"
 import PokePaginationBar from "../components/PokePaginationBar"
 import { CenteredFlexColGap } from "../components/styles"
-import { getPokemonWrapperTypeColor } from "../functions/poke-functions"
 import useSinglePokemonData from "../hooks/useSinglePokemonData"
 
 // TODO: styling
@@ -31,14 +30,14 @@ function SinglePokemon() {
         pokedexEntries={data.pokedexEntries}
       />
       
+      <EvolutionChain 
+        chainLink={data.evolutionChain}
+        type={data.types[0]}
+      />
       <PokePaginationBar
         max={data.maxNumberOfPokemons}
         growth={3}
         current={data.id}
-      />
-      <EvolutionChain 
-        chainLink={data.evolutionChain} 
-        color={getPokemonWrapperTypeColor(data.types[0])}
       />
     </CenteredFlexColGap>
   )

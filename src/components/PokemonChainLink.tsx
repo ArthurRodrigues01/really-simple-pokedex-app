@@ -1,12 +1,11 @@
 import { useEffect, useState } from "react"
 
-import { capitalize } from "../functions/other-functions"
 import useImagePreloader from "../hooks/useImagePreloader"
 import useOnScreen from "../hooks/useOnScreen"
 import useSinglePokemonData from "../hooks/useSinglePokemonData"
 import PokemonChainLinkLoadingFeedback from "./feedbacks/PokemonChainLinkLoadingFeedback"
-import { NoDecorationLink, Title } from "./main-components"
-import { PokemonSpriteChainLink } from "./styles"
+import { NoDecorationLink } from "./main-components"
+import { PokemonSpriteChainLink, PokemonSpriteWrapperChainLink } from "./styles"
 
 function PokemonChainLink({ id, name }: { id: number, name: string }) {
   const { ref, isVisible } = useOnScreen()
@@ -26,9 +25,10 @@ function PokemonChainLink({ id, name }: { id: number, name: string }) {
     )
   }
   return (
-    <NoDecorationLink to={`/pokemon/${data.id}`}>
-      <PokemonSpriteChainLink src={data.spriteSrc} alt={`Pokemon ${data.id}`}/>
-      <Title color="#fff" style={{textWrap: 'nowrap'}}>{capitalize(data.name)}</Title>
+    <NoDecorationLink to={`/pokemon/${data.id}`} style={{ borderRadius: 10000 }}>
+      <PokemonSpriteWrapperChainLink>
+        <PokemonSpriteChainLink src={data.spriteSrc} alt={`Pokemon ${data.id}`}/>
+      </PokemonSpriteWrapperChainLink>
     </NoDecorationLink>
   )
 }

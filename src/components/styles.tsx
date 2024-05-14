@@ -65,8 +65,8 @@ export const CenteredFlexColGap = styled(CenteredFlexCol)`
   gap: 3rem;
 `
 export const PokemonStatsWrapper = styled(CenteredFlexCol)<{ type?: string}>`
-  min-width: 325px;
-  border-top-left-radius: 1rem;
+  width: 30%;
+  border-top-left-radius: 4rem;
   background-color: ${(props) => props.type ? props.type : '#d4d4d4'};
   padding: 1.5rem;
   gap: 1.5rem;
@@ -87,9 +87,10 @@ const PokemonTypeImage = styled.img`
   height: 1.5rem;
 `
 export const PokemonCardWrapper = styled(CenteredFlexRow)<{ type?: string}>`
-  border-top-left-radius: 1rem;
-  border-bottom-right-radius: 1rem;
+  border-top-left-radius: 4rem;
+  border-bottom-right-radius: 4rem;
   background-color: ${props => props.type ? props.type : '#d4d4d4'};
+  width: calc(10rem + 950px);
 `
 const PokemonEntryWrapper = styled(Title)`
   padding: 3rem;
@@ -101,8 +102,8 @@ const PokemonEntryWrapper = styled(Title)`
 
 export function PokemonEntry({ children }: { children: string }) {
   return (
-    <CenteredFlexRow style={{ width: 500 }}>
-      <PokemonEntryWrapper color="#fff">
+    <CenteredFlexRow style={{ width: '70%' }}>
+      <PokemonEntryWrapper $color="#fff">
         { children }
       </PokemonEntryWrapper>
     </CenteredFlexRow>
@@ -188,16 +189,29 @@ export const FeedbackedButton = styled.button`
 `
 
 export const PokemonSpriteChainLink = styled(PokemonSprite)`
-  width: 150px;
-  height: 150px;
+  width: 125px;
+  height: 125px;
 `
 export const PokemonSpriteWrapperChainLink = styled(PokemonSpriteWrapper)`
   width: 175px;
   height: 175px;
 `
-export const EvolutionChainWrapper = styled(CenteredFlexCol)<{ color: string }>`
-  border-radius: 4rem;
-  background-color: ${props => props.color};
-  min-width: 750px;
+export const EvolutionChainWrapper = styled(CenteredFlexRow)<{ $backgroundColor: string }>`
+  border-bottom-left-radius: 4rem;
+  border-bottom-right-radius: 4rem;
+  background-color: ${props => props.$backgroundColor};
   padding: 5rem;
+  width: 950px;
+  gap: 2rem;
+`
+
+export const SectionTitleWrapper = styled.div<{ $color: string }>`
+  border-top-left-radius: 4rem;
+  border-top-right-radius: 4rem;
+  background-color: ${props => props.$color};
+  padding: 2rem 5rem;
+  width: 950px;
+`
+export const RotateImage = styled.img<{ $angle?: number }>`
+  transform: rotate(${props => props.$angle ? props.$angle : 0}deg);
 `

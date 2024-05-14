@@ -34,14 +34,14 @@ function PokemonCard({
   return (
     <PokemonCardWrapper type={getPokemonWrapperTypeColor(types[0])}>
       <PokemonStatsWrapper type={getPokemonTypeColor(types[0])}>
-        <Title color="#fff">{capitalize(name)}</Title>
+        <Title $color="#fff">{capitalize(name)}</Title>
         <PokemonSpriteWrapper>
           <PokemonSprite src={`${spriteSrc}`} width={250} height={250}/>
         </PokemonSpriteWrapper>
-        <SubTitle color="#fff">ID: <Text>{id}</Text></SubTitle>
-        <SubTitle color="#fff">Gen: <Text>{gen}</Text></SubTitle>
-        <SubTitle color="#fff">Height: <Text>{height}m</Text></SubTitle>
-        <SubTitle color="#fff">Weight: <Text>{weight}kg</Text></SubTitle>
+        <SubTitle $color="#fff">ID: <Text>{id}</Text></SubTitle>
+        <SubTitle $color="#fff">Gen: <Text>{gen}</Text></SubTitle>
+        <SubTitle $color="#fff">Height: <Text>{height}m</Text></SubTitle>
+        <SubTitle $color="#fff">Weight: <Text>{weight}kg</Text></SubTitle>
         <PokemonTypesWrapper>
           {types.map(type => <PokemonType key={`pokemon-type-${type}`} type={type}/>)}
         </PokemonTypesWrapper>

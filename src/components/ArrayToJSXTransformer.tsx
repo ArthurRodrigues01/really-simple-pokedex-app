@@ -6,9 +6,9 @@ function ArrayToJSXTransformer<T>(
   transformer
 }: { 
   dataArray: T[], 
-  transformer: (elementData: T) => ReactNode,
+  transformer: (elementData: T, index: number) => ReactNode,
 }) {
-  const transformed = dataArray.map((some) => transformer(some))
+  const transformed = dataArray.map((some, index) => transformer(some, index))
 
   return (
     <>
