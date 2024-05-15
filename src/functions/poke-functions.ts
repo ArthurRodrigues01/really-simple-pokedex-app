@@ -172,41 +172,41 @@ export function getPokemonTypeColor(type: string): string {
 export function getPokemonWrapperTypeColor(type: string): string {
   switch(type) {
     case 'bug':
-      return '#759623'
+      return '#749e0e'
     case 'dark': 
-      return '#3a3940' 
+      return '#3b3943' 
     case 'dragon':
-      return '#0a57a6'  
+      return '#004baa'  
     case 'electric':
-      return '#c9b542'  
+      return '#d4bb30'  
     case 'fairy':
-      return '#c777c0'  
+      return '#d072c8'  
     case 'fighting':
-      return '#a31d38'  
+      return '#b0283c'  
     case 'fire':
-      return '#db7f2a'  
+      return '#e17612'  
     case 'flying':
-      return '#798db3'  
+      return '#839dce'  
     case 'ghost':
-      return '#454f87'  
+      return '#414f9e'  
     case 'grass':
-      return '#468a41'  
+      return '#419f3a'  
     case 'ground':
-      return '#a16735'  
+      return '#b36827'  
     case 'ice':
-      return '#518f85'  
+      return '#57b2a3'  
     case 'normal':
-      return '#6c6e6b'  
+      return '#828481'  
     case 'poison':
-      return '#7410ad'  
+      return '#7f00cd'  
     case 'psychic':
-      return '#d1706d'  
+      return '#dc6763'  
     case 'rock':
-      return '#877e5d'  
+      return '#ab9d6c'  
     case 'steel':
-      return '#3a646e'  
+      return '#387785'  
     case 'water':
-      return '#3f75a6'
+      return '#357fc1'
     default:
       return '#d4d4d4'  
   }

@@ -119,35 +119,11 @@ function isUnique<T extends string | number>(array: T[], value: T) {
   return true
 }
 
-function recursiveFiltering<T>(
-  array: T[], 
-  predicate: (value: T, recArr: T[]) => boolean, 
-  increment: (value: T, recArr: T[]) => T[]
-) {
-  let ret: T[] = []
-
-  for (const item of array) {
-    if (predicate(item, ret)) {
-      ret = increment(item, ret)
-    }
-  }
-
-  return ret
-}
-
-/*
-  recursvieFiltering(aux, 
-    rec.find(poke => poke.evolvesFrom !== rmPoke),
-    rec.filter(sub => sub.species !== item)
-  )
- */
-
 export { 
   isNaturalNumber, 
   isInRange, 
   capitalize,
   getCommonItemsFromObjectArrays,
   isObjectEmpty,
-  isUnique,
-  recursiveFiltering
+  isUnique
 }

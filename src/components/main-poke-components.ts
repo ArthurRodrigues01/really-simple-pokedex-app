@@ -3,11 +3,11 @@ import styled from "styled-components";
 import { POKEMON_IMAGE_WRAPPER_BG_COLOR } from "../constants/pokemon-related-constants";
 import { CenteredFlexCol } from "./main-components";
 
-export const PokemonPreviewCardWrapper = styled(CenteredFlexCol)<{ type?: string }>`
+export const PokemonPreviewCardWrapper = styled(CenteredFlexCol)<{ $backgroundColor?: string }>`
   text-wrap: balance;
   border-top-left-radius: 1rem;
   border-bottom-right-radius: 1rem;
-  background-color: ${props => props.type || '#d4d4d4'};
+  background-color: ${props => props.$backgroundColor || '#d4d4d4'};
   gap: 1.5rem;
   padding: 1.5rem;
 `

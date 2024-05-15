@@ -19,11 +19,11 @@ const PokemonPreviewCardLoadingFeedback = forwardRef<HTMLDivElement,
     >
       <NoDecorationLink to={`/pokemon/${props.id}`}>
         <PokemonPreviewCardWrapper ref={ref}>
-          <Title color="#fff">{capitalize(props.name)}</Title>
+          <Title $color="#fff">{capitalize(props.name)}</Title>
           <PokemonSpriteWrapper>
             <RotatingPokeballFeedback pokemonId={props.id}/>
           </PokemonSpriteWrapper>
-          <Title color="#fff">Loading...</Title>
+          <Title $color="#fff">Loading...</Title>
         </PokemonPreviewCardWrapper>
       </NoDecorationLink>
     </HoverableGrowthFeedback>
