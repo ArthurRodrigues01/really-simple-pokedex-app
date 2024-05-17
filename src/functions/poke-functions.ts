@@ -7,7 +7,8 @@ import {
   PokemonData,
   PokemonPage,
   PokemonPreviewData,
-  SpeciesPage
+  SpeciesPage,
+  Variety
 } from "../types/pokemon-related-types";
 import { isInRange, isNaturalNumber } from "./other-functions";
 
@@ -43,6 +44,7 @@ export async function getPokemonData(id: number): Promise<PokemonData | null> {
     spriteSrc: rawPokemonPageData.sprites.other["official-artwork"].front_default,
     pokedexEntries: pokedexEntries,
     maxNumberOfPokemons: maxNumberOfPokemons,
+    varieties: rawSpeciesPageData.varieties,
     evolutionChain: rawEvolutionChainPageData.chain
   }
 }
@@ -297,4 +299,11 @@ export function getEvolutionChains(chain: ChainLink) {
   const convergion = getConvergion(allEvolutionChains)
 
   return convergion
+}
+
+export function getVarieties(varieties: Variety[]) {
+  const ret = varieties.filter(variety => variety.is_default === false)
+  const nra = ret.map(item => item.pokemon)
+  
+  return nra
 }

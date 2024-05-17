@@ -1,6 +1,6 @@
 import { RotateImage } from "./styles"
 
-function EvolutionChainArrow(
+function PokemonEvolutionChainArrow(
   { 
     width, 
     height, 
@@ -24,4 +24,4 @@ function EvolutionChainArrow(
   )
 }
 
-export default EvolutionChainArrow
+export default PokemonEvolutionChainArrow

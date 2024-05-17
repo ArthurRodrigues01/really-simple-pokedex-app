@@ -3,6 +3,7 @@ import { useEffect, useState } from "react"
 import useImagePreloader from "../hooks/useImagePreloader"
 import useOnScreen from "../hooks/useOnScreen"
 import useSinglePokemonData from "../hooks/useSinglePokemonData"
+import HoverableGrowthFeedback from "./feedbacks/HoverableGrowthFeedback"
 import PokemonChainLinkLoadingFeedback from "./feedbacks/PokemonChainLinkLoadingFeedback"
 import { NoDecorationLink } from "./main-components"
 import { PokemonSpriteChainLink, PokemonSpriteWrapperChainLink } from "./styles"
@@ -25,11 +26,15 @@ function PokemonChainLink({ id, name }: { id: number, name: string }) {
     )
   }
   return (
-    <NoDecorationLink to={`/pokemon/${data.id}`} style={{ borderRadius: 10000 }}>
-      <PokemonSpriteWrapperChainLink>
-        <PokemonSpriteChainLink src={data.spriteSrc} alt={`Pokemon ${data.id}`}/>
-      </PokemonSpriteWrapperChainLink>
-    </NoDecorationLink>
+    <HoverableGrowthFeedback
+      $borderRadius={999}
+    >
+      <NoDecorationLink to={`/pokemon/${data.id}`}>
+        <PokemonSpriteWrapperChainLink>
+          <PokemonSpriteChainLink src={data.spriteSrc} alt={`pokemon ${data.id}`}/>
+        </PokemonSpriteWrapperChainLink>
+      </NoDecorationLink>
+    </HoverableGrowthFeedback>
   )
 }
 

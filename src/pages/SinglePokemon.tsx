@@ -1,8 +1,10 @@
+import { useEffect } from "react"
 import { useParams } from "react-router-dom"
 
-import EvolutionChain from "../components/EvolutionChain"
 import PokemonCardLoadingFeedback from "../components/feedbacks/PokemonCardLoadingFeedback"
 import PokemonCard from "../components/PokemonCard"
+import PokemonEvolutionChain from "../components/PokemonEvolutionChain"
+import PokemonVarieties from "../components/PokemonVarieties"
 import PokePaginationBar from "../components/PokePaginationBar"
 import { CenteredFlexColGap } from "../components/styles"
 import useSinglePokemonData from "../hooks/useSinglePokemonData"
@@ -13,6 +15,10 @@ function SinglePokemon() {
   const { id } = useParams()
   const pokemonId = Number(id)
   const { data, isLoading } = useSinglePokemonData(pokemonId)
+  
+  // useEffect(() => {
+  //   window.scrollTo({ top: 0, behavior: 'smooth'})
+  // }, [id]);
   
   if (isLoading) return <PokemonCardLoadingFeedback id={pokemonId}/>
   else if (data === null) return <h1>Sorry, no pokemon found with this id.</h1>
@@ -30,8 +36,12 @@ function SinglePokemon() {
         pokedexEntries={data.pokedexEntries}
       />
       
-      <EvolutionChain 
+      <PokemonEvolutionChain 
         chainLink={data.evolutionChain}
+        type={data.types[0]}
+      />
+      <PokemonVarieties
+        varieties={data.varieties}
         type={data.types[0]}
       />
       <PokePaginationBar

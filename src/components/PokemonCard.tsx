@@ -32,8 +32,8 @@ function PokemonCard({
 }) {
 
   return (
-    <PokemonCardWrapper type={getPokemonWrapperTypeColor(types[0])}>
-      <PokemonStatsWrapper type={getPokemonTypeColor(types[0])}>
+    <PokemonCardWrapper $backgroundColor={getPokemonWrapperTypeColor(types[0])}>
+      <PokemonStatsWrapper $backgroundColor={getPokemonTypeColor(types[0])}>
         <Title $color="#fff">{capitalize(name)}</Title>
         <PokemonSpriteWrapper>
           <PokemonSprite src={`${spriteSrc}`} width={250} height={250}/>

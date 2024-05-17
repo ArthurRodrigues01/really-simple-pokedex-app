@@ -34,14 +34,15 @@ function PokemonPreviewCard({ id, name }: { id: number, name: string }) {
 
   return (
     <HoverableGrowthFeedback 
-      borderBottomRightRadius={16} 
-      borderTopLeftRadius={16}
+      $borderBottomRightRadius={'4rem'} 
+      $borderTopLeftRadius={'4rem'}
+      $outline
     >
-      <NoDecorationLink to={`/pokemon/${data.id}`}>
+      <NoDecorationLink to={`/pokemon/${data.id}`} style={{borderBottomRightRadius: '4rem', borderTopLeftRadius: '4rem'}}>
         <PokemonPreviewCardWrapper ref={ref} $backgroundColor={getPokemonTypeColor(data.types[0])}>
           <Title $color="#fff">{capitalize(data.name)}</Title>
           <PokemonSpriteWrapper>
-            <PokemonSprite src={data.spriteSrc} alt={`Pokemon ${data.id}`}/>
+            <PokemonSprite src={data.spriteSrc} alt={`pokemon ${data.id}`}/>
           </PokemonSpriteWrapper>
           <Title $color="#fff">#{data.id}</Title>
         </PokemonPreviewCardWrapper>

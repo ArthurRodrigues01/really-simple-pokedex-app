@@ -19,6 +19,7 @@ export type PokemonData = {
   spriteSrc: string,
   pokedexEntries: PokedexEntry[],
   maxNumberOfPokemons: number,
+  varieties: Variety[],
   evolutionChain: ChainLink
 }
 
@@ -87,7 +88,7 @@ type PokedexNumber = {
   pokedex: NamedAPIResource
 }
 
-type Variety = {
+export type Variety = {
   is_default: boolean,
   pokemon: NamedAPIResource
 }

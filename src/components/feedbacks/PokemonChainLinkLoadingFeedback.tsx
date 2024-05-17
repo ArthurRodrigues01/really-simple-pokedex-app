@@ -12,7 +12,7 @@ const PokemonChainLinkLoadingFeedback = forwardRef<HTMLDivElement,
   return (
       <NoDecorationLink to={`/pokemon/${props.id}`}>
         <div ref={ref}> 
-          <RotatingPokeballFeedback pokemonId={props.id} width={150} height={150}/>
+          <RotatingPokeballFeedback pokemonId={props.id} width={175} height={175}/>
         </div>
       </NoDecorationLink>
   )
