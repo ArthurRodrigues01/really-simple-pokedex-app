@@ -20,7 +20,8 @@ export type PokemonData = {
   pokedexEntries: PokedexEntry[],
   maxNumberOfPokemons: number,
   varieties: Variety[],
-  evolutionChain: ChainLink
+  evolutionChain: ChainLink,
+  isDefault: boolean
 }
 
 export type PokemonPreviewData = {

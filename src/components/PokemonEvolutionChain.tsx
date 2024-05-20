@@ -54,7 +54,6 @@ function PokemonEvolutionChain({ chainLink, type }: { chainLink: ChainLink, type
             }
             <PokemonChainLink
               id={item.id}
-              name={item.name}
             />
           </AlignedFlexRow>
         ))}
@@ -66,7 +65,6 @@ function PokemonEvolutionChain({ chainLink, type }: { chainLink: ChainLink, type
                     <PokemonEvolutionChainArrow width={125} height={125} className={index2 === 0 ? 'division' : 'arrow'}/>
                     <PokemonChainLink
                       id={item2.id}
-                      name={item2.name}
                     />
                 </AlignedFlexRow>
               ))}

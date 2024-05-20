@@ -15,13 +15,13 @@ function SinglePokemon() {
   const { id } = useParams()
   const pokemonId = Number(id)
   const { data, isLoading } = useSinglePokemonData(pokemonId)
-  
-  // useEffect(() => {
-  //   window.scrollTo({ top: 0, behavior: 'smooth'})
-  // }, [id]);
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth'})
+  }, [id]);
   
   if (isLoading) return <PokemonCardLoadingFeedback id={pokemonId}/>
-  else if (data === null) return <h1>Sorry, no pokemon found with this id.</h1>
+  else if (data === null) return <h1>Sorry, no pokemon found.</h1>
     
   return (
     <CenteredFlexColGap>
@@ -40,10 +40,7 @@ function SinglePokemon() {
         chainLink={data.evolutionChain}
         type={data.types[0]}
       />
-      <PokemonVarieties
-        varieties={data.varieties}
-        type={data.types[0]}
-      />
+      { data.isDefault && <PokemonVarieties varieties={data.varieties} type={data.types[0]}/> }
       <PokePaginationBar
         max={data.maxNumberOfPokemons}
         growth={3}

@@ -1,20 +1,11 @@
 import { useQuery } from "@tanstack/react-query"
 
-import { PokemonPage } from "../types/pokemon-related-types"
+import { getPokemonVarietyData } from "../functions/poke-functions"
 
-function usePokemonVariety(link: string, enabled = true) {
+function usePokemonVariety(id: number, enabled = true) {
   const { data, isLoading } = useQuery({
-    queryKey: [link],
-    queryFn: async () => {
-      const res = await fetch(link)
-      const rawData: PokemonPage = await res.json()
-
-      return {
-        name: rawData.name,
-        types: rawData.types[0],
-        spriteSrc: rawData.sprites.other["official-artwork"].front_default
-      }
-    },
+    queryKey: [id],
+    queryFn: async () => await getPokemonVarietyData(id),
     enabled: enabled
   })
 
