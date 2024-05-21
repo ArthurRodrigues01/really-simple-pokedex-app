@@ -119,11 +119,16 @@ function isUnique<T extends string | number>(array: T[], value: T) {
   return true
 }
 
+function areArrayEqual<T extends string | number>(array1: T[], array2: T[]) {
+  return array1.every(item => array2.includes(item))
+}
+
 export { 
   isNaturalNumber, 
   isInRange, 
   capitalize,
   getCommonItemsFromObjectArrays,
   isObjectEmpty,
-  isUnique
+  isUnique,
+  areArrayEqual
 }

@@ -1,4 +1,5 @@
 import { ReactNode } from "react"
+import { Link } from "react-router-dom"
 import styled from "styled-components"
 
 import { getPokemonTypeColor } from "../functions/poke-functions"
@@ -64,10 +65,10 @@ export const CenteredFlexRowGap = styled(CenteredFlexRow)`
 export const CenteredFlexColGap = styled(CenteredFlexCol)`
   gap: 3rem;
 `
-export const PokemonStatsWrapper = styled(CenteredFlexCol)<{ type?: string}>`
+export const PokemonStatsWrapper = styled(CenteredFlexCol)<{ $backgroundColor?: string}>`
   width: 30%;
   border-top-left-radius: 4rem;
-  background-color: ${(props) => props.type ? props.type : '#d4d4d4'};
+  background-color: ${(props) => props.$backgroundColor ? props.$backgroundColor : '#d4d4d4'};
   padding: 1.5rem;
   gap: 1.5rem;
 ` 
@@ -86,10 +87,10 @@ const PokemonTypeImage = styled.img`
   width: 1.5rem;
   height: 1.5rem;
 `
-export const PokemonCardWrapper = styled(CenteredFlexRow)<{ type?: string}>`
+export const PokemonCardWrapper = styled(CenteredFlexRow)<{ $backgroundColor?: string}>`
   border-top-left-radius: 4rem;
   border-bottom-right-radius: 4rem;
-  background-color: ${props => props.type ? props.type : '#d4d4d4'};
+  background-color: ${props => props.$backgroundColor ? props.$backgroundColor : '#d4d4d4'};
   width: calc(10rem + 950px);
 `
 const PokemonEntryWrapper = styled(Title)`
@@ -112,18 +113,24 @@ export function PokemonEntry({ children }: { children: string }) {
 
 export function PokemonType({ type }: { type: string }) {
   return (
-    <PokemonTypeWrapper style={{backgroundColor: getPokemonTypeColor(type)}}>
-      <PokemonTypeImage src={`/really-simple-pokedex-app/pokemon-types/${type}.svg`} alt={`Pokemon ${type} type icon`}/>
-    </PokemonTypeWrapper>
+    <HoverableGrowthFeedback
+      $borderRadius={64}
+    >
+      <Link to={`/filtered?type1=${type}`} style={{borderRadius: '4rem'}}>
+        <PokemonTypeWrapper style={{backgroundColor: getPokemonTypeColor(type)}}>
+          <PokemonTypeImage src={`/really-simple-pokedex-app/pokemon-types/${type}.svg`} alt={`Pokemon ${type} type icon`}/>
+        </PokemonTypeWrapper>
+      </Link>
+    </HoverableGrowthFeedback>
   )
 }
 
 const FilterBase = styled(CenteredFlexRow)`
   border-radius: 4rem;
   background-color: gray;
-  min-width: 5rem;
   cursor: pointer;
   padding: 1rem;
+  min-width: 5rem;
   color: #fff;
   font-size: 1.5rem;
   font-weight: bold;
@@ -142,7 +149,8 @@ export function Filter({
 }) {
   return (
     <HoverableGrowthFeedback
-      borderRadius={64}
+      $borderRadius={'4rem'}
+      $growthScale={1.3}
     >
       <FilterBase onClick={onClick}>
         { children }
@@ -152,21 +160,21 @@ export function Filter({
 }
 
 export function FilterType({ 
-  children, 
   type, 
   onClick 
 }: { 
-  children: ReactNode, 
   type: string, 
   onClick: () => void 
 }) {
   return (
     <HoverableGrowthFeedback
-      borderRadius={64}
+      $borderRadius={'4rem'}
+      $growthScale={1.5}
+      style={{cursor: 'pointer'}}
     >
-      <FilterBase onClick={onClick} style={{ backgroundColor: getPokemonTypeColor(type), minWidth: '8rem' }}>
-        { children }
-      </FilterBase>
+      <CenteredFlexCol onClick={onClick} style={{ backgroundColor: getPokemonTypeColor(type), width: '4rem', height: '4rem', borderRadius: '4rem' }}>
+        <img style={{width: '2rem', height: '2rem'}} src={`/really-simple-pokedex-app/pokemon-types/${type}.svg`} alt={`pokemon ${type} type icon`}/>
+      </CenteredFlexCol>
     </HoverableGrowthFeedback>
   )
 } 
@@ -196,7 +204,7 @@ export const PokemonSpriteWrapperChainLink = styled(PokemonSpriteWrapper)`
   width: 175px;
   height: 175px;
 `
-export const EvolutionChainWrapper = styled(CenteredFlexRow)<{ $backgroundColor: string }>`
+export const PokemonEvolutionChainWrapper = styled(CenteredFlexRow)<{ $backgroundColor: string }>`
   border-bottom-left-radius: 4rem;
   border-bottom-right-radius: 4rem;
   background-color: ${props => props.$backgroundColor};
@@ -204,11 +212,19 @@ export const EvolutionChainWrapper = styled(CenteredFlexRow)<{ $backgroundColor:
   width: 950px;
   gap: 2rem;
 `
+export const PokemonVarietiesWrapper = styled(CenteredFlexRow)<{ $backgroundColor: string }>`
+  flex-wrap: wrap;
+  border-bottom-left-radius: 4rem;
+  border-bottom-right-radius: 4rem;
+  background-color: ${props => props.$backgroundColor};
+  padding: 5rem;
+  width: 950px;
+`
 
-export const SectionTitleWrapper = styled.div<{ $color: string }>`
+export const SectionTitleWrapper = styled.div<{ $backgroundColor: string }>`
   border-top-left-radius: 4rem;
   border-top-right-radius: 4rem;
-  background-color: ${props => props.$color};
+  background-color: ${props => props.$backgroundColor};
   padding: 2rem 5rem;
   width: 950px;
 `

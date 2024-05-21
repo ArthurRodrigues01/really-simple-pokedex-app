@@ -7,44 +7,85 @@ import {
   PokemonData,
   PokemonPage,
   PokemonPreviewData,
-  SpeciesPage
+  SpeciesPage,
+  Variety
 } from "../types/pokemon-related-types";
 import { isInRange, isNaturalNumber } from "./other-functions";
 
 export async function getPokemonData(id: number): Promise<PokemonData | null> {
-  const maxNumberOfPokemons = await getMaxNumberOfPokemons()
+  const maxNumberOfPokemons = await getMaxNumberOfSpecies()
 
-  if (await isValidPokemonId(id) === false) return null
+  if (await isValidVarietyId(id) === false) return null
 
-  const resPokemonPageData = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`)
-  const rawPokemonPageData: PokemonPage = await resPokemonPageData.json()
-  
-  const resSpeciesPageData = await fetch(rawPokemonPageData.species.url)
-  const rawSpeciesPageData: SpeciesPage = await resSpeciesPageData.json()
+  const rawPokemonPageData: PokemonPage = await getPokemonPageData(id)
+  const rawSpeciesPageData: SpeciesPage = await getSpeciesPageData(rawPokemonPageData.species.url)
 
   const resEvolutionChainPageData = await fetch(rawSpeciesPageData.evolution_chain.url)
   const rawEvolutionChainPageData: EvolutionChainPage = await resEvolutionChainPageData.json() 
 
-  const pokemonTypes = rawPokemonPageData.types.map(
-    pokemonTypeObj => pokemonTypeObj.type.name
-  )
+  const pokemonTypes = rawPokemonPageData.types.map(item => item.type.name)
 
   const pokedexEntries = rawSpeciesPageData.flavor_text_entries.filter(
     pokemonEntryObj => pokemonEntryObj.language.name === 'en'
   )
 
   return {
-    id: rawPokemonPageData.id,
+    id: rawSpeciesPageData.id,
     gen: getGenFromFetchedData(rawSpeciesPageData),
-    name: rawSpeciesPageData.name,
+    name: rawPokemonPageData.is_default ? rawSpeciesPageData.name : rawPokemonPageData.name,
     weight: rawPokemonPageData.weight / 10, // ??? -> KG
     height: rawPokemonPageData.height /10, // Decimeters -> Meters
     types: pokemonTypes,
     spriteSrc: rawPokemonPageData.sprites.other["official-artwork"].front_default,
     pokedexEntries: pokedexEntries,
     maxNumberOfPokemons: maxNumberOfPokemons,
-    evolutionChain: rawEvolutionChainPageData.chain
+    varieties: rawSpeciesPageData.varieties,
+    evolutionChain: rawEvolutionChainPageData.chain,
+    isDefault: rawPokemonPageData.is_default
   }
+}
+
+export async function getPokemonVarietyData(id: number) {
+  const rawPokemonPageData: PokemonPage = await getPokemonPageData(id)
+  const rawSpeciesPageData: SpeciesPage = await getSpeciesPageData(rawPokemonPageData.species.url)
+
+  const pokedexEntries = rawSpeciesPageData.flavor_text_entries.map(item => 
+    item.language.name === 'en'
+  )
+  const pokemonTypes = rawPokemonPageData.types.map(item => item.type.name)
+
+  return {
+    id: rawPokemonPageData.id,
+    gen: getGenFromFetchedData(rawSpeciesPageData),
+    name: rawPokemonPageData.name,
+    weight: rawPokemonPageData.weight / 10, // ??? -> KG
+    height: rawPokemonPageData.height /10, // Decimeters -> Meters
+    types: pokemonTypes,
+    spriteSrc: rawPokemonPageData.sprites.other["official-artwork"].front_default,
+    pokedexEntries: pokedexEntries,
+    varieties: rawSpeciesPageData.varieties,
+  }
+}
+
+export async function getSpeciesPageData(fetchable: number | string) {
+  const res = await fetch(
+    typeof fetchable === 'number' ? 
+    `https://pokeapi.co/api/v2/pokemon-species/${fetchable}` : 
+    fetchable
+  )
+  const rawData: SpeciesPage = await res.json()
+
+  return rawData
+}
+export async function getPokemonPageData(fetchable: number | string) {
+  const res = await fetch(
+    typeof fetchable === 'number' ? 
+    `https://pokeapi.co/api/v2/pokemon/${fetchable}` : 
+    fetchable
+  )
+  const rawData: PokemonPage = await res.json()
+
+  return rawData
 }
 
 function getGenFromFetchedData(fetchedPokemonSpeciesData: SpeciesPage) {
@@ -53,11 +94,18 @@ function getGenFromFetchedData(fetchedPokemonSpeciesData: SpeciesPage) {
   return Number(genURL.split('/')[6])
 }
 
-export async function getMaxNumberOfPokemons(): Promise<number> {
+export async function getMaxNumberOfSpecies(): Promise<number> {
   const res = await fetch('https://pokeapi.co/api/v2/pokemon-species/')
   const rawData: NamedAPIResourceList = await res.json()
 
   return rawData.count
+}
+export async function getNonSpeciesLastIndex(): Promise<number> {
+  const maxNumberOfSpecies = await getMaxNumberOfSpecies()
+  const res = await fetch('https://pokeapi.co/api/v2/pokemon/')
+  const rawData: NamedAPIResourceList = await res.json()
+
+  return rawData.count - maxNumberOfSpecies + 10000
 }
 
 export function getPokemonPreviewDataFromArray(arr: NamedAPIResource[]): PokemonPreviewData[] {
@@ -116,10 +164,11 @@ export function isValidGen(gen: number) {
   return isNaturalNumber(gen) && isInRange(gen, VALID_GENS.length)
 }
 
-export async function isValidPokemonId(id: number) {
-  const maxPokemons = await getMaxNumberOfPokemons()
+export async function isValidVarietyId(id: number) {
+  const maxPokemons = await getMaxNumberOfSpecies()
+  const nonSpeciesLastIndex = await getNonSpeciesLastIndex()
   
-  return isNaturalNumber(id) && isInRange(id, maxPokemons)
+  return isNaturalNumber(id) && (isInRange(id, maxPokemons) || isInRange(id, nonSpeciesLastIndex, 10001))
 }
 
 export function getSortedPokemonsById(pokemons: PokemonPreviewData[] | PokemonData[]) {
@@ -297,4 +346,11 @@ export function getEvolutionChains(chain: ChainLink) {
   const convergion = getConvergion(allEvolutionChains)
 
   return convergion
+}
+
+export function getVarieties(varieties: Variety[]) {
+  const ret = varieties.filter(variety => variety.is_default === false)
+  const nra = ret.map(item => item.pokemon)
+  
+  return getPokemonPreviewDataFromArray(nra)
 }

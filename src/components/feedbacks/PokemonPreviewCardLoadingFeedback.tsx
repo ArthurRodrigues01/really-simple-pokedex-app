@@ -14,8 +14,8 @@ const PokemonPreviewCardLoadingFeedback = forwardRef<HTMLDivElement,
   (props, ref) => {
   return (
     <HoverableGrowthFeedback
-      borderBottomRightRadius={16} 
-      borderTopLeftRadius={16}
+      $borderBottomRightRadius={16} 
+      $borderTopLeftRadius={16}
     >
       <NoDecorationLink to={`/pokemon/${props.id}`}>
         <PokemonPreviewCardWrapper ref={ref}>

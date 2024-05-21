@@ -28,50 +28,38 @@ function FilteringOptionsUI() {
         <CenteredFlexCol>
           <h1>Gens</h1>
           <FiltersWrapper>
-            <ArrayToJSXTransformer
-              dataArray={VALID_GENS}
-              transformer={(gen) => {
-                return (
-                  <Filter 
-                    onClick={() => {
-                      const activeGens = filters.filter(item => item.type === 'gen') 
-                      
-                      if (activeGens.length < 1) {
-                        setFilters(prev => [...prev, {name: `${gen}`, type: 'gen'}])}  
-                      }
-                    }
-                    key={`filter-gen-${gen}`}
-                  >
-                    { `Gen ${gen}` }
-                  </Filter>
-                )
-              }}
-            />
+            {VALID_GENS.map((gen) => (
+              <Filter 
+                onClick={() => {
+                  const activeGens = filters.filter(item => item.type === 'gen') 
+                  
+                  if (activeGens.length < 1) {
+                    setFilters(prev => [...prev, {name: `${gen}`, type: 'gen'}])}  
+                  }
+                }
+                key={`filter-gen-${gen}`}
+              >
+                { `Gen ${gen}` }
+              </Filter>
+            ))}
           </FiltersWrapper>
         </CenteredFlexCol> 
         <CenteredFlexCol>
           <h1>Types</h1>
           <FiltersWrapper>
-            <ArrayToJSXTransformer
-              dataArray={VALID_TYPES}
-              transformer={(type) => {
-                return (
-                  <FilterType 
-                    type={type} 
-                    onClick={() => {
-                      const activeTypes = filters.filter(item => item.type === 'type')
-                      
-                      if (activeTypes.length < 2 && !activeTypes.find(item => item.name === type)) {
-                        setFilters(prev => [...prev, {name: `${type}`, type: 'type'}])}  
-                      }
-                    }
-                    key={`filter-type-${type}`}
-                  >
-                    { type }
-                  </FilterType>
-                )
-              }}
-            />
+            {VALID_TYPES.map((type) => (
+              <FilterType 
+                type={type} 
+                onClick={() => {
+                  const activeTypes = filters.filter(item => item.type === 'type')
+                  
+                  if (activeTypes.length < 2 && !activeTypes.find(item => item.name === type)) {
+                    setFilters(prev => [...prev, {name: `${type}`, type: 'type'}])}  
+                  }
+                }
+                key={`filter-type-${type}`}
+              />
+            ))}
           </FiltersWrapper>
         </CenteredFlexCol>
       </CenteredFlexColGap>
@@ -82,11 +70,16 @@ function FilteringOptionsUI() {
             dataArray={filters}
             transformer={(active) => {
               return active.type === 'type' ? (
-                <FilterType type={active.name} key={`option-${active.type}-${active.name}`} onClick={() => setFilters(prev => prev.filter(item => item !== active))}>
-                  {active.name} 
-                </FilterType>
+                <FilterType 
+                  type={active.name} 
+                  onClick={() => setFilters(prev => prev.filter(item => item !== active))}
+                  key={`option-${active.type}-${active.name}`} 
+                />
               ) : (
-                <Filter key={`option-${active.type}-${active.name}`} onClick={() => setFilters(prev => prev.filter(item => item !== active))}>
+                <Filter 
+                  onClick={() => setFilters(prev => prev.filter(item => item !== active))}
+                  key={`option-${active.type}-${active.name}`} 
+                >
                   {`Gen ${active.name}`} 
                 </Filter>
               )
