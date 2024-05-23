@@ -1,6 +1,6 @@
 import styled from "styled-components"
 
-const HoverableGrowthFeedback = styled.span<{
+const HoverableGrowthFeedback = styled.div<{
   $borderRadius?: string | number;
   $borderTopLeftRadius?: string | number;
   $borderTopRightRadius?: string | number;
@@ -20,7 +20,7 @@ const HoverableGrowthFeedback = styled.span<{
 
   transition: .2s;
   outline: 0px solid #fff;
-  &: hover {
+  &:hover {
     ${props => props.$outline ? 'outline: 3px solid #fff' : ''};
     z-index: 999;
     transform: scale(${props => props.$growthScale ?? '1.2'});

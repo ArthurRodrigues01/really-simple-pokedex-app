@@ -55,7 +55,7 @@ export async function getPokemonVarietyData(id: number) {
   const pokemonTypes = rawPokemonPageData.types.map(item => item.type.name)
 
   return {
-    id: rawPokemonPageData.id,
+    id: rawSpeciesPageData.id,
     gen: getGenFromFetchedData(rawSpeciesPageData),
     name: rawPokemonPageData.name,
     weight: rawPokemonPageData.weight / 10, // ??? -> KG
