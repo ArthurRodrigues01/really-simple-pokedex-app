@@ -447,3 +447,35 @@ export type EvolutionChainPage = {
   chain: ChainLink
   id: number
 }
+
+export type PokemonFormPage = {
+  form_name: string,
+  form_names: {
+    language: NamedAPIResource,
+    name: string
+  }[],
+  form_order: number,
+  id: number,
+  is_battle_only: boolean,
+  is_default: boolean,
+  is_mega: boolean,
+  name: string,
+  names: {
+    language: NamedAPIResource,
+    name: string
+  }[],
+  order: number,
+  pokemon: NamedAPIResource,
+  sprites: {
+    back_default: string | null,
+    back_female: string | null,
+    back_shiny: string | null,
+    back_shiny_female: string | null,
+    front_default: string | null,
+    front_female: string | null,
+    front_shiny: string | null,
+    front_shiny_female: string | null
+  },
+  types: PokemonType[],
+  version_group: NamedAPIResource
+}

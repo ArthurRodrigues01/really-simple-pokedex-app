@@ -5,12 +5,13 @@ import {
   NamedAPIResource,
   NamedAPIResourceList,
   PokemonData,
+  PokemonFormPage,
   PokemonPage,
   PokemonPreviewData,
   SpeciesPage,
   Variety
 } from "../types/pokemon-related-types";
-import { isInRange, isNaturalNumber } from "./other-functions";
+import { capitalize, isInRange, isNaturalNumber } from "./other-functions";
 
 export async function getPokemonData(id: number): Promise<PokemonData | null> {
   const maxNumberOfPokemons = await getMaxNumberOfSpecies()
@@ -54,10 +55,33 @@ export async function getPokemonVarietyData(id: number) {
   )
   const pokemonTypes = rawPokemonPageData.types.map(item => item.type.name)
 
+  const resPokemonFormPageData = await fetch(rawPokemonPageData.forms[0].url)
+  const rawPokemonFormPageData: PokemonFormPage  = await resPokemonFormPageData.json()
+
+  const completeVarietyName = rawPokemonFormPageData.names.find((item: {
+    language: { name: string, url: string },
+    name: string
+  }) => item.language.name === 'en')
+
+  const formName = rawPokemonFormPageData.form_names.find(item => item.language.name === 'en')
+
+  const speciesName = capitalize(rawSpeciesPageData.name)
+
+  const resVersionGroupPageData = await fetch(rawPokemonFormPageData.version_group.url)
+  const rawVersionGroupPageData: { 
+    generation: { 
+      name: string, 
+      url: string 
+    } 
+  } = await resVersionGroupPageData.json()
+
+  const gen = rawVersionGroupPageData.generation.url.split('/')[6]
+
+
   return {
     id: rawSpeciesPageData.id,
-    gen: getGenFromFetchedData(rawSpeciesPageData),
-    name: rawPokemonPageData.name,
+    gen: gen,
+    name: completeVarietyName ? completeVarietyName.name : formName ? `${formName.name} ${speciesName}` : capitalize(rawSpeciesPageData.name),
     weight: rawPokemonPageData.weight / 10, // ??? -> KG
     height: rawPokemonPageData.height /10, // Decimeters -> Meters
     types: pokemonTypes,

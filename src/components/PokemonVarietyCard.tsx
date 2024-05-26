@@ -75,7 +75,7 @@ function PokemonVarietyCard({ id, name }: { id: number, name: string }) {
           <PokemonVarietyStatsWrapper 
             $backgroundColor={getPokemonTypeColor(varietyData.types[0])}
             >
-            <Title $color="#fff">{capitalize(varietyData.name)}</Title>
+            <Title $color="#fff">{varietyData.name}</Title>
             <PokemonSpriteWrapper>
               <PokemonSprite 
                 src={`${varietyData.spriteSrc}`} 
