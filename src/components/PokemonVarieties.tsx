@@ -26,7 +26,7 @@ function PokemonVarieties({ type, varieties }: { type: string, varieties: Variet
       <SectionTitleWrapper $backgroundColor={getPokemonTypeColor(type)}>
         <Title $color="#fff">Other Varieties</Title>
       </SectionTitleWrapper>
-      <PokemonVarietiesWrapper $gap={'2rem'} $backgroundColor={getPokemonWrapperTypeColor(type)}>
+      <PokemonVarietiesWrapper $gap={'3rem'} $backgroundColor={getPokemonWrapperTypeColor(type)}>
         {result.map(item => (
           <PokemonVarietyCard
             id={item.id}

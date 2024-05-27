@@ -1,13 +1,14 @@
 import styled from "styled-components"
 
 const HoverableGrowthFeedback = styled.div<{
-  $borderRadius?: string | number;
-  $borderTopLeftRadius?: string | number;
-  $borderTopRightRadius?: string | number;
-  $borderBottomLeftRadius?: string | number;
-  $borderBottomRightRadius?: string | number;
-  $growthScale?: number;
-  $outline?: boolean;
+  $borderRadius?: string | number,
+  $borderTopLeftRadius?: string | number
+  $borderTopRightRadius?: string | number,
+  $borderBottomLeftRadius?: string | number,
+  $borderBottomRightRadius?: string | number,
+  $growthScale?: number,
+  $outline?: boolean,
+  $pointingCursor?: boolean
 }>`
   ${ props => props.$borderRadius ? `
     border-radius: ${props.$borderRadius ? typeof props.$borderRadius === 'string' ? props.$borderRadius : `${props.$borderRadius}px` : 'initial'};
@@ -17,6 +18,8 @@ const HoverableGrowthFeedback = styled.div<{
     border-bottom-left-radius: ${props.$borderBottomLeftRadius ? typeof props.$borderBottomLeftRadius === 'string' ? props.$borderBottomLeftRadius : `${props.$borderBottomLeftRadius}px` : 'initial'};
     border-bottom-right-radius: ${props.$borderBottomRightRadius ? typeof props.$borderBottomRightRadius === 'string' ? props.$borderBottomRightRadius : `${props.$borderBottomRightRadius}px` : 'initial'};`
   }
+
+  ${props => props.$pointingCursor ? 'cursor: pointer;' : ''}
 
   transition: .2s;
   outline: 0px solid #fff;

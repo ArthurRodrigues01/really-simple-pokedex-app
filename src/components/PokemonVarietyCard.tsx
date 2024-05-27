@@ -1,6 +1,5 @@
 import { useState } from "react";
 
-import { capitalize } from "../functions/other-functions";
 import { getPokemonTypeColor } from "../functions/poke-functions";
 import useImagePreloader from "../hooks/useImagePreloader";
 import usePokemonVariety from "../hooks/usePokemonVariety"
@@ -8,7 +7,6 @@ import useSinglePokemonData from "../hooks/useSinglePokemonData";
 import HoverableGrowthFeedback from "./feedbacks/HoverableGrowthFeedback";
 import PokemonVarietyCardLoadingFeedback from "./feedbacks/PokemonVarietyCardLoadingFeedback";
 import {
-  CenteredFlexCol,
   SubTitle,
   Text,
   Title
@@ -16,11 +14,10 @@ import {
 import { Modal } from "./main-modal-components";
 import { PokemonSprite, PokemonSpriteWrapper } from "./main-poke-components";
 import {
-  PokemonSpriteChainLink,
-  PokemonSpriteWrapperChainLink,
+  DivGap,
+  PokemonModalStatsWrapper,
   PokemonType,
-  PokemonTypesWrapper,
-  PokemonVarietyStatsWrapper
+  PokemonTypesWrapper
 } from "./styles";
 
 function PokemonVarietyCard({ id, name }: { id: number, name: string }) {
@@ -50,10 +47,10 @@ function PokemonVarietyCard({ id, name }: { id: number, name: string }) {
       {
         isModalOpen &&
         <Modal setIsModalOpen={setIsModalOpen}>
-          <PokemonVarietyStatsWrapper 
+          <PokemonModalStatsWrapper 
             $backgroundColor={getPokemonTypeColor(singlePokemonData.types[0])}
             > 
-            <Title $color="#fff">{capitalize(singlePokemonData.name)}</Title>
+            <Title $color="#fff">{singlePokemonData.name}</Title>
             <PokemonSpriteWrapper>
               <PokemonSprite 
                 src={`${singlePokemonData.spriteSrc}`} 
@@ -71,8 +68,9 @@ function PokemonVarietyCard({ id, name }: { id: number, name: string }) {
                 type => <PokemonType key={`pokemon-type-${type}-2`} type={type}/>
               )}
             </PokemonTypesWrapper>
-          </PokemonVarietyStatsWrapper>
-          <PokemonVarietyStatsWrapper 
+          </PokemonModalStatsWrapper>
+          <DivGap $width={'6rem'} onClick={() => setIsModalOpen(!isModalOpen)}/>
+          <PokemonModalStatsWrapper 
             $backgroundColor={getPokemonTypeColor(varietyData.types[0])}
             >
             <Title $color="#fff">{varietyData.name}</Title>
@@ -90,16 +88,13 @@ function PokemonVarietyCard({ id, name }: { id: number, name: string }) {
                 type => <PokemonType key={`pokemon-type-${type}-1`} type={type}/>
               )}
             </PokemonTypesWrapper>
-          </PokemonVarietyStatsWrapper>
+          </PokemonModalStatsWrapper>
         </Modal>
       }
-      <HoverableGrowthFeedback onClick={() => setIsModalOpen(!isModalOpen)}>
-        <CenteredFlexCol $gap={'1rem'}>
-          <PokemonSpriteWrapperChainLink>
-            <PokemonSpriteChainLink src={varietyData.spriteSrc} alt={`pokemon ${varietyData.name}`}/>
-          </PokemonSpriteWrapperChainLink> 
-          <Title $color="#fff">{varietyData.name}</Title>
-        </CenteredFlexCol>
+      <HoverableGrowthFeedback $pointingCursor onClick={() => setIsModalOpen(!isModalOpen)}>
+        <PokemonSpriteWrapper>
+          <PokemonSprite src={varietyData.spriteSrc} alt={`pokemon ${varietyData.name}`}/>
+        </PokemonSpriteWrapper> 
       </HoverableGrowthFeedback>
     </div>
   )

@@ -57,7 +57,7 @@ export const Modal = ({ children, setIsModalOpen }: { children: ReactNode, setIs
   return (
     <>
     <ModalBackground onClick={() => setIsModalOpen(false)}/>
-      <ModalBox $gap={'5rem'}>
+      <ModalBox>
       { children }
       </ModalBox>
     </>

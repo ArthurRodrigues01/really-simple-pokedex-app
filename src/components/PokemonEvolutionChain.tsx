@@ -34,7 +34,7 @@ function PokemonEvolutionChain({ chainLink, type }: { chainLink: ChainLink, type
           <Title $color="#fff">Evolution Chain</Title>
         </SectionTitleWrapper>
         <PokemonEvolutionChainWrapper $backgroundColor={getPokemonWrapperTypeColor(type)}>
-          <Title $color="#fff">This Pokemon has no evolutions or pre-evolutions</Title>
+          <Title $color="#fff">This Pokemon is not in a evolution chain.</Title>
         </PokemonEvolutionChainWrapper>
       </div>
     )
