@@ -1,13 +1,14 @@
 import styled from "styled-components"
 
-const HoverableGrowthFeedback = styled.span<{
-  $borderRadius?: string | number;
-  $borderTopLeftRadius?: string | number;
-  $borderTopRightRadius?: string | number;
-  $borderBottomLeftRadius?: string | number;
-  $borderBottomRightRadius?: string | number;
-  $growthScale?: number;
-  $outline?: boolean;
+const HoverableGrowthFeedback = styled.div<{
+  $borderRadius?: string | number,
+  $borderTopLeftRadius?: string | number
+  $borderTopRightRadius?: string | number,
+  $borderBottomLeftRadius?: string | number,
+  $borderBottomRightRadius?: string | number,
+  $growthScale?: number,
+  $outline?: boolean,
+  $pointingCursor?: boolean
 }>`
   ${ props => props.$borderRadius ? `
     border-radius: ${props.$borderRadius ? typeof props.$borderRadius === 'string' ? props.$borderRadius : `${props.$borderRadius}px` : 'initial'};
@@ -18,9 +19,11 @@ const HoverableGrowthFeedback = styled.span<{
     border-bottom-right-radius: ${props.$borderBottomRightRadius ? typeof props.$borderBottomRightRadius === 'string' ? props.$borderBottomRightRadius : `${props.$borderBottomRightRadius}px` : 'initial'};`
   }
 
+  ${props => props.$pointingCursor ? 'cursor: pointer;' : ''}
+
   transition: .2s;
   outline: 0px solid #fff;
-  &: hover {
+  &:hover {
     ${props => props.$outline ? 'outline: 3px solid #fff' : ''};
     z-index: 999;
     transform: scale(${props => props.$growthScale ?? '1.2'});

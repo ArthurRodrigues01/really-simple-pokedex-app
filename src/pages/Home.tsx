@@ -1,6 +1,5 @@
 import { useEffect } from "react";
 
-import ArrayToJSXTransformer from "../components/ArrayToJSXTransformer";
 import PokemonPreviewCard from "../components/PokemonPreviewCard";
 import useInfinitePokemonsPreviewData from "../hooks/useInfinitePokemonsPreviewData";
 import useOnScreen from "../hooks/useOnScreen";
@@ -31,16 +30,13 @@ function Home() {
   return (
     <>
       <div style={{display: "flex", flexDirection: 'row', flexWrap: 'wrap', gap: 16}}>
-        <ArrayToJSXTransformer
-            dataArray={previewData}
-            transformer={(pokemon) => (
-              <PokemonPreviewCard 
-                id={pokemon.id} 
-                name={pokemon.name} 
-                key={`pokemon-${pokemon.id}`}
-              />
-            )}
+        {previewData.map(pokemon => (
+          <PokemonPreviewCard 
+            id={pokemon.id} 
+            name={pokemon.name} 
+            key={`pokemon-${pokemon.id}`}
           />
+        ))}
       </div>
       <div ref={ref}>{isLoadingMorePokemons && <h1>Loading more pokemons...</h1>}</div>
     </>

@@ -1,4 +1,3 @@
-import { capitalize } from "../functions/other-functions"
 import { getPokemonTypeColor, getPokemonWrapperTypeColor } from "../functions/poke-functions"
 import { PokedexEntry } from "../types/pokemon-related-types"
 import { SubTitle, Text, Title } from "./main-components"
@@ -34,7 +33,7 @@ function PokemonCard({
   return (
     <PokemonCardWrapper $backgroundColor={getPokemonWrapperTypeColor(types[0])}>
       <PokemonStatsWrapper $backgroundColor={getPokemonTypeColor(types[0])}>
-        <Title $color="#fff">{capitalize(name)}</Title>
+        <Title $color="#fff">{name}</Title>
         <PokemonSpriteWrapper>
           <PokemonSprite src={`${spriteSrc}`} width={250} height={250}/>
         </PokemonSpriteWrapper>

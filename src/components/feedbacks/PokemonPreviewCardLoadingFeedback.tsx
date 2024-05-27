@@ -1,6 +1,5 @@
 import { forwardRef } from "react"
 
-import { capitalize } from "../../functions/other-functions"
 import { NoDecorationLink, Title } from "../main-components"
 import { PokemonPreviewCardWrapper, PokemonSpriteWrapper } from "../main-poke-components"
 import HoverableGrowthFeedback from "./HoverableGrowthFeedback"
@@ -19,7 +18,7 @@ const PokemonPreviewCardLoadingFeedback = forwardRef<HTMLDivElement,
     >
       <NoDecorationLink to={`/pokemon/${props.id}`}>
         <PokemonPreviewCardWrapper ref={ref}>
-          <Title $color="#fff">{capitalize(props.name)}</Title>
+          <Title $color="#fff">{props.name}</Title>
           <PokemonSpriteWrapper>
             <RotatingPokeballFeedback pokemonId={props.id}/>
           </PokemonSpriteWrapper>

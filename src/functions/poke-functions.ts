@@ -1,16 +1,20 @@
 import { VALID_GENS, VALID_TYPES } from "../constants/pokemon-related-constants";
 import {
-  ChainLink,
   EvolutionChainPage,
+  PokemonFormPage,
+  PokemonPage,
+  SpeciesPage,
+  VersionGroupPage
+} from "../types/pokemon-api-page-types";
+import {
+  ChainLink,
   NamedAPIResource,
   NamedAPIResourceList,
   PokemonData,
-  PokemonPage,
   PokemonPreviewData,
-  SpeciesPage,
   Variety
 } from "../types/pokemon-related-types";
-import { isInRange, isNaturalNumber } from "./other-functions";
+import { capitalize, isInRange, isNaturalNumber } from "./other-functions";
 
 export async function getPokemonData(id: number): Promise<PokemonData | null> {
   const maxNumberOfPokemons = await getMaxNumberOfSpecies()
@@ -31,8 +35,8 @@ export async function getPokemonData(id: number): Promise<PokemonData | null> {
 
   return {
     id: rawSpeciesPageData.id,
-    gen: getGenFromFetchedData(rawSpeciesPageData),
-    name: rawPokemonPageData.is_default ? rawSpeciesPageData.name : rawPokemonPageData.name,
+    gen: getGenFromPokeURL(rawSpeciesPageData.generation.url),
+    name: capitalize(rawSpeciesPageData.name),
     weight: rawPokemonPageData.weight / 10, // ??? -> KG
     height: rawPokemonPageData.height /10, // Decimeters -> Meters
     types: pokemonTypes,
@@ -49,15 +53,27 @@ export async function getPokemonVarietyData(id: number) {
   const rawPokemonPageData: PokemonPage = await getPokemonPageData(id)
   const rawSpeciesPageData: SpeciesPage = await getSpeciesPageData(rawPokemonPageData.species.url)
 
-  const pokedexEntries = rawSpeciesPageData.flavor_text_entries.map(item => 
-    item.language.name === 'en'
-  )
+  const resPokemonFormPageData = await fetch(rawPokemonPageData.forms[0].url)
+  const rawPokemonFormPageData: PokemonFormPage  = await resPokemonFormPageData.json()
+  
+  const resVersionGroupPageData = await fetch(rawPokemonFormPageData.version_group.url)
+  const rawVersionGroupPageData: VersionGroupPage = await resVersionGroupPageData.json()
+  
+  const pokedexEntries = rawSpeciesPageData.flavor_text_entries.map(item => item.language.name === 'en')
+  
   const pokemonTypes = rawPokemonPageData.types.map(item => item.type.name)
 
+  const completeVarietyName = rawPokemonFormPageData.names.find(item => item.language.name === 'en')
+  const formName = rawPokemonFormPageData.form_names.find(item => item.language.name === 'en')
+  const speciesName = capitalize(rawSpeciesPageData.name)
+
+  const gen = getGenFromPokeURL(rawVersionGroupPageData.generation.url)
+
+
   return {
-    id: rawPokemonPageData.id,
-    gen: getGenFromFetchedData(rawSpeciesPageData),
-    name: rawPokemonPageData.name,
+    id: rawSpeciesPageData.id,
+    gen: gen,
+    name: completeVarietyName ? completeVarietyName.name : formName ? `${formName.name} ${speciesName}` : capitalize(rawSpeciesPageData.name),
     weight: rawPokemonPageData.weight / 10, // ??? -> KG
     height: rawPokemonPageData.height /10, // Decimeters -> Meters
     types: pokemonTypes,
@@ -88,10 +104,8 @@ export async function getPokemonPageData(fetchable: number | string) {
   return rawData
 }
 
-function getGenFromFetchedData(fetchedPokemonSpeciesData: SpeciesPage) {
-  const genURL = fetchedPokemonSpeciesData.generation.url
-    
-  return Number(genURL.split('/')[6])
+function getGenFromPokeURL(url: string) {
+  return Number(url.split('/')[6])
 }
 
 export async function getMaxNumberOfSpecies(): Promise<number> {
@@ -111,7 +125,7 @@ export async function getNonSpeciesLastIndex(): Promise<number> {
 export function getPokemonPreviewDataFromArray(arr: NamedAPIResource[]): PokemonPreviewData[] {
   return arr.map(item => ({
     id: Number(item.url.split('/')[6]),
-    name: item.name
+    name: capitalize(item.name)
   }))
 }
 
@@ -166,9 +180,8 @@ export function isValidGen(gen: number) {
 
 export async function isValidVarietyId(id: number) {
   const maxPokemons = await getMaxNumberOfSpecies()
-  const nonSpeciesLastIndex = await getNonSpeciesLastIndex()
   
-  return isNaturalNumber(id) && (isInRange(id, maxPokemons) || isInRange(id, nonSpeciesLastIndex, 10001))
+  return isNaturalNumber(id) && isInRange(id, maxPokemons)
 }
 
 export function getSortedPokemonsById(pokemons: PokemonPreviewData[] | PokemonData[]) {

@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 
-import { capitalize } from "../functions/other-functions";
 import { getPokemonTypeColor } from "../functions/poke-functions";
 import useImagePreloader from "../hooks/useImagePreloader";
 import useOnScreen from "../hooks/useOnScreen";
@@ -40,7 +39,7 @@ function PokemonPreviewCard({ id, name }: { id: number, name: string }) {
     >
       <NoDecorationLink to={`/pokemon/${data.id}`} style={{borderBottomRightRadius: '4rem', borderTopLeftRadius: '4rem'}}>
         <PokemonPreviewCardWrapper ref={ref} $backgroundColor={getPokemonTypeColor(data.types[0])}>
-          <Title $color="#fff">{capitalize(data.name)}</Title>
+          <Title $color="#fff">{data.name}</Title>
           <PokemonSpriteWrapper>
             <PokemonSprite src={data.spriteSrc} alt={`pokemon ${data.id}`}/>
           </PokemonSpriteWrapper>

@@ -66,10 +66,10 @@ export const CenteredFlexColGap = styled(CenteredFlexCol)`
   gap: 3rem;
 `
 export const PokemonStatsWrapper = styled(CenteredFlexCol)<{ $backgroundColor?: string}>`
-  width: 30%;
   border-top-left-radius: 4rem;
   background-color: ${(props) => props.$backgroundColor ? props.$backgroundColor : '#d4d4d4'};
   padding: 1.5rem;
+  width: 30%;
   gap: 1.5rem;
 ` 
 export const PokemonTypesWrapper = styled(CenteredFlexRow)`
@@ -230,4 +230,16 @@ export const SectionTitleWrapper = styled.div<{ $backgroundColor: string }>`
 `
 export const RotateImage = styled.img<{ $angle?: number }>`
   transform: rotate(${props => props.$angle ? props.$angle : 0}deg);
+`
+export const PokemonModalStatsWrapper = styled(CenteredFlexCol)<{ $backgroundColor?: string}>`
+  border-top-left-radius: 4rem;
+  border-bottom-right-radius: 4rem;
+  background-color: ${(props) => props.$backgroundColor ? props.$backgroundColor : '#d4d4d4'};
+  padding: 1.5rem;
+  min-width: 19vw;
+  gap: 1.5rem;
+`
+export const DivGap = styled.div<{ $width?: string | number}>`
+  align-self: stretch;
+  width: ${props => props.$width ? typeof props.$width === 'string' ? props.$width : `${props.$width}px` : '1rem'};
 `
