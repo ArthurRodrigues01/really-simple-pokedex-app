@@ -1,7 +1,8 @@
 import styled from "styled-components";
 
-import { POKEMON_IMAGE_WRAPPER_BG_COLOR } from "../constants/pokemon-related-constants";
-import { CenteredFlexCol } from "./main-components";
+import { DEVICE_QUERIES } from "../../constants/other-constants";
+import { POKEMON_IMAGE_WRAPPER_BG_COLOR } from "../../constants/pokemon-related-constants";
+import { CenteredFlexCol } from "../main-components";
 
 export const PokemonPreviewCardWrapper = styled(CenteredFlexCol)<{ $backgroundColor?: string }>`
   text-wrap: balance;
@@ -16,10 +17,29 @@ export const PokemonSpriteWrapper = styled(CenteredFlexCol)`
   background-color: ${POKEMON_IMAGE_WRAPPER_BG_COLOR};
   height: 250px;
   width: 250px;
+
+  @media ${DEVICE_QUERIES.tablet} {
+    height: 170px;
+    width: 170px;
+  }
+  @media ${DEVICE_QUERIES.mobileL} {
+    height: 120px;
+    width: 120px;
+  }
 `
 export const PokemonSprite = styled.img`
   width: auto;
   height: auto;
   max-width: 175px;
   max-height: 175px;
+  
+  @media ${DEVICE_QUERIES.tablet} {
+    max-width: 120px;
+    max-height: 120px;
+  }
+
+  @media ${DEVICE_QUERIES.mobileL} {
+    max-width: 70px;
+    max-height: 70px;
+  }
 `

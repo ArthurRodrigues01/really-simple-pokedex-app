@@ -1,24 +1,24 @@
 import { useState } from "react";
 
-import { getPokemonTypeColor } from "../functions/poke-functions";
-import useImagePreloader from "../hooks/useImagePreloader";
-import usePokemonVariety from "../hooks/usePokemonVariety"
-import useSinglePokemonData from "../hooks/useSinglePokemonData";
-import HoverableGrowthFeedback from "./feedbacks/HoverableGrowthFeedback";
-import PokemonVarietyCardLoadingFeedback from "./feedbacks/PokemonVarietyCardLoadingFeedback";
+import { getPokemonTypeColor } from "../../functions/poke-functions";
+import useImagePreloader from "../../hooks/useImagePreloader";
+import usePokemonVariety from "../../hooks/usePokemonVariety"
+import useSinglePokemonData from "../../hooks/useSinglePokemonData";
+import HoverableGrowthFeedback from "../feedbacks/HoverableGrowthFeedback";
+import PokemonVarietyCardLoadingFeedback from "../feedbacks/PokemonVarietyCardLoadingFeedback";
 import {
   SubTitle,
   Text,
   Title
-} from "./main-components";
-import { Modal } from "./main-modal-components";
-import { PokemonSprite, PokemonSpriteWrapper } from "./main-poke-components";
+} from "../main-components";
+import { Modal } from "../main-modal-components";
 import {
   DivGap,
-  PokemonModalStatsWrapper,
   PokemonType,
   PokemonTypesWrapper
-} from "./styles";
+} from "../styles";
+import { PokemonModalStatsWrapper } from "../styles/pokemonVarietyCard-styles";
+import { PokemonSprite, PokemonSpriteWrapper } from "./main-poke-components";
 
 function PokemonVarietyCard({ id, name }: { id: number, name: string }) {
   const { data: varietyData, isLoading: varietyIsLoading } = usePokemonVariety(id)
@@ -69,7 +69,7 @@ function PokemonVarietyCard({ id, name }: { id: number, name: string }) {
               )}
             </PokemonTypesWrapper>
           </PokemonModalStatsWrapper>
-          <DivGap $width={'6rem'} onClick={() => setIsModalOpen(!isModalOpen)}/>
+          <DivGap onClick={() => setIsModalOpen(!isModalOpen)}/>
           <PokemonModalStatsWrapper 
             $backgroundColor={getPokemonTypeColor(varietyData.types[0])}
             >

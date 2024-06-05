@@ -1,7 +1,7 @@
 import { forwardRef } from "react"
 
 import { NoDecorationLink, Title } from "../main-components"
-import { PokemonPreviewCardWrapper, PokemonSpriteWrapper } from "../main-poke-components"
+import { PokemonPreviewCardWrapper, PokemonSpriteWrapper } from "../poke-components/main-poke-components"
 import HoverableGrowthFeedback from "./HoverableGrowthFeedback"
 import RotatingPokeballFeedback from "./RotatingPokeballFeedback"
 

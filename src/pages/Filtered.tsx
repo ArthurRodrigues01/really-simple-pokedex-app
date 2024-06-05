@@ -1,6 +1,6 @@
 import ArrayToJSXTransformer from "../components/ArrayToJSXTransformer"
 import FilteringOptionsUI from "../components/FilteringOptionsUI"
-import PokemonPreviewCard from "../components/PokemonPreviewCard"
+import PokemonPreviewCard from "../components/poke-components/PokemonPreviewCard"
 import { CenteredFlexColGap } from "../components/styles"
 import { sanitizeTypes } from "../functions/poke-functions"
 import useFilteredPokemonsPreviewData from "../hooks/useFilteredPokemonsPreviewData"

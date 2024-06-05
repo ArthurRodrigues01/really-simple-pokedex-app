@@ -1,9 +1,9 @@
-import useImagePreloader from "../hooks/useImagePreloader"
-import useSinglePokemonData from "../hooks/useSinglePokemonData"
-import HoverableGrowthFeedback from "./feedbacks/HoverableGrowthFeedback"
-import PokemonChainLinkLoadingFeedback from "./feedbacks/PokemonChainLinkLoadingFeedback"
-import { NoDecorationLink } from "./main-components"
-import { PokemonSpriteChainLink, PokemonSpriteWrapperChainLink } from "./styles"
+import useImagePreloader from "../../hooks/useImagePreloader"
+import useSinglePokemonData from "../../hooks/useSinglePokemonData"
+import HoverableGrowthFeedback from "../feedbacks/HoverableGrowthFeedback"
+import PokemonChainLinkLoadingFeedback from "../feedbacks/PokemonChainLinkLoadingFeedback"
+import { NoDecorationLink } from "../main-components"
+import { PokemonSpriteChainLink, PokemonSpriteWrapperChainLink } from "../styles/pokemonChainLink-styles"
 
 function PokemonChainLink({ id }: { id: number }) {
   const { data, isLoading } = useSinglePokemonData(id)

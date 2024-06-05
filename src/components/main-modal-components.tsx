@@ -24,12 +24,12 @@ const ModalBackground = styled(CenteredFlexCol)`
 `
 
 const ModalBox = styled(CenteredFlexRow)`
+  width: 100%;
+  height: 100%;
   position: fixed;
   top: 0; 
   left: 0;
   z-index: 1000;
-  margin-top: 20vh;
-  margin-left: 25vw;
   animation: ${FadeInAnimation} linear 0.1s;
 `
 
@@ -56,8 +56,8 @@ export const Modal = ({ children, setIsModalOpen }: { children: ReactNode, setIs
 
   return (
     <>
-    <ModalBackground onClick={() => setIsModalOpen(false)}/>
-      <ModalBox>
+    <ModalBackground/>
+      <ModalBox onClick={() => setIsModalOpen(false)}>
       { children }
       </ModalBox>
     </>
