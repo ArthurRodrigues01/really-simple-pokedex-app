@@ -5,12 +5,23 @@ import { POKEMON_IMAGE_WRAPPER_BG_COLOR } from "../../constants/pokemon-related-
 import { CenteredFlexCol } from "../main-components";
 
 export const PokemonPreviewCardWrapper = styled(CenteredFlexCol)<{ $backgroundColor?: string }>`
-  text-wrap: balance;
   border-top-left-radius: 4rem;
   border-bottom-right-radius: 4rem;
   background-color: ${props => props.$backgroundColor || '#d4d4d4'};
-  gap: 1.5rem;
   padding: 1.5rem;
+  width: calc(250px + 3rem);
+  text-overflow: ellipsis;
+  gap: 1.5rem;
+
+  @media ${DEVICE_QUERIES.tablet} {
+    width: calc(170px + 2rem);
+    padding: 1rem;
+    gap: 1rem;
+  }
+
+  @media ${DEVICE_QUERIES.mobileL} {
+    width: calc(120px + 3rem);
+  }
 `
 export const PokemonSpriteWrapper = styled(CenteredFlexCol)`
   border-radius: 999px;

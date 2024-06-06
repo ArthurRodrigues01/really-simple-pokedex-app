@@ -40,6 +40,10 @@ export const Title = styled.h1<{ $color?: string }>`
   @media ${DEVICE_QUERIES.tablet} {
     font-size: 2rem;
   }
+
+  @media ${DEVICE_QUERIES.mobileL} {
+    font-size: 1.7rem;
+  }
 `
 export const SubTitle = styled(Title)`
   font-size: 1.5rem;
