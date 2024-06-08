@@ -13,7 +13,7 @@ export const NavHeaderWrapper = styled(CenteredFlexRow)`
 export const NavHeaderTitle = styled(Title)`
   transition: all 0.2s;
   color: #fff;
-  filter: drop-shadow(6px 6px 4px ${POKEMON_COLOR_2}) ;
+  filter: drop-shadow(7px 7px 1px ${POKEMON_COLOR_2}) ;
 
   &: hover {
     @media (min-width: 768px) {

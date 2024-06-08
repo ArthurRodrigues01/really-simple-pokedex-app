@@ -1,7 +1,11 @@
 import styled from "styled-components";
 
 import { DEVICE_QUERIES } from "../../constants/other-constants";
-import { CenteredFlexCol, CenteredFlexRow } from "../main-components";
+import {
+  CenteredFlexCol,
+  CenteredFlexRow,
+  CenteredGridRow
+} from "../main-components";
 
 export const PokemonCardWrapper = styled(CenteredFlexRow)`
   width: calc((2rem * 2) + 950px);  
@@ -30,7 +34,7 @@ export const PokemonStatsWrapper = styled(CenteredFlexCol)<{ $backgroundColor?: 
     align-self: stretch;
     width: auto;
     flex-direction: row;
-    gap: 6rem;
+    justify-content: space-evenly;
   }
 `
 export const PokemonEntry = styled(CenteredFlexRow)<{ $backgroundColor?: string}>`
@@ -52,4 +56,8 @@ export const PokemonEntry = styled(CenteredFlexRow)<{ $backgroundColor?: string}
   @media ${DEVICE_QUERIES.tablet} {
     width: auto;
   }
+`
+
+export const PokemonCardGridArea = styled(CenteredGridRow)`
+  text-align: center;
 `

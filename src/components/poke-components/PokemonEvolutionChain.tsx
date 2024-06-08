@@ -36,8 +36,8 @@ function PokemonEvolutionChain({ chainLink, type }: { chainLink: ChainLink, type
   
   if (result.branches[0].length === 0) {
     return (
-      <SectionWrapper>
-        <PokemonSectionTitleWrapper $backgroundColor={getPokemonTypeColor(type)}>
+      <SectionWrapper >
+        <PokemonSectionTitleWrapper  $backgroundColor={getPokemonTypeColor(type)}>
           <Title $color="#fff">Evolution Chain</Title>
         </PokemonSectionTitleWrapper>
         <PokemonEvolutionChainWrapper $backgroundColor={getPokemonWrapperTypeColor(type)}>
@@ -48,8 +48,8 @@ function PokemonEvolutionChain({ chainLink, type }: { chainLink: ChainLink, type
   }
 
   return (
-    <SectionWrapper>
-      <PokemonSectionTitleWrapper $backgroundColor={getPokemonTypeColor(type)}>
+    <SectionWrapper id="parent">
+      <PokemonSectionTitleWrapper id="pokemon" $backgroundColor={getPokemonTypeColor(type)}>
         <Title $color="#fff">Evolution Chain</Title>
       </PokemonSectionTitleWrapper>
       <PokemonEvolutionChainGridArea $backgroundColor={getPokemonWrapperTypeColor(type)}>

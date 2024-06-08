@@ -1,5 +1,5 @@
 body {
-  background-color: lightseagreen;
+  background-image: url('/really-simple-pokedex-app/background-image.jpeg');
 }
 * {
   margin: 0;

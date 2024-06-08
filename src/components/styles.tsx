@@ -7,18 +7,11 @@ import { getPokemonTypeColor } from "../functions/poke-functions"
 import HoverableGrowthFeedback from "./feedbacks/HoverableGrowthFeedback"
 import { CenteredFlexCol, CenteredFlexRow } from "./main-components"
 
-export const CenteredFlexRowGap = styled(CenteredFlexRow)`
-  gap: 3rem;
-`
-export const CenteredFlexColGap = styled(CenteredFlexCol)`
-  gap: 3rem;
-`
 const FilterBase = styled(CenteredFlexRow)`
   border-radius: 4rem;
   background-color: gray;
   cursor: pointer;
   padding: 1rem;
-  min-width: 5rem;
   color: #fff;
   font-size: 1.5rem;
   font-weight: bold;
@@ -27,6 +20,26 @@ export const FiltersWrapper = styled(CenteredFlexRow)`
   flex-wrap: wrap;
   gap: 1rem;
 `
+const TypeImageWrapper = styled(CenteredFlexCol)<{ $backgroundColor: string }>`
+  background-color: ${props => props.$backgroundColor};
+  width: 4rem;
+  height: 4rem;
+  border-radius: 4rem;
+
+  @media ${DEVICE_QUERIES.tablet} {
+    width: 3rem;
+    height: 3rem;
+  }
+` 
+const TypeImage = styled.img`
+  width: 2rem;
+  height: 2rem;
+
+  @media ${DEVICE_QUERIES.tablet} {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+` 
 export function Filter({ 
   children, 
   onClick
@@ -58,9 +71,9 @@ export function FilterType({
       $growthScale={1.5}
       style={{cursor: 'pointer'}}
     >
-      <CenteredFlexCol onClick={onClick} style={{ backgroundColor: getPokemonTypeColor(type), width: '4rem', height: '4rem', borderRadius: '4rem' }}>
-        <img style={{width: '2rem', height: '2rem'}} src={`/really-simple-pokedex-app/pokemon-types/${type}.svg`} alt={`pokemon ${type} type icon`}/>
-      </CenteredFlexCol>
+      <TypeImageWrapper onClick={onClick} $backgroundColor={getPokemonTypeColor(type)}>
+        <TypeImage src={`/really-simple-pokedex-app/pokemon-types/${type}.svg`} alt={`pokemon ${type} type icon`}/>
+      </TypeImageWrapper>
     </HoverableGrowthFeedback>
   )
 } 
@@ -74,6 +87,11 @@ export const FeedbackedButton = styled.button`
   font-size: 2rem;
   font-weight: bold;
 
+
+  @media ${DEVICE_QUERIES.tablet} {
+    padding: 1rem 1.5rem;
+  }
+    
   &: hover {
     transform: scale(1.2);
     background-color: #215aff;
@@ -103,7 +121,7 @@ export const DivGap = styled.div`
 export const PokemonTypesWrapper = styled(CenteredFlexRow)`
   border-radius: 4rem;
   background-color: #fff;
-  padding: 0.5rem;
+  padding: 0.5rem;    
   gap: 1rem;
 `
 const PokemonTypeWrapper = styled(CenteredFlexRow)`

@@ -23,23 +23,23 @@ export const PokemonEvolutionChainGridArea = styled.div<{
   $backgroundColor: string 
 }>`
   display: grid;  
-  justify-content: center;
-  grid-auto-columns: 175px;
   grid-auto-rows: 175px;
+  grid-auto-columns: 175px;
   grid-auto-flow: row;
+  justify-content: center;
   border-bottom-left-radius: 4rem;
   border-bottom-right-radius: 4rem;
   background-color: ${props => props.$backgroundColor};
   padding: 2rem;
   width: 950px;
-  gap: 1rem;
   overflow-x: auto;
+  gap: 1rem;
   
   @media ${DEVICE_QUERIES.laptop} {
     grid-auto-flow: column;
+    align-self: stretch;
     justify-content: space-evenly;
     border-radius: 0;
-    align-self: stretch;
     width: auto;
   }
 `

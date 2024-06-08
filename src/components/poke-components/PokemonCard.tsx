@@ -3,6 +3,7 @@ import { PokedexEntry } from "../../types/pokemon-related-types"
 import { CenteredFlexCol, SubTitle, Text, Title } from "../main-components"
 import { PokemonType, PokemonTypesWrapper } from "../styles"
 import {
+  PokemonCardGridArea,
   PokemonCardWrapper,
   PokemonEntry,
   PokemonStatsWrapper,
@@ -38,7 +39,7 @@ function PokemonCard({
             <PokemonSprite src={`${spriteSrc}`} width={250} height={250}/>
           </PokemonSpriteWrapper>
         </CenteredFlexCol>
-        <CenteredFlexCol style={{gap: '1.5rem'}}>
+        <PokemonCardGridArea $gap='1.5rem'>
           <SubTitle $color="#fff">ID: <Text>{id}</Text></SubTitle>
           <SubTitle $color="#fff">Gen: <Text>{gen}</Text></SubTitle>
           <SubTitle $color="#fff">Height: <Text>{height}m</Text></SubTitle>
@@ -46,7 +47,7 @@ function PokemonCard({
           <PokemonTypesWrapper>
             {types.map(type => <PokemonType key={`pokemon-type-${type}`} type={type}/>)}
           </PokemonTypesWrapper>
-        </CenteredFlexCol>
+        </PokemonCardGridArea>
       </PokemonStatsWrapper>
       <PokemonEntry $backgroundColor={getPokemonWrapperTypeColor(types[0])}>{pokedexEntries[0].flavor_text}</PokemonEntry>
     </PokemonCardWrapper>

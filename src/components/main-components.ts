@@ -33,6 +33,24 @@ export const CenteredFlexCol = styled(FlexCol)`
   justify-content: center;
   align-items: center;
 ` 
+export const GridRow = styled.div<{ $gap?: number | string }>`
+  display: grid;
+  grid-auto-flow: row;
+  gap: ${(props) => props.$gap ? (typeof props.$gap === 'number' ? `${props.$gap}px` : props.$gap) : '0px'};
+`
+export const GridCol = styled.div<{ $gap?: number | string }>`
+  display: grid;
+  grid-auto-flow: column;
+  gap: ${(props) => props.$gap ? (typeof props.$gap === 'number' ? `${props.$gap}px` : props.$gap) : '0px'};
+`
+export const CenteredGridRow = styled(GridRow)`
+  align-items: center;  
+  justify-content: center;
+`
+export const CenteredGridCol = styled(GridCol)`
+  align-items: center;
+  justify-content: center;
+`
 export const Title = styled.h1<{ $color?: string }>`
   font-size: 2.5rem;
   color: ${props => props.$color || '#000'};
