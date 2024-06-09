@@ -105,9 +105,9 @@ export const PokemonSectionTitleWrapper = styled.div<{ $backgroundColor: string 
   width: 950px;
   
   @media ${DEVICE_QUERIES.laptop} {
-    width: auto;
-    border-radius: 0;
     align-self: stretch;
+    border-radius: 0;
+    width: auto;
   }
 `
 export const DivGap = styled.div`

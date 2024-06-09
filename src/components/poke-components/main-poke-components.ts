@@ -30,12 +30,12 @@ export const PokemonSpriteWrapper = styled(CenteredFlexCol)`
   width: 250px;
 
   @media ${DEVICE_QUERIES.tablet} {
-    height: 170px;
-    width: 170px;
+    height: 200px;
+    width: 200px;
   }
   @media ${DEVICE_QUERIES.mobileL} {
-    height: 120px;
-    width: 120px;
+    height: 150px;
+    width: 150px;
   }
 `
 export const PokemonSprite = styled.img`
@@ -45,12 +45,12 @@ export const PokemonSprite = styled.img`
   max-height: 175px;
   
   @media ${DEVICE_QUERIES.tablet} {
-    max-width: 120px;
-    max-height: 120px;
+    max-width: 150px;
+    max-height: 150px;
   }
 
   @media ${DEVICE_QUERIES.mobileL} {
-    max-width: 70px;
-    max-height: 70px;
+    max-width: 100px;
+    max-height: 100px;
   }
 `
