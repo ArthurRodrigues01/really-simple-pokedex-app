@@ -2,11 +2,11 @@ import { useEffect } from "react"
 import { useParams } from "react-router-dom"
 
 import PokemonCardLoadingFeedback from "../components/feedbacks/PokemonCardLoadingFeedback"
-import PokemonCard from "../components/PokemonCard"
-import PokemonEvolutionChain from "../components/PokemonEvolutionChain"
-import PokemonVarieties from "../components/PokemonVarieties"
-import PokePaginationBar from "../components/PokePaginationBar"
-import { CenteredFlexColGap } from "../components/styles"
+import { CenteredFlexCol } from "../components/main-components"
+import PaginationBar from "../components/PaginationBar"
+import PokemonCard from "../components/poke-components/PokemonCard"
+import PokemonEvolutionChain from "../components/poke-components/PokemonEvolutionChain"
+import PokemonVarieties from "../components/poke-components/PokemonVarieties"
 import useSinglePokemonData from "../hooks/useSinglePokemonData"
 
 // TODO: styling
@@ -24,7 +24,7 @@ function SinglePokemon() {
   else if (data === null) return <h1>Sorry, no pokemon found.</h1>
     
   return (
-    <CenteredFlexColGap>
+    <CenteredFlexCol $gap="1.5rem">
       <PokemonCard
         id={data.id}
         name={data.name}
@@ -41,12 +41,12 @@ function SinglePokemon() {
         type={data.types[0]}
       />
       { data.isDefault && <PokemonVarieties varieties={data.varieties} type={data.types[0]}/> }
-      <PokePaginationBar
+      <PaginationBar
         max={data.maxNumberOfPokemons}
         growth={3}
         current={data.id}
       />
-    </CenteredFlexColGap>
+    </CenteredFlexCol>
   )
 }
 

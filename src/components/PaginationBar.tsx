@@ -3,9 +3,9 @@ import { useQueryClient } from "@tanstack/react-query"
 import { getPokemonData } from "../functions/poke-functions"
 import { preloadImage } from "../hooks/useImagePreloader"
 import { CenteredFlexRow } from "./main-components"
-import { PaginationCell, PaginationCellCurrent } from "./styles"
+import { PaginationCell, PaginationCellCurrent } from "./styles/paginationBar-styles"
 
-function PokePaginationBar ({ 
+function PaginationBar ({ 
   growth,
   current, 
   max
@@ -84,4 +84,4 @@ function PokePaginationBar ({
   )
 }
 
-export default PokePaginationBar 
+export default PaginationBar 

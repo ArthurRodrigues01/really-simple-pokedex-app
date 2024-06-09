@@ -5,8 +5,8 @@ import { VALID_GENS, VALID_TYPES } from "../constants/pokemon-related-constants"
 import { sanitizeTypes } from "../functions/poke-functions";
 import useURLSearchParams from "../hooks/useURLSearchParams";
 import ArrayToJSXTransformer from "./ArrayToJSXTransformer";
-import { CenteredFlexCol } from "./main-components";
-import { CenteredFlexColGap, CenteredFlexRowGap, FeedbackedButton, Filter, FilterType, FiltersWrapper } from "./styles";
+import { CenteredFlexCol, CenteredFlexRow } from "./main-components";
+import { FeedbackedButton, Filter, FilterType, FiltersWrapper } from "./styles";
 
 function FilteringOptionsUI() {
   const searchParams = useURLSearchParams()
@@ -23,9 +23,9 @@ function FilteringOptionsUI() {
   const navigate = useNavigate()
 
   return (
-    <CenteredFlexColGap>
-      <CenteredFlexColGap>
-        <CenteredFlexCol>
+    <CenteredFlexCol $gap="1.5rem">
+      <CenteredFlexCol $gap="1.5rem">
+        <CenteredFlexCol $gap="1.5rem">
           <h1>Gens</h1>
           <FiltersWrapper>
             {VALID_GENS.map((gen) => (
@@ -44,7 +44,7 @@ function FilteringOptionsUI() {
             ))}
           </FiltersWrapper>
         </CenteredFlexCol> 
-        <CenteredFlexCol>
+        <CenteredFlexCol $gap="1.5rem">
           <h1>Types</h1>
           <FiltersWrapper>
             {VALID_TYPES.map((type) => (
@@ -62,8 +62,8 @@ function FilteringOptionsUI() {
             ))}
           </FiltersWrapper>
         </CenteredFlexCol>
-      </CenteredFlexColGap>
-      <CenteredFlexCol> 
+      </CenteredFlexCol>
+      <CenteredFlexCol $gap="1.5rem"> 
         <h1 hidden={filters.length === 0}>Filters</h1>
         <FiltersWrapper>
           <ArrayToJSXTransformer
@@ -87,11 +87,11 @@ function FilteringOptionsUI() {
           />
         </FiltersWrapper>
       </CenteredFlexCol>
-      <CenteredFlexRowGap>
+      <CenteredFlexRow $gap="1rem">
         <FeedbackedButton hidden={filters.length === 0} onClick={navigateHandler}>Search</FeedbackedButton>
         <FeedbackedButton hidden={filters.length === 0} onClick={() => setFilters([])} >Reset</FeedbackedButton>
-      </CenteredFlexRowGap>
-    </CenteredFlexColGap>
+      </CenteredFlexRow>
+    </CenteredFlexCol>
   )
 
   function navigateHandler() {

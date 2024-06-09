@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 
-import { getPokemonTypeColor } from "../functions/poke-functions";
-import useImagePreloader from "../hooks/useImagePreloader";
-import useOnScreen from "../hooks/useOnScreen";
-import useSinglePokemonData from "../hooks/useSinglePokemonData";
-import HoverableGrowthFeedback from "./feedbacks/HoverableGrowthFeedback";
-import PokemonPreviewCardLoadingFeedback from "./feedbacks/PokemonPreviewCardLoadingFeedback";
-import { NoDecorationLink, Title } from "./main-components";
+import { getPokemonTypeColor } from "../../functions/poke-functions";
+import useImagePreloader from "../../hooks/useImagePreloader";
+import useOnScreen from "../../hooks/useOnScreen";
+import useSinglePokemonData from "../../hooks/useSinglePokemonData";
+import HoverableGrowthFeedback from "../feedbacks/HoverableGrowthFeedback";
+import PokemonPreviewCardLoadingFeedback from "../feedbacks/PokemonPreviewCardLoadingFeedback";
+import { NoDecorationLink, Title } from "../main-components";
 import {
   PokemonPreviewCardWrapper,
   PokemonSprite,
