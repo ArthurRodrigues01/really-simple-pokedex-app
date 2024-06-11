@@ -1,13 +1,11 @@
 import { NoDecorationLink } from "../main-components"
-import RotatingPokeballFeedback from "./RotatingPokeballFeedback"
+import RotatingPokeballFeedbackChainLink from "./RotatingPokeballFeedbackChainLink"
 
 function PokemonChainLinkLoadingFeedback ({ id }: { id: number }) {
   return (
-      <NoDecorationLink to={`/pokemon/${id}`}>
-        <div> 
-          <RotatingPokeballFeedback pokemonId={id} width={175} height={175}/>
-        </div>
-      </NoDecorationLink>
+    <NoDecorationLink to={`/pokemon/${id}`}>
+      <RotatingPokeballFeedbackChainLink pokemonId={id}/>
+    </NoDecorationLink>
   )
 }
 

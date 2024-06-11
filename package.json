@@ -1,7 +1,7 @@
 {
   "name": "really-simple-pokedex",
   "private": true,
-  "version": "1.11.0" ,
+  "version": "1.11.1" ,
   "type": "module",
   "homepage": "https://arthurrodrigues.github.io/really-simple-pokedex-app",
   "scripts": {
