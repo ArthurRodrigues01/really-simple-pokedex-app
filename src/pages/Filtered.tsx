@@ -1,6 +1,7 @@
 import ArrayToJSXTransformer from "../components/ArrayToJSXTransformer"
+import PokemonPageLoadingFeedback from "../components/feedbacks/PokemonPageLoadingFeedback"
 import FilteringOptionsUI from "../components/FilteringOptionsUI"
-import { CenteredFlexCol } from "../components/main-components"
+import { CenteredFlexCol, Title } from "../components/main-components"
 import PokemonPreviewCard from "../components/poke-components/PokemonPreviewCard"
 import { sanitizeTypes } from "../functions/poke-functions"
 import useFilteredPokemonsPreviewData from "../hooks/useFilteredPokemonsPreviewData"
@@ -13,11 +14,8 @@ function Filtered() {
     types: sanitizeTypes([searchParams.type1, searchParams.type2])
   }) 
 
-  if (isLoading) {
-    return <h1>Loading...</h1>
-  } else if (previewData === null) {
-    return <h1>Sorry, no pokemons found, try less options or check if the current ones are typed correctly.</h1>
-  }
+  if (isLoading) return <PokemonPageLoadingFeedback/> 
+  else if (previewData === null) return <Title $color="#fff">Sorry, no pokemons found, try less options or check if the current ones are typed correctly.</Title>
 
   return (
     <CenteredFlexCol $gap="1.5rem">

@@ -5,7 +5,7 @@ import { VALID_GENS, VALID_TYPES } from "../constants/pokemon-related-constants"
 import { sanitizeTypes } from "../functions/poke-functions";
 import useURLSearchParams from "../hooks/useURLSearchParams";
 import ArrayToJSXTransformer from "./ArrayToJSXTransformer";
-import { CenteredFlexCol, CenteredFlexRow } from "./main-components";
+import { CenteredFlexCol, CenteredFlexRow, Title } from "./main-components";
 import { FeedbackedButton, Filter, FilterType, FiltersWrapper } from "./styles";
 
 function FilteringOptionsUI() {
@@ -26,7 +26,7 @@ function FilteringOptionsUI() {
     <CenteredFlexCol $gap="1.5rem">
       <CenteredFlexCol $gap="1.5rem">
         <CenteredFlexCol $gap="1.5rem">
-          <h1>Gens</h1>
+          <Title $color="#fff">Gens</Title>
           <FiltersWrapper>
             {VALID_GENS.map((gen) => (
               <Filter 
@@ -45,7 +45,7 @@ function FilteringOptionsUI() {
           </FiltersWrapper>
         </CenteredFlexCol> 
         <CenteredFlexCol $gap="1.5rem">
-          <h1>Types</h1>
+          <Title $color="#fff">Types</Title>
           <FiltersWrapper>
             {VALID_TYPES.map((type) => (
               <FilterType 
@@ -64,7 +64,7 @@ function FilteringOptionsUI() {
         </CenteredFlexCol>
       </CenteredFlexCol>
       <CenteredFlexCol $gap="1.5rem"> 
-        <h1 hidden={filters.length === 0}>Filters</h1>
+        <Title $color="#fff" hidden={filters.length === 0}>Filters</Title>
         <FiltersWrapper>
           <ArrayToJSXTransformer
             dataArray={filters}
