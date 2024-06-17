@@ -3,8 +3,7 @@ import styled from "styled-components"
 import { DEVICE_QUERIES } from "../../constants/other-constants"
 import Rotate from "../Rotate"
 
-function RotatingPokeballFeedback({ pokemonId }: { pokemonId: number | string }) {
-  const PokeballImg = styled.img`
+const PokeballImg = styled.img`
     width: 250px;
     height: 250px;
 
@@ -19,11 +18,13 @@ function RotatingPokeballFeedback({ pokemonId }: { pokemonId: number | string })
     }
   `
 
+function RotatingPokeballFeedback({ pokemonId }: { pokemonId?: number | string }) {
+
   return (
     <Rotate>
       <PokeballImg 
         src={"/really-simple-pokedex-app/pokeball.svg"} 
-        alt={`Loading pokemon ${pokemonId}`} 
+        alt={pokemonId ? `Loading pokemon ${pokemonId}` : 'Loading'} 
       />
     </Rotate>
   )

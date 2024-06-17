@@ -1,7 +1,7 @@
 import { useEffect } from "react"
 import { useParams } from "react-router-dom"
 
-import PokemonCardLoadingFeedback from "../components/feedbacks/PokemonCardLoadingFeedback"
+import PokemonPageLoadingFeedback from "../components/feedbacks/PokemonPageLoadingFeedback"
 import { CenteredFlexCol } from "../components/main-components"
 import PaginationBar from "../components/PaginationBar"
 import PokemonCard from "../components/poke-components/PokemonCard"
@@ -20,7 +20,7 @@ function SinglePokemon() {
     window.scrollTo({ top: 0, behavior: 'smooth'})
   }, [id]);
   
-  if (isLoading) return <PokemonCardLoadingFeedback id={pokemonId}/>
+  if (isLoading) return <PokemonPageLoadingFeedback/>
   else if (data === null) return <h1>Sorry, no pokemon found.</h1>
     
   return (
