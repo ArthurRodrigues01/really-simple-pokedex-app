@@ -3,7 +3,11 @@ import { useQueryClient } from "@tanstack/react-query"
 import { getPokemonData } from "../functions/poke-functions"
 import { preloadImage } from "../hooks/useImagePreloader"
 import { CenteredFlexRow } from "./main-components"
-import { PaginationCell, PaginationCellCurrent } from "./styles/paginationBar-styles"
+import {
+  PaginationCell,
+  PaginationCellCurrent,
+  PokeballImg
+} from "./styles/paginationBar-styles"
 
 function PaginationBar ({ 
   growth,
@@ -72,14 +76,19 @@ function PaginationBar ({
 
   return (
     <CenteredFlexRow>
-      {
-        cells.map((item, index) => {
-          if (item === current) {
-            return <PaginationCellCurrent key={`pagination-button-${index}-deactivated`}>{item}</PaginationCellCurrent>
-          }
-          return <PaginationCell key={`pagination-button-${index}`} to={`/pokemon/${item}`}>{item}</PaginationCell>
-        })
-      }
+      {cells.map((item, index) => {
+        if (item === current) {
+          return (
+            <PaginationCellCurrent key={`pagination-button-${index}-deactivated`}>
+              <PokeballImg 
+                src={"/really-simple-pokedex-app/pokeball.svg"} 
+                alt='pokeball-img'
+              />
+            </PaginationCellCurrent>
+          )
+        }
+        return <PaginationCell key={`pagination-button-${index}`} to={`/pokemon/${item}`}>{item}</PaginationCell>
+      })}
     </CenteredFlexRow>
   )
 }
