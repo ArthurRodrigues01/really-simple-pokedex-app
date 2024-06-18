@@ -3,14 +3,16 @@ import styled from "styled-components"
 
 import { DEVICE_QUERIES } from "../constants/other-constants"
 
-export const FlexRow = styled.div<{ $gap?: number | string }>`
+export const FlexRow = styled.div<{ $gap?: number | string, $wrap?: boolean }>`
   display: flex;
   flex-direction: row;
+  ${props => props.$wrap ? 'flex-wrap: wrap;' : ''}
   gap: ${(props) => props.$gap ? (typeof props.$gap === 'number' ? `${props.$gap}px` : props.$gap) : '0px'};
 ` 
-export const FlexCol = styled.div<{ $gap?: number | string }>`
+export const FlexCol = styled.div<{ $gap?: number | string, $wrap?: boolean }>`
   display: flex;
   flex-direction: column;
+  ${props => props.$wrap ? 'flex-wrap: wrap;' : ''}
   gap: ${(props) => props.$gap ? (typeof props.$gap === 'number' ? `${props.$gap}px` : props.$gap) : '0px'};
 ` 
 export const AlignedFlexRow = styled(FlexRow)`

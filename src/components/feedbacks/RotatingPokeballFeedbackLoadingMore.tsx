@@ -4,24 +4,24 @@ import { DEVICE_QUERIES } from "../../constants/other-constants"
 import Rotate from "../Rotate"
 
 const PokeballImg = styled.img`
-  width: 150px;
-  height: 150px;
+  width: 125px;
+  height: 125px;
 
   @media ${DEVICE_QUERIES.tablet} {
-    width: 125px;
-    height: 125px;
+    width: 75px;
+    height: 75px;
   }
 `
 
-function RotatingPokeballFeedbackChainLink({ pokemonId }: { pokemonId: number | string }) {
+function RotatingPokeballFeedbackLoadingMore() {
   return (
     <Rotate>
-      <PokeballImg
+      <PokeballImg 
         src={"/really-simple-pokedex-app/pokeball.svg"} 
-        alt={`Loading pokemon ${pokemonId}`}
+        alt={'Loading more pokemons'}
       />
     </Rotate>
   )
 }
 
-export default RotatingPokeballFeedbackChainLink
+export default RotatingPokeballFeedbackLoadingMore

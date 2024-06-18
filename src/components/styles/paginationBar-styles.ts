@@ -1,7 +1,7 @@
 import styled from "styled-components"
 
 import { DEVICE_QUERIES } from "../../constants/other-constants"
-import { NoDecorationLink } from "../main-components"
+import { CenteredFlexRow, NoDecorationLink } from "../main-components"
 
 export const PaginationCell = styled(NoDecorationLink)`
   display: flex;
@@ -39,11 +39,7 @@ export const PaginationCell = styled(NoDecorationLink)`
     font-size: 1rem;
   }
 `
-export const PaginationCellCurrent = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
+export const PaginationCellCurrent = styled(CenteredFlexRow)`
   transition: .2s;
   background-color: #fff;
   cursor: not-allowed;
@@ -51,8 +47,6 @@ export const PaginationCellCurrent = styled.div`
   width: 2rem;
   height: 2rem;
   color: #000;
-  font-size: 1.3rem;
-  font-weight: 600;
   user-select: none;
 
   &:hover {
@@ -74,6 +68,15 @@ export const PaginationCellCurrent = styled.div`
 
   @media ${DEVICE_QUERIES.mobileL} {
     padding: 0.8rem;
-    font-size: 1rem;
+  }
+`
+
+export const PokeballImg = styled.img`
+  width: 1.7rem;
+  height: 1.7rem;
+
+  @media ${DEVICE_QUERIES.mobileL} {
+    width: 1.5rem;
+    height: 1.5rem;
   }
 `
