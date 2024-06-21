@@ -54,16 +54,23 @@ export const CenteredGridCol = styled(GridCol)`
   justify-content: center;
 `
 export const Title = styled.h1<{ $color?: string }>`
-  font-size: 2.5rem;
   color: ${props => props.$color || '#000'};
+  font-size: 2.5rem;
+
 
   @media ${DEVICE_QUERIES.tablet} {
     font-size: 2rem;
   }
-
   @media ${DEVICE_QUERIES.mobileL} {
     font-size: 1.7rem;
   }
+`
+export const EllipsedText = styled(Title)<{ $centeredText?: boolean}>`
+  width: 100%;
+  overflow: hidden;
+  ${props => props.$centeredText ? 'text-align: center;' : ''}
+  text-overflow: ellipsis;
+  white-space: nowrap;
 `
 export const SubTitle = styled(Title)`
   font-size: 1.5rem;

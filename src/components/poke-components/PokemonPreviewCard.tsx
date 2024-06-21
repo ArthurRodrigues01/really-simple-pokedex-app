@@ -6,12 +6,8 @@ import useOnScreen from "../../hooks/useOnScreen";
 import useSinglePokemonData from "../../hooks/useSinglePokemonData";
 import HoverableGrowthFeedback from "../feedbacks/HoverableGrowthFeedback";
 import PokemonPreviewCardLoadingFeedback from "../feedbacks/PokemonPreviewCardLoadingFeedback";
-import { NoDecorationLink, Title } from "../main-components";
-import {
-  PokemonPreviewCardWrapper,
-  PokemonSprite,
-  PokemonSpriteWrapper
-} from "./main-poke-components";
+import { EllipsedText, NoDecorationLink } from "../main-components";
+import { PokemonPreviewCardWrapper, PokemonSpritePreviewCard, PokemonSpriteWrapperPreviewCard } from "../styles/pokemonPreviewCard-styles";
 
 function PokemonPreviewCard({ id, name }: { id: number, name: string }) {
   const { ref, isVisible } = useOnScreen()
@@ -33,17 +29,17 @@ function PokemonPreviewCard({ id, name }: { id: number, name: string }) {
 
   return (
     <HoverableGrowthFeedback 
-      $borderBottomRightRadius={'4rem'} 
-      $borderTopLeftRadius={'4rem'}
+      $borderBottomRightRadius={'3rem'} 
+      $borderTopLeftRadius={'3rem'}
       $outline
     >
       <NoDecorationLink to={`/pokemon/${data.id}`} style={{borderBottomRightRadius: '4rem', borderTopLeftRadius: '4rem'}}>
         <PokemonPreviewCardWrapper ref={ref} $backgroundColor={getPokemonTypeColor(data.types[0])}>
-          <Title $color="#fff">{data.name}</Title>
-          <PokemonSpriteWrapper>
-            <PokemonSprite src={data.spriteSrc} alt={`pokemon ${data.id}`}/>
-          </PokemonSpriteWrapper>
-          <Title $color="#fff">#{data.id}</Title>
+          <EllipsedText $centeredText $color="#fff">{data.name}</EllipsedText>
+          <PokemonSpriteWrapperPreviewCard>
+            <PokemonSpritePreviewCard src={data.spriteSrc} alt={`pokemon ${data.id}`}/>
+          </PokemonSpriteWrapperPreviewCard>
+          <EllipsedText $centeredText $color="#fff">#{data.id}</EllipsedText>
         </PokemonPreviewCardWrapper>
       </NoDecorationLink>
     </HoverableGrowthFeedback>
