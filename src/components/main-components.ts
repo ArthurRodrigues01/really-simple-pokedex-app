@@ -55,7 +55,7 @@ export const CenteredGridCol = styled(GridCol)`
 `
 export const Title = styled.h1<{ $color?: string }>`
   font-size: 2.5rem;
-  color: ${props => props.$color || '#000'};
+  ${props => props.$color ? `color: ${props.$color};` : ''}
 
   @media ${DEVICE_QUERIES.tablet} {
     font-size: 2rem;

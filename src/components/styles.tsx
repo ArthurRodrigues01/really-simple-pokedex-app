@@ -1,4 +1,3 @@
-import { ReactNode } from "react"
 import { Link } from "react-router-dom"
 import styled from "styled-components"
 
@@ -7,76 +6,6 @@ import { getPokemonTypeColor } from "../functions/poke-functions"
 import HoverableGrowthFeedback from "./feedbacks/HoverableGrowthFeedback"
 import { CenteredFlexCol, CenteredFlexRow } from "./main-components"
 
-const FilterBase = styled(CenteredFlexRow)`
-  border-radius: 4rem;
-  background-color: gray;
-  cursor: pointer;
-  padding: 1rem;
-  color: #fff;
-  font-size: 1.5rem;
-  font-weight: bold;
-`
-export const FiltersWrapper = styled(CenteredFlexRow)`
-  flex-wrap: wrap;
-  gap: 1rem;
-`
-const TypeImageWrapper = styled(CenteredFlexCol)<{ $backgroundColor: string }>`
-  background-color: ${props => props.$backgroundColor};
-  width: 4rem;
-  height: 4rem;
-  border-radius: 4rem;
-
-  @media ${DEVICE_QUERIES.tablet} {
-    width: 3rem;
-    height: 3rem;
-  }
-` 
-const TypeImage = styled.img`
-  width: 2rem;
-  height: 2rem;
-
-  @media ${DEVICE_QUERIES.tablet} {
-    width: 1.5rem;
-    height: 1.5rem;
-  }
-` 
-export function Filter({ 
-  children, 
-  onClick
-}: { 
-  children: ReactNode, 
-  onClick: () => void
-}) {
-  return (
-    <HoverableGrowthFeedback
-      $borderRadius={'4rem'}
-      $growthScale={1.3}
-    >
-      <FilterBase onClick={onClick}>
-        { children }
-      </FilterBase>
-    </HoverableGrowthFeedback>
-  )
-}
-export function FilterType({ 
-  type, 
-  onClick 
-}: { 
-  type: string, 
-  onClick: () => void 
-}) {
-  return (
-    <HoverableGrowthFeedback
-      $borderRadius={'4rem'}
-      $growthScale={1.5}
-      style={{cursor: 'pointer'}}
-    >
-      <TypeImageWrapper onClick={onClick} $backgroundColor={getPokemonTypeColor(type)}>
-        <TypeImage src={`/really-simple-pokedex-app/pokemon-types/${type}.svg`} alt={`pokemon ${type} type icon`}/>
-      </TypeImageWrapper>
-    </HoverableGrowthFeedback>
-  )
-} 
 export const FeedbackedButton = styled.button`
   transition: 0.3s;
   border-radius: 4rem;
@@ -93,7 +22,6 @@ export const FeedbackedButton = styled.button`
   }
     
   &: hover {
-    transform: scale(1.2);
     background-color: #215aff;
   }
 `

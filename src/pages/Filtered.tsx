@@ -1,6 +1,6 @@
 import ArrayToJSXTransformer from "../components/ArrayToJSXTransformer"
 import PokemonPageLoadingFeedback from "../components/feedbacks/PokemonPageLoadingFeedback"
-import FilteringOptionsUI from "../components/FilteringOptionsUI"
+import FilteringMenu from "../components/FilteringMenu"
 import { CenteredFlexCol, CenteredFlexRow, Title } from "../components/main-components"
 import PokemonPreviewCard from "../components/poke-components/PokemonPreviewCard"
 import { sanitizeTypes } from "../functions/poke-functions"
@@ -19,7 +19,7 @@ function Filtered() {
 
   return (
     <CenteredFlexCol $gap="1.5rem">
-      <FilteringOptionsUI/>
+      <FilteringMenu/>
       <CenteredFlexRow $gap="1rem" $wrap>
         <ArrayToJSXTransformer
           dataArray={previewData}
