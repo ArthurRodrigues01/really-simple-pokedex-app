@@ -38,7 +38,11 @@ function useFilteredPokemonsPreviewData(options: PokemonFilteringOptions): Pokem
     }
   })
 
-  if (sanitized.length < demandedItems.length) {
+  if (
+    sanitized.length < demandedItems.length && 
+    isLoadingGen === false && 
+    isLoadingTypes === false
+  ) {
     return {
       previewData: null,
       isLoading: false

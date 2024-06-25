@@ -8,9 +8,11 @@ import useURLSearchParams from "../hooks/useURLSearchParams"
 
 function Filtered() {
   const searchParams = useURLSearchParams()
+  const gen = Number(searchParams.gen)
+  const types = sanitizeTypes([searchParams.type1, searchParams.type2])
   const { previewData, isLoading } = useFilteredPokemonsPreviewData({
-    gen: Number(searchParams.gen),
-    types: sanitizeTypes([searchParams.type1, searchParams.type2])
+    gen: gen,
+    types: types
   }) 
 
   if (isLoading) return (
