@@ -49,9 +49,11 @@ function FilteringMenu() {
             <FilterType
               type={activeFilter.name}
               onClick={() => deactivateFilterHandler(activeFilter)}
+              key={`active-filter-type-${activeFilter.name}`}
             /> : 
             <Filter
               onClick={() => deactivateFilterHandler(activeFilter)}
+              key={`active-filter-gen-${activeFilter.name}`}
             >
               {`Gen ${activeFilter.name}`}
             </Filter>
