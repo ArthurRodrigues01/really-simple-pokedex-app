@@ -93,11 +93,9 @@ function FilteringMenu() {
       } 
     }
   }
-
   function deactivateFilterHandler(filter: { name: string, type: string }) {
     setActiveFilters(prev => prev.filter(item2 => item2.name !== filter.name))
   }
-
   function openFilteringMenuHandler() {
     const wrapper = document.querySelector<HTMLDivElement>('.wrapper')!
     
@@ -106,7 +104,6 @@ function FilteringMenu() {
       setIsFilteringMenuOpen(true) 
     }
   }
-
   function closeFilteringMenuHandler() {
     const wrapper = document.querySelector<HTMLDivElement>('.wrapper')!
     const contentWrapper = document.querySelector<HTMLDivElement>('.content-wrapper')!
@@ -130,8 +127,10 @@ function FilteringMenu() {
       if (item) navlink.push(`type${index + 1}=${item.name}`)
     })
 
-    if (navlink.length !== 1) navigate(navlink.join('&'))
-
+    if (navlink.length !== 1) {
+      navigate(navlink.join('&'))
+      closeFilteringMenuHandler()
+    }
   }
 }
 
