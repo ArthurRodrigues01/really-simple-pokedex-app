@@ -6,10 +6,10 @@ import {
   getPokemonPreviewDataFromArray,
   removeNonSpeciesFromArray
 } from "../functions/poke-functions"
+import { PokemonTypePage } from "../types/pokemon-api-page-types"
 import {
   NamedAPIResource,
   NamedAPIResourceList,
-  PokemonTypePage,
   PokemonsPreviewDataStatus
 } from "../types/pokemon-related-types"
 

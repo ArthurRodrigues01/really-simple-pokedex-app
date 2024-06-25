@@ -28,6 +28,22 @@ function useFilteredPokemonsPreviewData(options: PokemonFilteringOptions): Pokem
   }
 
   const sanitized = [previewDataGen, previewDataTypes].filter(item => item !== null)
+  const demandedItems = [options.gen, options.types].filter(item => {
+    if (item !== undefined) {
+      if (Array.isArray(item) && item.length !== 0) {
+        return item
+      } else if (Array.isArray(item) === false) {
+        return item
+      }
+    }
+  })
+
+  if (sanitized.length < demandedItems.length) {
+    return {
+      previewData: null,
+      isLoading: false
+    }
+  }
 
   const reducedData = sanitized.reduce((prev, curr, index) => {
     if (index === 0) return curr!
