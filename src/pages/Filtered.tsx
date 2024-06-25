@@ -1,4 +1,3 @@
-import ArrayToJSXTransformer from "../components/ArrayToJSXTransformer"
 import PokemonPageLoadingFeedback from "../components/feedbacks/PokemonPageLoadingFeedback"
 import FilteringMenu from "../components/FilteringMenu"
 import { CenteredFlexCol, CenteredFlexRow, Title } from "../components/main-components"
@@ -14,23 +13,30 @@ function Filtered() {
     types: sanitizeTypes([searchParams.type1, searchParams.type2])
   }) 
 
-  if (isLoading) return <PokemonPageLoadingFeedback/> 
-  else if (previewData === null) return <Title $color="#fff">Sorry, no pokemons found, try less options or check if the current ones are typed correctly.</Title>
-
+  if (isLoading) return (
+    <CenteredFlexCol $gap='1.5rem'>
+      <FilteringMenu/>
+      <PokemonPageLoadingFeedback/>
+    </CenteredFlexCol>
+  )
+  else if (previewData === null) return (
+    <CenteredFlexCol $gap='1.5rem'>
+      <FilteringMenu/>
+      <Title $color="#fff">Sorry, no pokemons found, try less options or check if the current ones are typed correctly.</Title>
+    </CenteredFlexCol>
+  )
+  
   return (
     <CenteredFlexCol $gap="1.5rem">
       <FilteringMenu/>
       <CenteredFlexRow $gap="1rem" $wrap>
-        <ArrayToJSXTransformer
-          dataArray={previewData}
-          transformer={(pokemon) => (
-            <PokemonPreviewCard 
-              id={pokemon.id} 
-              name={pokemon.name} 
-              key={`pokemon-${pokemon.id}`}
-            />
-          )}
-        />
+        {previewData.map(pokemon => (
+          <PokemonPreviewCard 
+            id={pokemon.id} 
+            name={pokemon.name} 
+            key={`pokemon-${pokemon.id}`}
+          />
+        ))}
       </CenteredFlexRow>
     </CenteredFlexCol>
   )
