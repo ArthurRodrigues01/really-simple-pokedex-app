@@ -2,7 +2,8 @@ import { useQuery } from "@tanstack/react-query"
 
 import { isInRange, isNaturalNumber } from "../functions/other-functions"
 import { getPokemonPreviewDataFromArray } from "../functions/poke-functions"
-import { GenPage, PokemonsPreviewDataStatus } from "../types/pokemon-related-types"
+import { GenPage } from "../types/pokemon-api-page-types"
+import { PokemonsPreviewDataStatus } from "../types/pokemon-related-types"
 
 function usePokemonsPreviewDataGen(gen: number): PokemonsPreviewDataStatus {
   const { data, isLoading } = useQuery({
