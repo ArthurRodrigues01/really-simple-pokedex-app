@@ -14,6 +14,11 @@ export const FilteringMenuWrapper = styled.div`
   transition: all 0.3s ease-in-out;
   width: 560px;
   z-index: 1000;
+
+  @media ${DEVICE_QUERIES.tablet} {
+    right: 0;
+    width: 100%;
+  }
 `
 export const FilteringMenuTitleWrapper = styled(FlexRow)`
   align-items: center;
@@ -22,7 +27,7 @@ export const FilteringMenuTitleWrapper = styled(FlexRow)`
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
   background-color: #777;
-  padding: 2rem;
+  padding: 1rem 2rem;
 `
 export const FilteringMenuContent = styled(FlexCol)`
   background-color: #666;
@@ -37,6 +42,11 @@ export const ActiveFilters = styled(FlexRow)`
   overflow-x: auto;
   overflow-y: hidden;
   gap: 2rem;
+  align-items: center;
+
+  @media ${DEVICE_QUERIES.tablet} {
+    height: 2.5rem;
+  }
 `
 export const OtherFilters = styled(FlexRow)`
   flex-wrap: wrap;
@@ -46,6 +56,10 @@ export const OtherFilters = styled(FlexRow)`
   height: 10rem;
   overflow-y: scroll;
   gap: 2rem;
+
+  @media ${DEVICE_QUERIES.tablet} {
+    height: 5rem;
+  }
 `
 export const HideFilteringMenuButton = styled.img<{ $show?: boolean}>`
   transition: all 0.3s ease-in-out;
@@ -64,6 +78,10 @@ const FilterBase = styled(CenteredFlexRow)`
   color: #fff;
   font-size: 1.5rem;
   font-weight: bold;
+
+  @media ${DEVICE_QUERIES.tablet} {
+    font-size: 1.2rem
+  }
 `
 export const FiltersWrapper = styled(CenteredFlexRow)`
   flex-wrap: wrap;

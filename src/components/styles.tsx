@@ -19,6 +19,7 @@ export const FeedbackedButton = styled.button`
 
   @media ${DEVICE_QUERIES.tablet} {
     padding: 1rem 1.5rem;
+    font-size: 1.5rem;
   }
     
   &: hover {
