@@ -24,7 +24,7 @@ function Filtered() {
   else if (previewData === null) return (
     <CenteredFlexCol $gap='1.5rem'>
       <FilteringMenu/>
-      <Title $color="#fff">Sorry, no pokemons found, try less options or check if the current ones are typed correctly.</Title>
+      <Title>Sorry, no pokemons found, try less options or check if the current ones are typed correctly.</Title>
     </CenteredFlexCol>
   )
   

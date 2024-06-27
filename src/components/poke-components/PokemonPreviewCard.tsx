@@ -35,11 +35,11 @@ function PokemonPreviewCard({ id, name }: { id: number, name: string }) {
     >
       <NoDecorationLink to={`/pokemon/${data.id}`} style={{borderBottomRightRadius: '4rem', borderTopLeftRadius: '4rem'}}>
         <PokemonPreviewCardWrapper ref={ref} $backgroundColor={getPokemonTypeColor(data.types[0])}>
-          <EllipsedText $centeredText $color="#fff">{data.name}</EllipsedText>
+          <EllipsedText $centeredText>{data.name}</EllipsedText>
           <PokemonSpriteWrapperPreviewCard>
             <PokemonSpritePreviewCard src={data.spriteSrc} alt={`pokemon ${data.id}`}/>
           </PokemonSpriteWrapperPreviewCard>
-          <EllipsedText $centeredText $color="#fff">#{data.id}</EllipsedText>
+          <EllipsedText $centeredText>#{data.id}</EllipsedText>
         </PokemonPreviewCardWrapper>
       </NoDecorationLink>
     </HoverableGrowthFeedback>

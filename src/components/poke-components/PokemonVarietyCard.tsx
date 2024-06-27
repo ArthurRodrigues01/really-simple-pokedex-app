@@ -55,7 +55,7 @@ function PokemonVarietyCard({ id, name }: { id: number, name: string }) {
         <PokemonModalStatsWrapper 
           $backgroundColor={getPokemonTypeColor(singlePokemonData.types[0])}
           > 
-          <Title $color="#fff">{singlePokemonData.name}</Title>
+          <Title>{singlePokemonData.name}</Title>
           <PokemonSpriteWrapper>
             <PokemonSprite 
               src={`${singlePokemonData.spriteSrc}`} 
@@ -64,10 +64,10 @@ function PokemonVarietyCard({ id, name }: { id: number, name: string }) {
               height={250}
             />
           </PokemonSpriteWrapper>
-          <SubTitle $color="#fff">ID: <Text>{singlePokemonData.id}</Text></SubTitle>
-          <SubTitle $color="#fff">Gen: <Text>{singlePokemonData.gen}</Text></SubTitle>
-          <SubTitle $color="#fff">Height: <Text>{singlePokemonData.height}m</Text></SubTitle>
-          <SubTitle $color="#fff">Weight: <Text>{singlePokemonData.weight}kg</Text></SubTitle>
+          <SubTitle>ID: <Text>{singlePokemonData.id}</Text></SubTitle>
+          <SubTitle>Gen: <Text>{singlePokemonData.gen}</Text></SubTitle>
+          <SubTitle>Height: <Text>{singlePokemonData.height}m</Text></SubTitle>
+          <SubTitle>Weight: <Text>{singlePokemonData.weight}kg</Text></SubTitle>
           <PokemonTypesWrapper>
             {singlePokemonData.types.map(
               type => <PokemonType key={`pokemon-type-${type}-2`} type={type}/>
@@ -78,16 +78,16 @@ function PokemonVarietyCard({ id, name }: { id: number, name: string }) {
         <PokemonModalStatsWrapper 
           $backgroundColor={getPokemonTypeColor(varietyData.types[0])}
           >
-          <Title $color="#fff">{varietyData.name}</Title>
+          <Title>{varietyData.name}</Title>
           <PokemonSpriteWrapper>
             <PokemonSprite 
               src={`${varietyData.spriteSrc}`} 
               alt={`pokemon ${varietyData.name}`} width={250} height={250}/>
           </PokemonSpriteWrapper>
-          <SubTitle $color="#fff">ID: <Text>{varietyData.id}</Text></SubTitle>
-          <SubTitle $color="#fff">Gen: <Text>{varietyData.gen}</Text></SubTitle>
-          <SubTitle $color="#fff">Height: <Text>{varietyData.height}m</Text></SubTitle>
-          <SubTitle $color="#fff">Weight: <Text>{varietyData.weight}kg</Text></SubTitle>
+          <SubTitle>ID: <Text>{varietyData.id}</Text></SubTitle>
+          <SubTitle>Gen: <Text>{varietyData.gen}</Text></SubTitle>
+          <SubTitle>Height: <Text>{varietyData.height}m</Text></SubTitle>
+          <SubTitle>Weight: <Text>{varietyData.weight}kg</Text></SubTitle>
           <PokemonTypesWrapper>
             {varietyData.types.map(
               type => <PokemonType key={`pokemon-type-${type}-1`} type={type}/>

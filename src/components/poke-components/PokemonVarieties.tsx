@@ -13,10 +13,10 @@ function PokemonVarieties({ type, varieties }: { type: string, varieties: Variet
     return (
       <SectionWrapper>
         <PokemonSectionTitleWrapper $backgroundColor={getPokemonTypeColor(type)}>
-          <Title $color="#fff">Other Varieties</Title>
+          <Title>Other Varieties</Title>
         </PokemonSectionTitleWrapper>
         <PokemonVarietiesWrapper $backgroundColor={getPokemonWrapperTypeColor(type)}>
-          <Title $color="#fff">This Pokemon has no additional varieties.</Title>
+          <Title>This Pokemon has no additional varieties.</Title>
         </PokemonVarietiesWrapper>
       </SectionWrapper>
     )
@@ -25,7 +25,7 @@ function PokemonVarieties({ type, varieties }: { type: string, varieties: Variet
   return (
     <SectionWrapper >
       <PokemonSectionTitleWrapper $backgroundColor={getPokemonTypeColor(type)}>
-        <Title $color="#fff">Other Varieties</Title>
+        <Title>Other Varieties</Title>
       </PokemonSectionTitleWrapper>
       <PokemonVarietiesWrapper $gap={'1rem'} $backgroundColor={getPokemonWrapperTypeColor(type)}>
         {result.map(item => (

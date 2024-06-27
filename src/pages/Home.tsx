@@ -24,7 +24,7 @@ function Home() {
   }, [isVisible]);
 
   if (isLoadingRequest) return <PokemonPageLoadingFeedback/>
-  else if (previewData === null) return <Title $color="#fff">Something went wrong, perhaps refreshing the page will sort everything out.</Title>
+  else if (previewData === null) return <Title>Something went wrong, perhaps refreshing the page will sort everything out.</Title>
 
   return (
     <CenteredFlexCol $gap="2rem">

@@ -34,7 +34,7 @@ function FilteringMenu() {
   return (
     <FilteringMenuWrapper className="wrapper">
       <FilteringMenuTitleWrapper onClick={openFilteringMenuHandler}>
-        <Title $color="#fff">Filters</Title>
+        <Title>Filters</Title>
         <HideFilteringMenuButton 
           onClick={closeFilteringMenuHandler} 
           $show={isFilteringMenuOpen} 
@@ -42,7 +42,7 @@ function FilteringMenu() {
         />
       </FilteringMenuTitleWrapper>
       <FilteringMenuContent className="content-wrapper">
-        <SubTitle $color="#fff">Active Filters</SubTitle>
+        <SubTitle>Active Filters</SubTitle>
         <ActiveFilters>
           {activeFilters.map((activeFilter) => (
             activeFilter.type === 'type' ?
@@ -59,7 +59,7 @@ function FilteringMenu() {
             </Filter>
           ))}
         </ActiveFilters>
-        <SubTitle $color="#fff">Filters</SubTitle>
+        <SubTitle>Filters</SubTitle>
         <OtherFilters>
           {VALID_TYPES.map((type) => (
             <FilterType

@@ -5,7 +5,7 @@ function PokemonLoadingMoreFeedback() {
   return ( 
     <CenteredFlexRow $gap="3rem">
       <RotatingPokeballFeedbackLoadingMore/>
-      <Title $color="#fff">Loading more Pokemons...</Title>
+      <Title>Loading more Pokemons...</Title>
     </CenteredFlexRow>
   )
 }

@@ -34,13 +34,16 @@ function SinglePokemon() {
         spriteSrc={data.spriteSrc}
         types={data.types}
         pokedexEntries={data.pokedexEntries}
+        abilities={data.abilities}
       />
-      
       <PokemonEvolutionChain 
         chainLink={data.evolutionChain}
         type={data.types[0]}
       />
-      { data.isDefault && <PokemonVarieties varieties={data.varieties} type={data.types[0]}/> }
+      <PokemonVarieties 
+        varieties={data.varieties} 
+        type={data.types[0]}
+      />
       <PaginationBar
         max={data.maxNumberOfPokemons}
         growth={3}

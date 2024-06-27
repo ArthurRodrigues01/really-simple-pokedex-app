@@ -1,7 +1,10 @@
 import {
   Ability,
+  AbilityEntry,
   ChainLink,
   Cries,
+  EffectChange,
+  EffectEntry,
   FormDescription,
   GameIndiceGen,
   GameIndiceVersion,
@@ -155,4 +158,20 @@ export type VersionGroupPage = {
   pokedexes: NamedAPIResource[],
   regions: NamedAPIResource[],
   versions: NamedAPIResource[]
+}
+
+export type AbilityPage = {
+  effect_changes: EffectChange[],
+  effect_entries: EffectEntry[],
+  flavor_text_entries: AbilityEntry[],
+  generation: NamedAPIResource,
+  id: number,
+  is_main_series: boolean,
+  name: string,
+  names: Name[],
+  pokemon: {
+    is_hidden: boolean,
+    pokemon: NamedAPIResource,
+    slot: number
+  }[]
 }
