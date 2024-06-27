@@ -21,7 +21,8 @@ export type PokemonData = {
   maxNumberOfPokemons: number,
   varieties: Variety[],
   evolutionChain: ChainLink,
-  isDefault: boolean
+  isDefault: boolean,
+  abilities: PokemonAbility[]
 }
 
 export type PokemonPreviewData = {
@@ -358,4 +359,31 @@ export type EvolutionDetail = {
   time_of_day: string,
   trade_species: NamedAPIResource | null,
   turn_upside_down: boolean
+}
+
+export type EffectEntry = {
+  effect: string,
+  language: NamedAPIResource,
+  short_effect: string
+}
+
+type EffectChangeEntry = {
+  effect: string,
+  language: NamedAPIResource
+}
+
+export type EffectChange = {
+  effect_entries:  EffectChangeEntry[],
+  version_group: NamedAPIResource
+}
+
+export type AbilityEntry = {
+  flavor_text: string,
+  language: NamedAPIResource,
+  version_group: NamedAPIResource
+}
+
+export type PokemonAbility = {
+  name: string,
+  description: string
 }

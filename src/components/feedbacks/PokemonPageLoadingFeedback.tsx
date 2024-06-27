@@ -5,7 +5,7 @@ function PokemonPageLoadingFeedback() {
   return (
     <CenteredFlexCol style={{height: '75vh'}}>
       <RotatingPokeballFeedback/>
-      <Title $color='#fff'>Loading...</Title>
+      <Title>Loading...</Title>
     </CenteredFlexCol>
   )
 }

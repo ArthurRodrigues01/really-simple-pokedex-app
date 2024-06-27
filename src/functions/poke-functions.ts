@@ -1,5 +1,6 @@
 import { VALID_GENS, VALID_TYPES } from "../constants/pokemon-related-constants";
 import {
+  AbilityPage,
   EvolutionChainPage,
   PokemonFormPage,
   PokemonPage,
@@ -27,6 +28,11 @@ export async function getPokemonData(id: number): Promise<PokemonData | null> {
   const resEvolutionChainPageData = await fetch(rawSpeciesPageData.evolution_chain.url)
   const rawEvolutionChainPageData: EvolutionChainPage = await resEvolutionChainPageData.json() 
 
+  const nonHiddenPokemonAbilities = rawPokemonPageData.abilities.filter(item => item.is_hidden === false)
+
+  const resAbilityPageDataArray = await Promise.all(nonHiddenPokemonAbilities.map(item => fetch(item.ability.url)))
+  const rawAbilityPageDataArray: AbilityPage[] = await Promise.all(resAbilityPageDataArray.map(item => item.json()))
+
   const pokemonTypes = rawPokemonPageData.types.map(item => item.type.name)
 
   const pokedexEntries = rawSpeciesPageData.flavor_text_entries.filter(
@@ -45,7 +51,19 @@ export async function getPokemonData(id: number): Promise<PokemonData | null> {
     maxNumberOfPokemons: maxNumberOfPokemons,
     varieties: rawSpeciesPageData.varieties,
     evolutionChain: rawEvolutionChainPageData.chain,
-    isDefault: rawPokemonPageData.is_default
+    isDefault: rawPokemonPageData.is_default,
+    abilities: rawAbilityPageDataArray.map(item => {
+      const abilityNameEnglish = item.names.find(item2 => item2.language.name === 'en')
+      const abilityDescriptionsEnglish = item.flavor_text_entries.filter(item2 => item2.language.name === 'en')
+
+      const abilityName = capitalize(abilityNameEnglish ? abilityNameEnglish.name : item.name)
+      const abilityDescription = abilityDescriptionsEnglish[abilityDescriptionsEnglish.length - 1].flavor_text
+
+      return {
+        name: abilityName,
+        description: abilityDescription
+      }
+    })
   }
 }
 

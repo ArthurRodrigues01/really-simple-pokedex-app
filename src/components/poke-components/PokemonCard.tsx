@@ -1,11 +1,16 @@
-import { getPokemonTypeColor, getPokemonWrapperTypeColor } from "../../functions/poke-functions"
-import { PokedexEntry } from "../../types/pokemon-related-types"
+import {
+  getPokemonTypeColor,
+  getPokemonWrapperTypeColor
+} from "../../functions/poke-functions"
+import { PokedexEntry, PokemonAbility } from "../../types/pokemon-related-types"
 import { CenteredFlexCol, SubTitle, Text, Title } from "../main-components"
 import { PokemonType, PokemonTypesWrapper } from "../styles"
 import {
+  PokemonAbilities,
   PokemonCardGridArea,
   PokemonCardWrapper,
-  PokemonEntry,
+  PokemonFlavorTextsWrapper,
+  PokemonPokedexEntry,
   PokemonStatsWrapper,
 } from "../styles/pokemonCard-styles"
 import { PokemonSprite, PokemonSpriteWrapper } from "./main-poke-components"
@@ -18,7 +23,8 @@ function PokemonCard({
   weight, 
   types, 
   gen, 
-  pokedexEntries
+  pokedexEntries,
+  abilities,
 }: {
   id: number;
   gen: number;
@@ -28,28 +34,35 @@ function PokemonCard({
   types: string[];
   spriteSrc: string;
   pokedexEntries: PokedexEntry[];
+  abilities: PokemonAbility[];
 }) {
 
   return (
     <PokemonCardWrapper >
       <PokemonStatsWrapper $backgroundColor={getPokemonTypeColor(types[0])}>
         <CenteredFlexCol $gap={'1.5rem'}>
-          <Title $color="#fff">{name}</Title>
+          <Title>{name}</Title>
           <PokemonSpriteWrapper>
             <PokemonSprite src={`${spriteSrc}`} width={250} height={250}/>
           </PokemonSpriteWrapper>
         </CenteredFlexCol>
         <PokemonCardGridArea $gap='1.5rem'>
-          <SubTitle $color="#fff">ID: <Text>{id}</Text></SubTitle>
-          <SubTitle $color="#fff">Gen: <Text>{gen}</Text></SubTitle>
-          <SubTitle $color="#fff">Height: <Text>{height}m</Text></SubTitle>
-          <SubTitle $color="#fff">Weight: <Text>{weight}kg</Text></SubTitle>
+          <SubTitle>ID: <Text>{id}</Text></SubTitle>
+          <SubTitle>Gen: <Text>{gen}</Text></SubTitle>
+          <SubTitle>Height: <Text>{height}m</Text></SubTitle>
+          <SubTitle>Weight: <Text>{weight}kg</Text></SubTitle>
           <PokemonTypesWrapper>
             {types.map(type => <PokemonType key={`pokemon-type-${type}`} type={type}/>)}
           </PokemonTypesWrapper>
         </PokemonCardGridArea>
       </PokemonStatsWrapper>
-      <PokemonEntry $backgroundColor={getPokemonWrapperTypeColor(types[0])}>{pokedexEntries[0].flavor_text}</PokemonEntry>
+      <PokemonFlavorTextsWrapper 
+        $backgroundColor={getPokemonWrapperTypeColor(types[0])}
+        $gap={'1rem'}
+      >
+        <PokemonPokedexEntry pokedexEntry={pokedexEntries[0].flavor_text}/>
+        <PokemonAbilities abilities={abilities}/>
+      </PokemonFlavorTextsWrapper>
     </PokemonCardWrapper>
   )
 }
