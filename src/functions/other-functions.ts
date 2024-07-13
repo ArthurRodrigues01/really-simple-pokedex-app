@@ -28,7 +28,7 @@ function isInRange(number: number, max: number, min = 1) {
  * @returns a capitalized string 
  */
 function capitalize(word: string) {
-  return word[0].toUpperCase() + word.slice(1).toLowerCase()
+  return word !== '' ? word[0].toUpperCase() + word.slice(1).toLowerCase() : ''
 }
 /**
  * Get items that are common in both object arrays, equality parameter
@@ -104,31 +104,11 @@ function isObjectEmpty(obj: any) {
  * @param value a value to be checked if it is unique in the passed array
  * @returns 
  */
-function isUnique<T extends string | number>(array: T[], value: T) {
-  let count = 0
-
-  for (const item of array) {
-    if (item === value) {
-      count++
-    }
-    if (count > 1) {
-      return false
-    }
-  }
-
-  return true
-}
-
-function areArrayEqual<T extends string | number>(array1: T[], array2: T[]) {
-  return array1.every(item => array2.includes(item))
-}
 
 export { 
   isNaturalNumber, 
   isInRange, 
   capitalize,
   getCommonItemsFromObjectArrays,
-  isObjectEmpty,
-  isUnique,
-  areArrayEqual
+  isObjectEmpty
 }

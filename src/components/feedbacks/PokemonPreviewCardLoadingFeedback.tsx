@@ -1,6 +1,6 @@
 import { forwardRef } from "react"
 
-import { EllipsedText, NoDecorationLink } from "../main-components"
+import { EllipsedTitle, NoDecorationLink } from "../main-components"
 import { PokemonPreviewCardWrapper } from "../styles/pokemonPreviewCard-styles"
 import HoverableGrowthFeedback from "./HoverableGrowthFeedback"
 import RotatingPokeballFeedbackPreviewCard from "./RotatingPokeballFeedbackPreviewCard"
@@ -18,9 +18,9 @@ const PokemonPreviewCardLoadingFeedback = forwardRef<HTMLDivElement,
     >
       <NoDecorationLink to={`/pokemon/${props.id}`}>
         <PokemonPreviewCardWrapper ref={ref}>
-          <EllipsedText $centeredText>{props.name}</EllipsedText>
+          <EllipsedTitle $centeredText>{props.name}</EllipsedTitle>
           <RotatingPokeballFeedbackPreviewCard pokemonId={props.id}/>
-          <EllipsedText $centeredText>Loading...</EllipsedText>
+          <EllipsedTitle $centeredText>Loading...</EllipsedTitle>
         </PokemonPreviewCardWrapper>
       </NoDecorationLink>
     </HoverableGrowthFeedback>

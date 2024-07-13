@@ -88,6 +88,7 @@ export const PokemonAbilities = ({abilities}: {abilities: PokemonAbility[]}) => 
     <PokemonAbilitiesWrapper>
       {abilities.map(item => (
         <PokemonAbilityContainer
+          key={item.name}
           name={item.name}
           description={item.description}
         />

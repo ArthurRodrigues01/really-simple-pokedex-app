@@ -37,20 +37,18 @@ function usePokemonsPreviewDataTypes(types: string[]): PokemonsPreviewDataStatus
   })
 
   const { data, isLoading } = useMemo(() => ({
-    data: results.map(result => result.data ?? null).filter(
-      item => item !== null // weird typescript bug (I think), even though I filtered the array so that there could be no null value, it still says there could be null values on the array which is absurd
-    ),
+    data: results.map(result => result.data).filter( item => item !== undefined ),
     isLoading: results.some(result => result.isLoading)
   }), [results])
 
   const reducedData = data.reduce((prev, curr, index) => {
-    if (index === 0) return curr!
+    if (index === 0) return curr
     
-    return getCommonItemsFromObjectArrays(prev!, curr!, 'name')
+    return getCommonItemsFromObjectArrays(prev, curr, 'name')
   }, [])
 
   return ({
-    previewData: reducedData!.length !== 0 ? removeNonSpeciesFromArray(reducedData!) : null,
+    previewData: reducedData.length !== 0 ? removeNonSpeciesFromArray(reducedData) : null,
     isLoading
   })
 }

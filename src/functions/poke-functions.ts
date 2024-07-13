@@ -1,4 +1,4 @@
-import { VALID_GENS, VALID_TYPES } from "../constants/pokemon-related-constants";
+import { VALID_TYPES } from "../constants/pokemon-related-constants";
 import {
   AbilityPage,
   EvolutionChainPage,
@@ -41,7 +41,7 @@ export async function getPokemonData(id: number): Promise<PokemonData | null> {
 
   return {
     id: rawSpeciesPageData.id,
-    gen: getGenFromPokeURL(rawSpeciesPageData.generation.url),
+    gen: getGenIdEtcFromPokeURL(rawSpeciesPageData.generation.url),
     name: capitalize(rawSpeciesPageData.name),
     weight: rawPokemonPageData.weight / 10, // ??? -> KG
     height: rawPokemonPageData.height /10, // Decimeters -> Meters
@@ -85,7 +85,7 @@ export async function getPokemonVarietyData(id: number) {
   const formName = rawPokemonFormPageData.form_names.find(item => item.language.name === 'en')
   const speciesName = capitalize(rawSpeciesPageData.name)
 
-  const gen = getGenFromPokeURL(rawVersionGroupPageData.generation.url)
+  const gen = getGenIdEtcFromPokeURL(rawVersionGroupPageData.generation.url)
 
 
   return {
@@ -122,8 +122,18 @@ export async function getPokemonPageData(fetchable: number | string) {
   return rawData
 }
 
-function getGenFromPokeURL(url: string) {
+export function getGenIdEtcFromPokeURL(url: string) {
   return Number(url.split('/')[6])
+}
+
+export async function getAllSpeciesPreview() {
+  const res = await fetch('https://pokeapi.co/api/v2/pokemon-species/?limit=10000')
+  const rawData: NamedAPIResourceList = await res.json()
+
+  const allPokemonsSortedAlpha = rawData.results.sort((a, b) => a.name.localeCompare(b.name))
+
+
+  return allPokemonsSortedAlpha.map(item => ({ ...item, name: capitalize(item.name) }))
 }
 
 export async function getMaxNumberOfSpecies(): Promise<number> {
@@ -151,31 +161,6 @@ export function removeNonSpeciesFromArray(arr: PokemonPreviewData[]): PokemonPre
   return arr.filter(item => item.id < 10000)
 }
 
-export function getGenRegion(gen: number) {
-  switch (gen) {
-    case 1: 
-      return 'Kanto'
-    case 2:
-      return 'Johto'
-    case 3: 
-      return 'Hoenn'
-    case 4: 
-      return 'Sinnoh'
-    case 5:
-      return 'Unova'
-    case 6:
-      return 'Kalos'
-    case 7: 
-      return 'Alola'
-    case 8: 
-      return 'Galar'
-    case 9: 
-      return 'Paldea'
-    default: 
-      return null
-  }
-}
-
 export function sanitizeTypes(types: string[]) {
   let sanitizedTypes: string[] = []
 
@@ -186,14 +171,6 @@ export function sanitizeTypes(types: string[]) {
   }
 
   return sanitizedTypes
-}
-
-export function isValidType(type: string) {
-  return VALID_TYPES.includes(type)
-}
-
-export function isValidGen(gen: number) {
-  return isNaturalNumber(gen) && isInRange(gen, VALID_GENS.length)
 }
 
 export async function isValidVarietyId(id: number) {
@@ -384,4 +361,12 @@ export function getVarieties(varieties: Variety[]) {
   const nra = ret.map(item => item.pokemon)
   
   return getPokemonPreviewDataFromArray(nra)
+}
+
+export async function getSearchBarPokemonsPreview(query: string) {
+  const allPokemonsPreview = await getAllSpeciesPreview()
+
+  const preview = allPokemonsPreview.filter(item => item.name.startsWith(query))
+
+  return preview.slice(0,6)
 }

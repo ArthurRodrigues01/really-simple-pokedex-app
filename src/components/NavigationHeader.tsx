@@ -1,11 +1,15 @@
-import { NavHeaderItem, NavHeaderWrapper } from "./styles/navigationHeader-styles"
+import PokemonSearchBar from "./poke-components/PokemonSearchBar"
+import { NavHeaderItem, NavHeaderWrapper, NavLinksWrapper } from "./styles/navigationHeader-styles"
 
 function NavigationHeader() {
 
   return (
     <NavHeaderWrapper>
-      <NavHeaderItem to={'/'}>Home</NavHeaderItem>
-      <NavHeaderItem to={'/filtered?gen=1'}>Filtered</NavHeaderItem>
+      <NavLinksWrapper>
+        <NavHeaderItem to={'/'}>Home</NavHeaderItem>
+        <NavHeaderItem to={'/filtered?gen=1'}>Filtered</NavHeaderItem>
+      </NavLinksWrapper>
+      <PokemonSearchBar/>
     </NavHeaderWrapper>
   )
 }
