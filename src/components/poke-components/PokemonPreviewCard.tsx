@@ -6,7 +6,7 @@ import useOnScreen from "../../hooks/useOnScreen";
 import useSinglePokemonData from "../../hooks/useSinglePokemonData";
 import HoverableGrowthFeedback from "../feedbacks/HoverableGrowthFeedback";
 import PokemonPreviewCardLoadingFeedback from "../feedbacks/PokemonPreviewCardLoadingFeedback";
-import { EllipsedText, NoDecorationLink } from "../main-components";
+import { EllipsedTitle, NoDecorationLink } from "../main-components";
 import { PokemonPreviewCardWrapper, PokemonSpritePreviewCard, PokemonSpriteWrapperPreviewCard } from "../styles/pokemonPreviewCard-styles";
 
 function PokemonPreviewCard({ id, name }: { id: number, name: string }) {
@@ -35,11 +35,11 @@ function PokemonPreviewCard({ id, name }: { id: number, name: string }) {
     >
       <NoDecorationLink to={`/pokemon/${data.id}`} style={{borderBottomRightRadius: '4rem', borderTopLeftRadius: '4rem'}}>
         <PokemonPreviewCardWrapper ref={ref} $backgroundColor={getPokemonTypeColor(data.types[0])}>
-          <EllipsedText $centeredText>{data.name}</EllipsedText>
+          <EllipsedTitle $centeredText>{data.name}</EllipsedTitle>
           <PokemonSpriteWrapperPreviewCard>
             <PokemonSpritePreviewCard src={data.spriteSrc} alt={`pokemon ${data.id}`}/>
           </PokemonSpriteWrapperPreviewCard>
-          <EllipsedText $centeredText>#{data.id}</EllipsedText>
+          <EllipsedTitle $centeredText>#{data.id}</EllipsedTitle>
         </PokemonPreviewCardWrapper>
       </NoDecorationLink>
     </HoverableGrowthFeedback>

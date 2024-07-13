@@ -83,10 +83,6 @@ const FilterBase = styled(CenteredFlexRow)`
     font-size: 1.2rem
   }
 `
-export const FiltersWrapper = styled(CenteredFlexRow)`
-  flex-wrap: wrap;
-  gap: 1rem;
-`
 const TypeImageWrapper = styled(CenteredFlexCol)<{ $backgroundColor: string }>`
   border-radius: 4rem;
   background-color: ${props => props.$backgroundColor};

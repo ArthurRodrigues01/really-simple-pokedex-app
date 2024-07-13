@@ -99,7 +99,7 @@ export type GameIndiceVersion = {
   version: NamedAPIResource
 }
 
-export type VersionDetail = {
+type VersionDetail = {
   rarity: number,
   version: NamedAPIResource
 }
@@ -109,7 +109,7 @@ export type HeldItem = {
   version_details: VersionDetail[]
 }
 
-export type VersionGroupDetail = {
+type VersionGroupDetail = {
   level_learned_at: number,
   move_learn_method: NamedAPIResource,
   version_group: NamedAPIResource
@@ -120,7 +120,7 @@ export type Move = {
   version_group_details: VersionGroupDetail[]
 }
 
-export type OtherSprites = { 
+type OtherSprites = { 
   dream_world: {
     front_default: string,
     front_female: string | null
@@ -340,7 +340,7 @@ export type ChainLink = {
   evolves_to: ChainLink[]
 }
 
-export type EvolutionDetail = {
+type EvolutionDetail = {
   item: NamedAPIResource | null,
   trigger: NamedAPIResource,
   gender: number | null,

@@ -53,9 +53,10 @@ export const CenteredGridCol = styled(GridCol)`
   align-items: center;
   justify-content: center;
 `
-export const Title = styled.h1<{ $color?: string }>`
-  font-size: 2.5rem;
+export const Title = styled.h1<{ $color?: string, $highlighted?: boolean }>`
   ${props => props.$color ? `color: ${props.$color};` : ''}
+  font-size: 2.5rem;
+  font-weight: ${props => props.$highlighted === undefined ? 'bold' : (props.$highlighted ? 'bold' : 'normal')};
 
   @media ${DEVICE_QUERIES.tablet} {
     font-size: 2rem;
@@ -64,7 +65,7 @@ export const Title = styled.h1<{ $color?: string }>`
     font-size: 1.7rem;
   }
 `
-export const EllipsedText = styled(Title)<{ $centeredText?: boolean}>`
+export const EllipsedTitle = styled(Title)<{ $centeredText?: boolean}>`
   width: 100%;
   overflow: hidden;
   ${props => props.$centeredText ? 'text-align: center;' : ''}
@@ -78,6 +79,13 @@ export const SubTitle = styled(Title)`
     font-size: 1.3rem;
   }
 `
+export const EllipsedSubTitle = styled(SubTitle)<{ $centeredText?: boolean}>`
+  width: 100%;
+  overflow: hidden;
+  ${props => props.$centeredText ? 'text-align: center;' : ''}
+  text-overflow: ellipsis;
+  white-space: nowrap;
+`
 export const Text = styled.span`
   font-size: 1.35rem;
   font-weight: normal;
@@ -86,8 +94,9 @@ export const Text = styled.span`
     font-size: 1.2rem;
   }
 `
-export const Bolder = styled.span`
-  font-weight: 900;
+export const Bold = styled.span<{$color?: string}>`
+  ${props => props.$color ? `color: ${props.$color};` : ''}
+  font-weight: bold;
 `
 export const NoDecorationLink = styled(Link)`
   text-decoration: none;
