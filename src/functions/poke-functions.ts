@@ -4,6 +4,7 @@ import {
   EvolutionChainPage,
   PokemonFormPage,
   PokemonPage,
+  PokemonTypePage,
   SpeciesPage,
   VersionGroupPage
 } from "../types/pokemon-api-page-types";
@@ -13,6 +14,7 @@ import {
   NamedAPIResourceList,
   PokemonData,
   PokemonPreviewData,
+  TypeRelations,
   Variety
 } from "../types/pokemon-related-types";
 import { capitalize, isInRange, isNaturalNumber } from "./other-functions";
@@ -33,7 +35,25 @@ export async function getPokemonData(id: number): Promise<PokemonData | null> {
   const resAbilityPageDataArray = await Promise.all(nonHiddenPokemonAbilities.map(item => fetch(item.ability.url)))
   const rawAbilityPageDataArray: AbilityPage[] = await Promise.all(resAbilityPageDataArray.map(item => item.json()))
 
+  const resPokemonTypePageDataArray = await Promise.all(rawPokemonPageData.types.map(item => fetch(item.type.url)))
+  const rawPokemonTypePageDataArray: PokemonTypePage[] = await Promise.all(resPokemonTypePageDataArray.map(item => item.json()))
+
+  const pokemonWeaknesses = getPokemonWeaknesses(rawPokemonTypePageDataArray.map(item => item.damage_relations))
+  
   const pokemonTypes = rawPokemonPageData.types.map(item => item.type.name)
+
+  const pokemonAbilities = rawAbilityPageDataArray.map(item => {
+    const abilityNameEnglish = item.names.find(item2 => item2.language.name === 'en')
+    const abilityDescriptionsEnglish = item.flavor_text_entries.filter(item2 => item2.language.name === 'en')
+
+    const abilityName = capitalize(abilityNameEnglish ? abilityNameEnglish.name : item.name)
+    const abilityDescription = abilityDescriptionsEnglish[abilityDescriptionsEnglish.length - 1].flavor_text
+
+    return {
+      name: abilityName,
+      description: abilityDescription
+    }
+  })
 
   const pokedexEntries = rawSpeciesPageData.flavor_text_entries.filter(
     pokemonEntryObj => pokemonEntryObj.language.name === 'en'
@@ -46,24 +66,14 @@ export async function getPokemonData(id: number): Promise<PokemonData | null> {
     weight: rawPokemonPageData.weight / 10, // ??? -> KG
     height: rawPokemonPageData.height /10, // Decimeters -> Meters
     types: pokemonTypes,
+    weaknesses: pokemonWeaknesses,
     spriteSrc: rawPokemonPageData.sprites.other["official-artwork"].front_default,
     pokedexEntries: pokedexEntries,
     maxNumberOfPokemons: maxNumberOfPokemons,
     varieties: rawSpeciesPageData.varieties,
     evolutionChain: rawEvolutionChainPageData.chain,
     isDefault: rawPokemonPageData.is_default,
-    abilities: rawAbilityPageDataArray.map(item => {
-      const abilityNameEnglish = item.names.find(item2 => item2.language.name === 'en')
-      const abilityDescriptionsEnglish = item.flavor_text_entries.filter(item2 => item2.language.name === 'en')
-
-      const abilityName = capitalize(abilityNameEnglish ? abilityNameEnglish.name : item.name)
-      const abilityDescription = abilityDescriptionsEnglish[abilityDescriptionsEnglish.length - 1].flavor_text
-
-      return {
-        name: abilityName,
-        description: abilityDescription
-      }
-    })
+    abilities: pokemonAbilities
   }
 }
 
@@ -369,4 +379,45 @@ export async function getSearchBarPokemonsPreview(query: string) {
   const preview = allPokemonsPreview.filter(item => item.name.startsWith(query))
 
   return preview.slice(0,6)
+}
+
+function getPokemonWeaknesses(pokemonTypeRelationsArray: TypeRelations[]) {
+  const firstTypeWeaknesses = pokemonTypeRelationsArray[0].double_damage_from
+  const secondTypeWeaknesses = (
+    pokemonTypeRelationsArray.length === 2 ? 
+    pokemonTypeRelationsArray[1].double_damage_from : 
+    null
+  )
+  const firstTypeResistances = [
+    ...pokemonTypeRelationsArray[0].half_damage_from, 
+    ...pokemonTypeRelationsArray[0].no_damage_from
+  ]
+  const secondTypeResistances = (
+    pokemonTypeRelationsArray.length === 2 ?
+    [
+      ...pokemonTypeRelationsArray[1].half_damage_from, 
+      ...pokemonTypeRelationsArray[1].no_damage_from
+    ] :
+    null
+  )
+
+
+  if (secondTypeWeaknesses !== null && secondTypeResistances !== null) {
+    // check weaknesses of a type, for each weakness if not a resistance/immunity of the other type, 
+    // than it is a pokemon's weakness
+    const firstTypeTrueWeaknesses = firstTypeWeaknesses.filter(item => secondTypeResistances.find(item2 => item2.name === item.name) === undefined)
+    // console.log(firstTypeTrueWeaknesses)
+    const secondTypeTrueWeaknesses = secondTypeWeaknesses.filter(item => firstTypeResistances.find(item2 => item2.name === item.name) === undefined)
+    // console.log(secondTypeTrueWeaknesses)
+    
+    const pokemonWeaknesses = [...firstTypeTrueWeaknesses, ...secondTypeTrueWeaknesses]
+    
+    const pokemonWeaknessesNoDupes = pokemonWeaknesses.filter(
+      (item, index, array) => array.findIndex(item2 => item2.name === item.name) === index
+    )
+
+    return pokemonWeaknessesNoDupes.map(item => item.name)
+  } 
+
+  return firstTypeWeaknesses.map(item => item.name)
 }

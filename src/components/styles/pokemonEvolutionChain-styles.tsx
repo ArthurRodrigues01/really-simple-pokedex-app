@@ -4,8 +4,8 @@ import { DEVICE_QUERIES } from "../../constants/other-constants";
 import { CenteredFlexCol, CenteredFlexRow } from "../main-components";
 
 export const PokemonEvolutionChainWrapper = styled(CenteredFlexRow)<{ $backgroundColor: string }>`
-  border-bottom-left-radius: 4rem;
-  border-bottom-right-radius: 4rem;
+  border-bottom-left-radius: 2.5rem;
+  border-bottom-right-radius: 2.5rem;
   background-color: ${props => props.$backgroundColor};
   padding: 2rem;
   width: 950px;
@@ -27,8 +27,8 @@ export const PokemonEvolutionChainGridArea = styled.div<{
   grid-auto-columns: 175px;
   grid-auto-flow: row;
   justify-content: center;
-  border-bottom-left-radius: 4rem;
-  border-bottom-right-radius: 4rem;
+  border-bottom-left-radius: 2.5rem;
+  border-bottom-right-radius: 2.5rem;
   background-color: ${props => props.$backgroundColor};
   padding: 2rem;
   width: 950px;

@@ -16,6 +16,7 @@ export type PokemonData = {
   weight: number,
   height: number,
   types: string[],
+  weaknesses: string[],
   spriteSrc: string,
   pokedexEntries: PokedexEntry[],
   maxNumberOfPokemons: number,

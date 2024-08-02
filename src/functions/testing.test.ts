@@ -1,5 +1,7 @@
 import { expect, test } from '@jest/globals'
 
+import { getPokemonData } from './poke-functions'
+
 test('testing', async () => {
-  expect(0.4 === 0.4).toBe(true)
+  expect((await getPokemonData(260))?.weaknesses).toEqual(['grass'])
 })

@@ -5,15 +5,33 @@ import { PokemonAbility } from "../../types/pokemon-related-types";
 import {
   CenteredFlexCol,
   CenteredFlexRow,
-  CenteredGridRow,
   FlexCol,
   Text,
   Title
 } from "../main-components";
+import { PokemonSprite, PokemonSpriteWrapper } from "../poke-components/main-poke-components";
 
+export const PokemonSpriteWrapperPokemonCard = styled(PokemonSpriteWrapper)`
+  width: 320px;
+  height: 320px;
+
+  @media ${DEVICE_QUERIES.mobileM} {
+    width: 240px;
+    height: 240px;
+  }
+`
+export const PokemonSpritePokemonCard = styled(PokemonSprite)`
+  max-width: calc(320px * 0.7);
+  max-height: calc(320px * 0.7);
+
+  @media ${DEVICE_QUERIES.mobileM} {
+    max-width: calc(240px * 0.7);
+    max-height: calc(240px * 0.7);
+  }
+`
 export const PokemonCardWrapper = styled(CenteredFlexRow)`
   width: calc((2rem * 2) + 950px);  
-
+  
   @media ${DEVICE_QUERIES.laptop} {
     align-self: stretch;
     width: auto;
@@ -24,7 +42,8 @@ export const PokemonCardWrapper = styled(CenteredFlexRow)`
   }
 `
 export const PokemonStatsWrapper = styled(CenteredFlexCol)<{ $backgroundColor?: string}>`
-  border-top-left-radius: 4rem;
+  align-self: stretch;
+  border-top-left-radius: 2rem;
   background-color: ${(props) => props.$backgroundColor ? props.$backgroundColor : '#d4d4d4'};
   padding: 1.5rem;
   width: 40%;
@@ -42,9 +61,9 @@ export const PokemonStatsWrapper = styled(CenteredFlexCol)<{ $backgroundColor?: 
   }
 `
 export const PokemonFlavorTextsWrapper = styled(FlexCol)<{ $backgroundColor?: string}>`
-  justify-content: space-around;
   align-self: stretch;  
-  border-bottom-right-radius: 4rem;
+  justify-content: space-around;
+  border-bottom-right-radius: 2.5rem;
   background-color: ${props => props.$backgroundColor ? props.$backgroundColor : '#d4d4d4'};
   padding: 1.5rem;
   width: 60%;
@@ -96,7 +115,3 @@ export const PokemonAbilities = ({abilities}: {abilities: PokemonAbility[]}) => 
     </PokemonAbilitiesWrapper>
   </FlexCol>
 )
-
-export const PokemonCardGridArea = styled(CenteredGridRow)`
-  text-align: center;
-`

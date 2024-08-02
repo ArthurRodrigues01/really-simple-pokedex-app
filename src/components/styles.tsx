@@ -27,8 +27,8 @@ export const FeedbackedButton = styled.button`
   }
 `
 export const PokemonSectionTitleWrapper = styled.div<{ $backgroundColor: string }>`
-  border-top-left-radius: 4rem;
-  border-top-right-radius: 4rem;
+  border-top-left-radius: 2.5rem;
+  border-top-right-radius: 2.5rem;
   background-color: ${props => props.$backgroundColor};
   padding: 2rem 2rem;
   width: 950px;
@@ -48,9 +48,9 @@ export const DivGap = styled.div`
   }
 `
 export const PokemonTypesWrapper = styled(CenteredFlexRow)`
-  border-radius: 4rem;
+  border-radius: 1.5rem;
   background-color: #fff;
-  padding: 0.5rem;    
+  padding: .5rem;    
   gap: 1rem;
 `
 const PokemonTypeWrapper = styled(CenteredFlexRow)`
