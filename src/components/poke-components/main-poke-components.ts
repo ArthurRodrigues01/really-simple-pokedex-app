@@ -15,22 +15,22 @@ export const PokemonSpriteWrapper = styled(CenteredFlexCol)`
     height: 200px;
   }
   @media ${DEVICE_QUERIES.mobileL} {
-    width: 150px;
-    height: 150px;
+    width: 140px;
+    height: 140px;
   }
 `
 export const PokemonSprite = styled.img`
   width: auto;
-  max-width: 175px;
+  max-width: calc(250px * 0.7);
   height: auto;
-  max-height: 175px;
+  max-height: calc(250px * 0.7);
   
   @media ${DEVICE_QUERIES.tablet} {
-    max-width: 150px;
-    max-height: 150px;
+    max-width: calc(200px * 0.7);
+    max-height: calc(200px * 0.7);
   }
   @media ${DEVICE_QUERIES.mobileL} {
-    max-width: 100px;
-    max-height: 100px;
+    max-width: calc(140px * 0.7);
+    max-height: calc(140px * 0.7);
   }
 `

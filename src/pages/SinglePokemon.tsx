@@ -5,6 +5,7 @@ import PokemonPageLoadingFeedback from "../components/feedbacks/PokemonPageLoadi
 import { CenteredFlexCol } from "../components/main-components"
 import PaginationBar from "../components/PaginationBar"
 import PokemonCard from "../components/poke-components/PokemonCard"
+import PokemonDetails from "../components/poke-components/PokemonDetails"
 import PokemonEvolutionChain from "../components/poke-components/PokemonEvolutionChain"
 import PokemonVarieties from "../components/poke-components/PokemonVarieties"
 import useSinglePokemonData from "../hooks/useSinglePokemonData"
@@ -26,15 +27,19 @@ function SinglePokemon() {
   return (
     <CenteredFlexCol $gap="1.5rem">
       <PokemonCard
-        id={data.id}
         name={data.name}
-        gen={data.gen}
-        height={data.height}
-        weight={data.weight}
         spriteSrc={data.spriteSrc}
         types={data.types}
         pokedexEntries={data.pokedexEntries}
         abilities={data.abilities}
+      />
+      <PokemonDetails
+        id={data.id}
+        height={data.height}
+        weight={data.weight}
+        gen={data.gen}
+        types={data.types}
+        weaknesses={data.weaknesses}
       />
       <PokemonEvolutionChain 
         chainLink={data.evolutionChain}

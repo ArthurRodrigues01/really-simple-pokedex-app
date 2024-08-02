@@ -21,12 +21,12 @@ export const PaginationCell = styled(NoDecorationLink)`
     background-color: #d4d4d4;
   }
   &: first-child {
-    border-top-left-radius: 2rem;
-    border-bottom-left-radius: 2rem;
+    border-top-left-radius: 1rem;
+    border-bottom-left-radius: 1rem;
   }
   &: last-child {
-    border-top-right-radius: 2rem;
-    border-bottom-right-radius: 2rem;
+    border-top-right-radius: 1rem;
+    border-bottom-right-radius: 1rem;
   }
 
   @media ${DEVICE_QUERIES.tablet} {
@@ -53,12 +53,12 @@ export const PaginationCellCurrent = styled(CenteredFlexRow)`
     background-color: #d4d4d4;
   }
   &: first-child {
-    border-top-left-radius: 1000px;
-    border-bottom-left-radius: 1000px;
+    border-top-left-radius: 1rem;
+    border-bottom-left-radius: 1rem;
   }
   &: last-child {
-    border-top-right-radius: 1000px;
-    border-bottom-right-radius: 1000px;
+    border-top-right-radius: 1rem;
+    border-bottom-right-radius: 1rem;
   }
 
   @media ${DEVICE_QUERIES.tablet} {

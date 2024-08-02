@@ -1,10 +1,18 @@
 import { useEffect, useMemo, useState } from "react";
 
-import { getEvolutionChains, getPokemonTypeColor, getPokemonWrapperTypeColor } from "../../functions/poke-functions";
+import {
+  getEvolutionChains,
+  getPokemonTypeColor,
+  getPokemonWrapperTypeColor
+} from "../../functions/poke-functions";
 import { ChainLink, PokemonPreviewData } from "../../types/pokemon-related-types";
 import { Title } from "../main-components";
 import { PokemonSectionTitleWrapper, SectionWrapper } from "../styles";
-import { PokemonEvolutionChainGridArea, PokemonEvolutionChainGridCell, PokemonEvolutionChainWrapper } from "../styles/pokemonEvolutionChain-styles";
+import {
+  PokemonEvolutionChainGridArea,
+  PokemonEvolutionChainGridCell,
+  PokemonEvolutionChainWrapper
+} from "../styles/pokemonEvolutionChain-styles";
 import PokemonChainLink from "./PokemonChainLink";
 import PokemonEvolutionChainArrow from "./PokemonEvolutionChainArrow";
 
